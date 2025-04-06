@@ -1,15 +1,20 @@
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Navbar } from './components/Navbar/Navbar';
+import { MenuPage } from './pages/MenuPage/MenuPage.jsx';
+import { HomePage } from './pages/HomePage/HomePage.jsx';
+
 function App() {
-	const items = ['el1', 'el2', 'el3', 'el4'];
 
 	return (
-		<div>
-			<h1>List of elements</h1>
-			<ul>
-				{items.map((item, index) => (
-					<li key={index}>{item}</li>
-				))}
-			</ul>
-		</div>
+		<>
+			<Navbar />
+			<Routes>
+				<Route path="/" element={<Navigate to="/home" replace />} />
+				<Route path="/home" element={<HomePage />} />
+				<Route path="/menu" element={<MenuPage />} />
+			</Routes>
+		</>
 	);
 }
 
