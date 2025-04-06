@@ -19,7 +19,6 @@
 	height: auto;
 }
 
-
 .navigation {
 	display: flex;
 	flex-direction: row;
@@ -35,7 +34,7 @@
 	align-items: center;
 }
 
-.radio-item input{
+.radio-item input {
 	display: none;
 }
 
@@ -45,7 +44,7 @@
 }
 
 .radio-item input:checked + label {
-	color: #35B8BE;
+	color: #35b8be;
 }
 
 .radio-item label:hover {
