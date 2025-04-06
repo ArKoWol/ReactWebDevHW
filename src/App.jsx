@@ -3,9 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar/Navbar';
 import { MenuPage } from './pages/MenuPage/MenuPage.jsx';
 import { HomePage } from './pages/HomePage/HomePage.jsx';
+import '@fontsource/inter';
 
 function App() {
-
 	return (
 		<>
 			<Navbar />
