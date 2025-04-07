@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar/Navbar';
 import { MenuPage } from './pages/MenuPage/MenuPage.jsx';
 import { HomePage } from './pages/HomePage/HomePage.jsx';
+import { Footer } from './components/Footer/Footer.jsx';
 import '@fontsource/inter';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 				<Route path="/home" element={<HomePage />} />
 				<Route path="/menu" element={<MenuPage />} />
 			</Routes>
+			<Footer></Footer>
 		</>
 	);
 }
