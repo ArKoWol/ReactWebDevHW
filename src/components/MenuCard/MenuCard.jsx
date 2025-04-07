@@ -15,7 +15,8 @@ export function MenuCard({ image, title, price, description }) {
 				<div className='card-info'>
 					<p>{description}</p>
 				</div>
-				<div>
+				<div className='menu-add-buttons'>
+					<input type="text" placeholder="1" className="menu-text-input"/>
 					<Button>
 						Add to Cart
 					</Button>

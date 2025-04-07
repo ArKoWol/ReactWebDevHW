@@ -45,3 +45,17 @@
     font-size: 120%;
     letter-spacing: 0.6px;
 }
+
+.menu-text-input {
+    height: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 6px;
+    width: 17%;
+    text-align: center;
+}
+
+.menu-add-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
