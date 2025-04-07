@@ -22,6 +22,7 @@ export function MenuPage() {
 								type="radio"
 								id={item.id}
 								name="menus-radio-group"
+								checked
 								onChange={() => handleChange(item.id)}
 							/>
 							<label htmlFor={item.id}>{item.label}</label>
