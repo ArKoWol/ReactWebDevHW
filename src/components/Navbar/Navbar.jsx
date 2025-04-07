@@ -5,10 +5,11 @@ import { Button } from '../Button/Button.jsx';
 import cart from '../../assets/cart.svg';
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export function Navbar() {
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const handleChange = (id) => {
 		navigate(`/${id}`);
@@ -23,17 +24,21 @@ export function Navbar() {
 			</div>
 
 			<div className="navigation">
-				{options.map((item, index) => (
-					<div key={index} className="radio-item">
-						<input
-							type="radio"
-							id={item.id}
-							name="pages-radio-group"
-							onChange={() => handleChange(item.id)}
-						/>
-						<label htmlFor={item.id}>{item.label}</label>
-					</div>
-				))}
+				{options.map((item, index) => {
+					const isChecked = location.pathname === `/${item.id}`;
+					return (
+						<div key={index} className="radio-item">
+							<input
+								type="radio"
+								id={item.id}
+								name="pages-radio-group"
+								checked={isChecked}
+								onChange={() => handleChange(item.id)}
+							/>
+							<label htmlFor={item.id}>{item.label}</label>
+						</div>
+					);
+				})}
 
 				<Link to="/cart">
 					<Button>
