@@ -12,8 +12,9 @@ export function MenuPage() {
 			<div className="title">
 				<h1>Browse our menu</h1>
 				<p>
-					Use our menu to place an order online, or <span>phone</span> our store
-					to place a pickup order. Fast and fresh food.
+					Use our menu to place an order online, or <span className="tooltip-container">phone
+						  <span className="tooltip-text">+370 (694) 67 353</span>
+					</span> our store to place a pickup order. Fast and fresh food.
 				</p>
 				<div className="menu-select">
 					{menuTypes.map((item, index) => (
