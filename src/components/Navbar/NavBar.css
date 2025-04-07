@@ -54,3 +54,19 @@
 	justify-content: center;
 	align-items: center;
 }
+
+.number-of-selected-products {
+	position: absolute;
+	top: 12px;
+	right: 112px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	box-shadow: #7E828F45 1px -1px 1px;
+	background-color: #FFFFFF;
+	color: #35b8be;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 12px;
+}

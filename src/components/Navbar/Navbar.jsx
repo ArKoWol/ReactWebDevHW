@@ -43,6 +43,7 @@ export function Navbar() {
 				<Link to="/cart">
 					<Button>
 						<img src={cart} alt="Cart" />
+						<div className='number-of-selected-products'>0</div>
 					</Button>
 				</Link>
 			</div>
