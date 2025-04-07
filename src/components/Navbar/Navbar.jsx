@@ -28,7 +28,7 @@ export function Navbar() {
 						<input
 							type="radio"
 							id={item.id}
-							name="radio-group"
+							name="pages-radio-group"
 							onChange={() => handleChange(item.id)}
 						/>
 						<label htmlFor={item.id}>{item.label}</label>
