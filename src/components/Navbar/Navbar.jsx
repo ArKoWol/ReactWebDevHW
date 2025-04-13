@@ -1,7 +1,6 @@
 import { options } from '../../data/options.js';
 import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
-import { Button } from '../Button/Button.jsx';
 import cart from '../../assets/cart.svg';
 
 import React from 'react';
@@ -31,12 +30,12 @@ export function Navbar() {
 
 				<NavLink
 					to="/cart"
-					className={({ isActive }) => `${isActive ? 'active' : ''}`}
+					className={({ isActive }) =>
+						`cart-button ${isActive ? 'active' : ''}`
+					}
 				>
-					<Button>
-						<img src={cart} alt="Cart" />
-						<div className="number-of-selected-products">0</div>
-					</Button>
+					<img src={cart} alt="Cart" />
+					<div className="number-of-selected-products">0</div>
 				</NavLink>
 			</div>
 		</div>

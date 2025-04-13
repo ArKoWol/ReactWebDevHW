@@ -47,7 +47,7 @@
 	font-weight: 600;
 }
 
-.navigation button {
+.cart-button {
 	border: none;
 	aspect-ratio: 1;
 	height: 51%;
@@ -55,12 +55,14 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: #35b8be;
+	border-radius: 4px;
 }
 
 .number-of-selected-products {
 	position: absolute;
 	top: 12px;
-	right: 111px;
+	right: 110px;
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
