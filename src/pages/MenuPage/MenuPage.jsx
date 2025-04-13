@@ -18,7 +18,7 @@ export function MenuPage() {
 				</p>
 				<div className="menu-select">
 					{menuTypes.map((item, index) => (
-						<div key={index} className="radio-item">
+						<div key={index} className="radio-item-menu">
 							<input
 								type="radio"
 								id={item.id}
