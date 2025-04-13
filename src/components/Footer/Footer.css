@@ -15,7 +15,7 @@
     height: 73%;
 }
 
-.info-container #info {
+.info-container .info {
     display: flex;
     flex-direction: column;
     padding-top: 7%;
