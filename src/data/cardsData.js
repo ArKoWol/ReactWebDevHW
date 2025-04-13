@@ -10,36 +10,42 @@ export const cardsData = [
 		image: img1,
 		title: 'Burger Dreams',
 		price: '$ 9.20 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 	{
 		image: img2,
 		title: 'Burger Waldo',
 		price: '$ 10.00 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 	{
 		image: img3,
 		title: 'Burger Cali',
 		price: '$ 8.00 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 	{
 		image: img4,
 		title: 'Burger Bacon Buddy',
 		price: '$ 9.99 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 	{
 		image: img5,
 		title: 'Burger Spicy',
 		price: '$ 9.20 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 	{
 		image: img6,
 		title: 'Burger Classic',
 		price: '$ 8.00 USD',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+		description:
+			'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
 	},
 ];

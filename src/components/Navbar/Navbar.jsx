@@ -12,7 +12,7 @@ export function Navbar() {
 		<div className="navbar">
 			<div className="logo">
 				<Link to="/">
-					<img src={logo} alt="Logo"/>
+					<img src={logo} alt="Logo" />
 				</Link>
 			</div>
 
@@ -29,10 +29,12 @@ export function Navbar() {
 					</NavLink>
 				))}
 
-				<NavLink to="/cart" className={({ isActive }) =>
-					`${isActive ? 'active' : ''}`}>
+				<NavLink
+					to="/cart"
+					className={({ isActive }) => `${isActive ? 'active' : ''}`}
+				>
 					<Button>
-						<img src={cart} alt="Cart"/>
+						<img src={cart} alt="Cart" />
 						<div className="number-of-selected-products">0</div>
 					</Button>
 				</NavLink>
