@@ -5,47 +5,37 @@ import { Button } from '../Button/Button.jsx';
 import cart from '../../assets/cart.svg';
 
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 export function Navbar() {
-	const navigate = useNavigate();
-	const location = useLocation();
-
-	const handleChange = (id) => {
-		navigate(`/${id}`);
-	};
-
 	return (
 		<div className="navbar">
 			<div className="logo">
 				<Link to="/">
-					<img src={logo} alt="Logo" />
+					<img src={logo} alt="Logo"/>
 				</Link>
 			</div>
 
 			<div className="navigation">
-				{options.map((item, index) => {
-					const isChecked = location.pathname === `/${item.id}`;
-					return (
-						<div key={index} className="radio-item">
-							<input
-								type="radio"
-								id={item.id}
-								name="pages-radio-group"
-								checked={isChecked}
-								onChange={() => handleChange(item.id)}
-							/>
-							<label htmlFor={item.id}>{item.label}</label>
-						</div>
-					);
-				})}
+				{options.map((item, index) => (
+					<NavLink
+						key={index}
+						to={`/${item.id}`}
+						className={({ isActive }) =>
+							`radio-item-navbar ${isActive ? 'active' : ''}`
+						}
+					>
+						{item.label}
+					</NavLink>
+				))}
 
-				<Link to="/cart">
+				<NavLink to="/cart" className={({ isActive }) =>
+					`${isActive ? 'active' : ''}`}>
 					<Button>
-						<img src={cart} alt="Cart" />
-						<div className='number-of-selected-products'>0</div>
+						<img src={cart} alt="Cart"/>
+						<div className="number-of-selected-products">0</div>
 					</Button>
-				</Link>
+				</NavLink>
 			</div>
 		</div>
 	);
