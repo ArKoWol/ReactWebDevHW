@@ -17,7 +17,7 @@ class App extends Component {
 		this.addToCart = this.addToCart.bind(this);
 	}
 	addToCart(quantity) {
-		this.setState(prevState => ({
+		this.setState((prevState) => ({
 			cartItemCount: prevState.cartItemCount + quantity,
 		}));
 	}
@@ -27,11 +27,7 @@ class App extends Component {
 			<Routes>
 				<Route
 					path="/"
-					element={
-						<Layout
-							cartItemCount={this.state.cartItemCount}
-						/>
-					}
+					element={<Layout cartItemCount={this.state.cartItemCount} />}
 				>
 					<Route index element={<HomePage />} />
 					<Route

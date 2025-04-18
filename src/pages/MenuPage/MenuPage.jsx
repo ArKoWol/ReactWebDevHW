@@ -47,7 +47,6 @@ export class MenuPage extends Component {
 
 		const visibleCards = filteredCards.slice(0, visibleCount);
 
-
 		return (
 			<div className="menu-page">
 				<div className="triangle"></div>

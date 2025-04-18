@@ -12,7 +12,7 @@ export class Footer extends Component {
 			<footer className="footer">
 				<div className="info-container">
 					<div className="logo-and-info">
-						<img src={logo} alt="Logo"/>
+						<img src={logo} alt="Logo" />
 						<p>Takeaway & Delivery template</p>
 						<p>for small - medium businesses.</p>
 					</div>
@@ -23,7 +23,11 @@ export class Footer extends Component {
 							{section.links.map((link, linkIndex) => (
 								<p key={linkIndex}>
 									{section.title === 'TEMPLATE' ? (
-										<a href="https://www.google.com" target="_blank" rel="noopener noreferrer">
+										<a
+											href="https://www.google.com"
+											target="_blank"
+											rel="noopener noreferrer"
+										>
 											{link}
 										</a>
 									) : (
@@ -33,10 +37,9 @@ export class Footer extends Component {
 							))}
 						</div>
 					))}
-
 				</div>
 
-				<hr/>
+				<hr />
 
 				<div className="links-and-info">
 					<div className="footer-info">
@@ -46,13 +49,13 @@ export class Footer extends Component {
 					</div>
 					<div className="social-links">
 						<a href="https://www.instagram.com/">
-							<img src={instagram} alt="instagram"/>
+							<img src={instagram} alt="instagram" />
 						</a>
 						<a href="https://x.com/">
-							<img src={twitter} alt="twitter"/>
+							<img src={twitter} alt="twitter" />
 						</a>
 						<a href="https://www.youtube.com/">
-							<img src={youtube} alt="youtube"/>
+							<img src={youtube} alt="youtube" />
 						</a>
 					</div>
 				</div>

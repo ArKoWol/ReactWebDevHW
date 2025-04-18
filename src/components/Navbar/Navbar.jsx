@@ -38,9 +38,7 @@ export class Navbar extends Component {
 						}
 					>
 						<img src={cart} alt="Cart" />
-						<div className="number-of-selected-products">
-							{cartItemCount}
-						</div>
+						<div className="number-of-selected-products">{cartItemCount}</div>
 					</NavLink>
 				</div>
 			</div>
