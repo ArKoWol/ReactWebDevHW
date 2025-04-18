@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Button.css';
 
-export function Button({ children, onClick }) {
-	return (
-		<button className="custom-button" onClick={onClick}>
-			{children}
-		</button>
-	);
+export class Button extends Component {
+	render() {
+		const { children, onClick } = this.props;
+
+		return (
+			<button className="custom-button" onClick={onClick}>
+				{children}
+			</button>
+		);
+	}
 }
