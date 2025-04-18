@@ -10,13 +10,13 @@ export class MenuPage extends Component {
 		this.state = {
 			cardsData: [],
 			selectedMenu: '',
+			visibleCount: 6,
 		};
 	}
 
 	componentDidMount() {
 		fetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals')
 			.then((res) => {
-				if (!res.ok) throw new Error('Сетевая ошибка');
 				return res.json();
 			})
 			.then((data) => {
@@ -28,22 +28,25 @@ export class MenuPage extends Component {
 					description: item.instructions,
 				}));
 				this.setState({ cardsData: formatted });
-			})
-			.catch((err) => {
-				console.error('Ошибка при загрузке данных:', err);
 			});
 	}
 
-	handleChange = (id) => {
-		this.setState({ selectedMenu: id });
+	handleSeeMore = () => {
+		this.setState((prevState) => ({
+			visibleCount: prevState.visibleCount + 6,
+		}));
 	};
 
 	render() {
 		const { onAddToCart } = this.props;
-		const { cardsData, selectedMenu } = this.state;
+		const { cardsData, selectedMenu, visibleCount } = this.state;
+
 		const filteredCards = selectedMenu
 			? cardsData.filter((card) => card.category === selectedMenu)
 			: cardsData;
+
+		const visibleCards = filteredCards.slice(0, visibleCount);
+
 
 		return (
 			<div className="menu-page">
@@ -66,7 +69,6 @@ export class MenuPage extends Component {
 									id={item.id}
 									name="menus-radio-group"
 									checked={selectedMenu === item.id}
-									onChange={() => this.handleChange(item.id)}
 								/>
 								<label htmlFor={item.id}>{item.label}</label>
 							</div>
@@ -74,8 +76,8 @@ export class MenuPage extends Component {
 					</div>
 				</div>
 
-				<div className="menu-content">
-					{filteredCards.slice(0, 6).map((card, index) => (
+				<div className="menu-page-content">
+					{visibleCards.map((card, index) => (
 						<MenuCard
 							key={index}
 							image={card.image}
@@ -86,8 +88,7 @@ export class MenuPage extends Component {
 						/>
 					))}
 				</div>
-
-				<Button>See more</Button>
+				<Button onClick={this.handleSeeMore}>See more</Button>
 			</div>
 		);
 	}
