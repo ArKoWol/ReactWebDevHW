@@ -23,6 +23,11 @@
 	gap: 10%;
 }
 
+.info a,
+span {
+	color: #546285;
+}
+
 .info-container p {
 	color: #546285;
 	font-size: 87%;

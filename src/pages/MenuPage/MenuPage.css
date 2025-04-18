@@ -3,7 +3,6 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	height: 1336px;
 	background-color: #f5fbfc;
 	position: relative;
 }
@@ -84,15 +83,15 @@
 	color: white;
 }
 
-.menu-content {
+.menu-page-content {
 	margin: 5% 5% 5% 5%;
 	display: flex;
 	justify-content: center;
 	width: 80%;
 	flex-wrap: wrap;
 	gap: 2rem;
-	max-height: 660px;
 }
+
 .tooltip-container {
 	position: relative;
 	display: inline-block;
