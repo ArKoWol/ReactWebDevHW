@@ -11,6 +11,14 @@
 	padding: 16px;
 }
 
+.menuCard img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 6px;
+	flex-shrink: 0;
+}
+
 .menu-content {
 	height: 100%;
 	display: flex;
@@ -27,6 +35,13 @@
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
+}
+
+.card-info {
+	overflow-y: auto;
+	max-height: 48px;
+	scrollbar-width: thin;
+	scrollbar-color: #ccc transparent;
 }
 
 .card-info p {

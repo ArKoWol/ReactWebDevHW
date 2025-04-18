@@ -2,13 +2,48 @@ import './MenuPage.css';
 import { Button } from '../../components/Button/Button.jsx';
 import { menuTypes } from '../../data/menuTypes.js';
 import React, { Component } from 'react';
-import { cardsData } from '../../data/cardsData.js';
 import { MenuCard } from '../../components/MenuCard/MenuCard.jsx';
 
 export class MenuPage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cardsData: [],
+			selectedMenu: '',
+		};
+	}
+
+	componentDidMount() {
+		fetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals')
+			.then((res) => {
+				if (!res.ok) throw new Error('Сетевая ошибка');
+				return res.json();
+			})
+			.then((data) => {
+				const formatted = data.map((item) => ({
+					id: item.id,
+					image: item.img,
+					title: item.meal,
+					price: item.price,
+					description: item.instructions,
+				}));
+				this.setState({ cardsData: formatted });
+			})
+			.catch((err) => {
+				console.error('Ошибка при загрузке данных:', err);
+			});
+	}
+
+	handleChange = (id) => {
+		this.setState({ selectedMenu: id });
+	};
+
 	render() {
 		const { onAddToCart } = this.props;
-
+		const { cardsData, selectedMenu } = this.state;
+		const filteredCards = selectedMenu
+			? cardsData.filter((card) => card.category === selectedMenu)
+			: cardsData;
 
 		return (
 			<div className="menu-page">
@@ -18,7 +53,7 @@ export class MenuPage extends Component {
 					<p>
 						Use our menu to place an order online, or{' '}
 						<span className="tooltip-container">
-						phone
+							phone
 							<span className="tooltip-text">+370 (694) 67 353</span>
 						</span>{' '}
 						our store to place a pickup order. Fast and fresh food.
@@ -30,16 +65,17 @@ export class MenuPage extends Component {
 									type="radio"
 									id={item.id}
 									name="menus-radio-group"
-									checked
-									onChange={() => handleChange(item.id)}
+									checked={selectedMenu === item.id}
+									onChange={() => this.handleChange(item.id)}
 								/>
 								<label htmlFor={item.id}>{item.label}</label>
 							</div>
 						))}
 					</div>
 				</div>
+
 				<div className="menu-content">
-					{cardsData.slice(0, 6).map((card, index) => (
+					{filteredCards.slice(0, 6).map((card, index) => (
 						<MenuCard
 							key={index}
 							image={card.image}
@@ -50,6 +86,7 @@ export class MenuPage extends Component {
 						/>
 					))}
 				</div>
+
 				<Button>See more</Button>
 			</div>
 		);
