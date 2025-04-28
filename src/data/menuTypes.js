@@ -1,5 +1,5 @@
 export const menuTypes = [
-	{ id: 'desert', label: 'Desert' },
+	{ id: 'dessert', label: 'Dessert' },
 	{ id: 'dinner', label: 'Dinner' },
 	{ id: 'breakfast', label: 'Breakfast' },
 ];
