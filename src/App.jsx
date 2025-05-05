@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage.jsx';
 import { MenuPage } from './pages/MenuPage/MenuPage.jsx';
@@ -10,6 +10,35 @@ import '@fontsource/inter';
 
 function App() {
 	const [cartItemCount, setCartItemCount] = useState(0);
+	const [menuData, setMenuData] = useState([]);
+	const [categories, setCategories] = useState([]);
+
+	useEffect(() => {
+		fetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals')
+			.then((res) => res.json())
+			.then((data) => {
+				const formatted = data.map((item) => ({
+					id: item.id,
+					image: item.img,
+					title: item.meal,
+					price: item.price,
+					description: item.instructions,
+					category: item.category.toLowerCase(),
+				}));
+				setMenuData(formatted);
+				const uniqueCategories = [
+					...new Set(data.map((item) => item.category.toLowerCase())),
+				];
+				const formattedCategories = uniqueCategories.map((category) => ({
+					id: category.toLowerCase(),
+					label: category.charAt(0).toUpperCase() + category.slice(1),
+				}));
+				setCategories(formattedCategories);
+			})
+			.catch((error) => {
+				console.error('Error fetching menu data:', error);
+			});
+	}, []);
 
 	const addToCart = (quantity) => {
 		setCartItemCount((prevCount) => prevCount + quantity);
@@ -19,7 +48,16 @@ function App() {
 		<Routes>
 			<Route path="/" element={<Layout cartItemCount={cartItemCount} />}>
 				<Route index element={<HomePage />} />
-				<Route path="menu" element={<MenuPage onAddToCart={addToCart} />} />
+				<Route
+					path="menu"
+					element={
+						<MenuPage
+							onAddToCart={addToCart}
+							menuData={menuData}
+							categories={categories}
+						/>
+					}
+				/>
 				<Route path="company" element={<CompanyPage />} />
 				<Route path="login" element={<LoginPage />} />
 				<Route path="cart" element={<CartPage />} />
