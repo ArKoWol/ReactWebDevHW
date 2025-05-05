@@ -13,9 +13,7 @@ export function MenuCard({ image, title, price, description, onAddToCart }) {
 	};
 
 	const handleAddToCart = () => {
-		if (onAddToCart) {
-			onAddToCart(quantity);
-		}
+		onAddToCart(quantity);
 	};
 
 	return (

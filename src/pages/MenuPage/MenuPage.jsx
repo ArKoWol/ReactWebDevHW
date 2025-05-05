@@ -1,47 +1,35 @@
 import './MenuPage.css';
 import { Button } from '../../components/Button/Button.jsx';
-import { menuTypes } from '../../data/menuTypes.js';
 import React, { useState, useEffect } from 'react';
 import { MenuCard } from '../../components/MenuCard/MenuCard.jsx';
+import { MenuSelector } from '../../components/MenuSelector/MenuSelector.jsx';
 
-export function MenuPage({ onAddToCart }) {
-	const [cardsData, setCardsData] = useState([]);
-	const [selectedMenu, setSelectedMenu] = useState('dessert');
-	const [visibleCount, setVisibleCount] = useState(6);
+export function MenuPage({ onAddToCart, menuData, categories }) {
+	const numberOfVisibleMeals = 6;
+
+	const [selectedMenu, setSelectedMenu] = useState('');
+	const [visibleCount, setVisibleCount] = useState(numberOfVisibleMeals);
 
 	useEffect(() => {
-		fetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals')
-			.then((res) => res.json())
-			.then((data) => {
-				const formatted = data.map((item) => ({
-					id: item.id,
-					image: item.img,
-					title: item.meal,
-					price: item.price,
-					description: item.instructions,
-					category: item.category.toLowerCase(),
-				}));
-				setCardsData(formatted);
-			})
-			.catch((error) => {
-				console.error('Error fetching menu data:', error);
-			});
-	}, []);
+		if (categories.length > 0) {
+			setSelectedMenu(categories[0].id);
+		}
+	}, [categories]);
 
 	const handleSeeMore = () => {
-		setVisibleCount((prevCount) => prevCount + 6);
+		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
 	};
 
 	const handleMenuChange = (menuId) => {
 		setSelectedMenu(menuId);
-		setVisibleCount(6);
+		setVisibleCount(numberOfVisibleMeals);
 	};
 
 	const filteredCards = selectedMenu
-		? cardsData.filter(
+		? menuData.filter(
 				(card) => card.category.toLowerCase() === selectedMenu.toLowerCase(),
 			)
-		: cardsData;
+		: menuData;
 
 	const visibleCards = filteredCards.slice(0, visibleCount);
 
@@ -64,20 +52,12 @@ export function MenuPage({ onAddToCart }) {
 					</span>{' '}
 					our store to place a pickup order. Fast and fresh food.
 				</p>
-				<div className="menu-select">
-					{menuTypes.map((item, index) => (
-						<div key={index} className="radio-item-menu">
-							<input
-								type="radio"
-								id={item.id}
-								name="menus-radio-group"
-								checked={selectedMenu === item.id}
-								onChange={() => handleMenuChange(item.id)}
-							/>
-							<label htmlFor={item.id}>{item.label}</label>
-						</div>
-					))}
-				</div>
+
+				<MenuSelector
+					categories={categories}
+					selectedMenu={selectedMenu}
+					onMenuChange={handleMenuChange}
+				/>
 			</div>
 
 			<div className="menu-page-content">
