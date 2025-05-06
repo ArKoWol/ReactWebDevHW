@@ -20,7 +20,19 @@ export function Footer() {
 					<div className="info" key={index}>
 						<h1>{section.title}</h1>
 						{section.links.map((link, linkIndex) => (
-							<p key={linkIndex}>{link}</p>
+							<p key={linkIndex}>
+								{section.title === 'TEMPLATE' ? (
+									<a
+										href="https://www.google.com"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{link}
+									</a>
+								) : (
+									<span>{link}</span>
+								)}
+							</p>
 						))}
 					</div>
 				))}

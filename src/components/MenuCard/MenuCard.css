@@ -3,12 +3,20 @@
 	background-color: white;
 	border: 1px solid #35b8be26;
 	border-radius: 6px;
-	max-width: 48%;
-	max-height: 30%;
+	width: 48%;
+	height: 200px;
 	justify-content: center;
 	align-items: center;
 	flex-direction: row;
 	padding: 16px;
+}
+
+.menuCard img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 6px;
+	flex-shrink: 0;
 }
 
 .menu-content {
@@ -16,6 +24,11 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	margin: 5% 5% 5% 5%;
+	width: 80%;
+	flex-wrap: wrap;
+	gap: 2rem;
+	max-height: 660px;
 }
 
 .menuCard * {
@@ -27,6 +40,13 @@
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
+}
+
+.card-info {
+	overflow-y: auto;
+	max-height: 48px;
+	scrollbar-width: thin;
+	scrollbar-color: #ccc transparent;
 }
 
 .card-info p {
@@ -43,6 +63,11 @@
 .menu-card-title {
 	font-size: 120%;
 	letter-spacing: 0.6px;
+	overflow-y: auto;
+	max-height: 20px;
+	max-width: 70%;
+	scrollbar-width: thin;
+	scrollbar-color: #ccc transparent;
 }
 
 .menu-text-input {

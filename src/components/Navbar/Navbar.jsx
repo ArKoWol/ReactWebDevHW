@@ -6,7 +6,7 @@ import cart from '../../assets/cart.svg';
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export function Navbar() {
+export function Navbar({ cartItemCount = 0 }) {
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -35,7 +35,7 @@ export function Navbar() {
 					}
 				>
 					<img src={cart} alt="Cart" />
-					<div className="number-of-selected-products">0</div>
+					<div className="number-of-selected-products">{cartItemCount}</div>
 				</NavLink>
 			</div>
 		</div>
