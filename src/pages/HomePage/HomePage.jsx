@@ -4,11 +4,11 @@ import trustpilot from '../../assets/trustpilot.svg';
 import { Button as ButtonComponent } from '../../components/Button/Button.jsx';
 
 const HomePageContainer = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    background-color: #f5fbfc;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	background-color: #f5fbfc;
 `;
 
 const TriangleVertical = styled.div`
@@ -18,7 +18,7 @@ const TriangleVertical = styled.div`
 	width: 19vw;
 	height: 90vh;
 	background-color: white;
-	clip-path: polygon(100% 100%, 0 0,0 100%);
+	clip-path: polygon(100% 100%, 0 0, 0 100%);
 	z-index: 0;
 `;
 
@@ -33,57 +33,56 @@ const TriangleHorizontal = styled.div`
 	z-index: 0;
 `;
 
-
 const HomePageMainContent = styled.div`
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+	width: 80%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	z-index: 1;
 `;
 
 const HomePageInfoContainer = styled.div`
-    h1 {
-        font-size: 400%;
-        line-height: 100%;
-        padding-bottom: 4%;
+	h1 {
+		font-size: 400%;
+		line-height: 100%;
+		padding-bottom: 4%;
 
-        span {
-            font-size: 100%;
-            color: #35b8be;
-        }
-    }
+		span {
+			font-size: 100%;
+			color: #35b8be;
+		}
+	}
 
-    p {
-        width: 86%;
-        font-size: 120%;
-        line-height: 150%;
-        color: #546285;
-        padding-bottom: 8%;
-    }
+	p {
+		width: 86%;
+		font-size: 120%;
+		line-height: 150%;
+		color: #546285;
+		padding-bottom: 8%;
+	}
 `;
 
 const StyledButton = styled(ButtonComponent)`
-    width: 30%;
-    font-style: normal;
-    font-size: 110%;
-    font-weight: 300;
-    height: 52px;
+	width: 30%;
+	font-style: normal;
+	font-size: 110%;
+	font-weight: 300;
+	height: 52px;
 `;
 
 const RatingContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: 6%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-top: 6%;
 
-    p {
-        span {
-            font-weight: 400;
-            color: #35b8be;
-        }
-    }
+	p {
+		span {
+			font-weight: 400;
+			color: #35b8be;
+		}
+	}
 `;
 
 export function HomePage() {
