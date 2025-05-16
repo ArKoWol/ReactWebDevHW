@@ -5,15 +5,17 @@ import { auth } from '../../firebase/firebaseApp';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-
 async function loginUser(email, password, navigate) {
 	try {
-		const userCredential = await signInWithEmailAndPassword(auth, email, password);
+		const userCredential = await signInWithEmailAndPassword(
+			auth,
+			email,
+			password,
+		);
 		console.log('Log in success:', userCredential.user.email);
 		alert(`Welcome, ${userCredential.user.email}`);
 		navigate('/');
-	}
-	catch (err) {
+	} catch (err) {
 		console.error('Log in Error:', err.message);
 		alert(`Log in Error: ${err.message}`);
 	}
@@ -61,7 +63,13 @@ export function LoginPage() {
 					</div>
 					<div className="login-form-button-container">
 						<Button type="submit">Submit</Button>
-						<Button type="button" onClick={() => { setEmail(''); setPassword(''); }}>
+						<Button
+							type="button"
+							onClick={() => {
+								setEmail('');
+								setPassword('');
+							}}
+						>
 							Cancel
 						</Button>
 					</div>
