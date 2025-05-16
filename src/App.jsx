@@ -6,6 +6,7 @@ import { CompanyPage } from './pages/CompanyPage/CompanyPage.jsx';
 import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
 import { CartPage } from './pages/CartPage/CartPage.jsx';
 import { Layout } from './components/Layout/Layout.jsx';
+import { useFetch } from './hooks/useFetch';
 import '@fontsource/inter';
 
 function App() {
@@ -13,32 +14,32 @@ function App() {
 	const [menuData, setMenuData] = useState([]);
 	const [categories, setCategories] = useState([]);
 
+	const { data: rawMenuData } = useFetch(
+		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
+	);
+
 	useEffect(() => {
-		fetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals')
-			.then((res) => res.json())
-			.then((data) => {
-				const formatted = data.map((item) => ({
-					id: item.id,
-					image: item.img,
-					title: item.meal,
-					price: item.price,
-					description: item.instructions,
-					category: item.category.toLowerCase(),
-				}));
-				setMenuData(formatted);
-				const uniqueCategories = [
-					...new Set(data.map((item) => item.category.toLowerCase())),
-				];
-				const formattedCategories = uniqueCategories.map((category) => ({
-					id: category.toLowerCase(),
-					label: category.charAt(0).toUpperCase() + category.slice(1),
-				}));
-				setCategories(formattedCategories);
-			})
-			.catch((error) => {
-				console.error('Error fetching menu data:', error);
-			});
-	}, []);
+		if (!rawMenuData) return;
+
+		const formatted = rawMenuData.map((item) => ({
+			id: item.id,
+			image: item.img,
+			title: item.meal,
+			price: item.price,
+			description: item.instructions,
+			category: item.category.toLowerCase(),
+		}));
+		setMenuData(formatted);
+
+		const uniqueCategories = [
+			...new Set(rawMenuData.map((item) => item.category.toLowerCase())),
+		];
+		const formattedCategories = uniqueCategories.map((category) => ({
+			id: category.toLowerCase(),
+			label: category.charAt(0).toUpperCase() + category.slice(1),
+		}));
+		setCategories(formattedCategories);
+	}, [rawMenuData]);
 
 	const addToCart = (quantity) => {
 		setCartItemCount((prevCount) => prevCount + quantity);
