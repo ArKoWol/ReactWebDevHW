@@ -7,16 +7,30 @@ import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
 import { CartPage } from './pages/CartPage/CartPage.jsx';
 import { Layout } from './components/Layout/Layout.jsx';
 import { useFetch } from './hooks/useFetch';
+import { auth } from './firebase/firebaseApp';
+import { onAuthStateChanged } from 'firebase/auth';
 import '@fontsource/inter';
 
 function App() {
 	const [cartItemCount, setCartItemCount] = useState(0);
 	const [menuData, setMenuData] = useState([]);
 	const [categories, setCategories] = useState([]);
+	const [currentUser, setCurrentUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	const { data: rawMenuData } = useFetch(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
 	);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setCurrentUser(user);
+			setLoading(false);
+		});
+
+		return () => unsubscribe();
+	}, []);
+
 
 	useEffect(() => {
 		if (!rawMenuData) return;
@@ -45,9 +59,18 @@ function App() {
 		setCartItemCount((prevCount) => prevCount + quantity);
 	};
 
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<Routes>
-			<Route path="/" element={<Layout cartItemCount={cartItemCount} />}>
+			<Route
+				path="/"
+				element={
+					<Layout cartItemCount={cartItemCount} currentUser={currentUser} />
+				}
+			>
 				<Route index element={<HomePage />} />
 				<Route
 					path="menu"
@@ -60,7 +83,7 @@ function App() {
 					}
 				/>
 				<Route path="company" element={<CompanyPage />} />
-				<Route path="login" element={<LoginPage />} />
+				<Route path="login" element={<LoginPage currentUser={currentUser} />} />
 				<Route path="cart" element={<CartPage />} />
 			</Route>
 		</Routes>
