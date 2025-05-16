@@ -14,7 +14,9 @@ function App() {
 	const [menuData, setMenuData] = useState([]);
 	const [categories, setCategories] = useState([]);
 
-	const { data: rawMenuData } = useFetch('https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals');
+	const { data: rawMenuData } = useFetch(
+		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
+	);
 
 	useEffect(() => {
 		if (!rawMenuData) return;
@@ -38,7 +40,6 @@ function App() {
 		}));
 		setCategories(formattedCategories);
 	}, [rawMenuData]);
-
 
 	const addToCart = (quantity) => {
 		setCartItemCount((prevCount) => prevCount + quantity);
