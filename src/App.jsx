@@ -31,6 +31,7 @@ function App() {
 		return () => unsubscribe();
 	}, []);
 
+
 	useEffect(() => {
 		if (!rawMenuData) return;
 
