@@ -5,19 +5,18 @@ import { Footer } from '../Footer/Footer';
 import { User } from 'firebase/auth';
 
 interface LayoutProps {
-  cartItemCount: number;
-  currentUser: User | null;
+	cartItemCount: number;
+	currentUser: User | null;
 }
 
 export function Layout({ cartItemCount }: LayoutProps): React.ReactElement {
-
-  return (
-    <div className="layout">
-      <Navbar cartItemCount={cartItemCount}/>
-      <main className="main-content">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
-  );
-} 
+	return (
+		<div className="layout">
+			<Navbar cartItemCount={cartItemCount} />
+			<main className="main-content">
+				<Outlet />
+			</main>
+			<Footer />
+		</div>
+	);
+}
