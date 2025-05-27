@@ -1,12 +1,19 @@
-import { options } from '../../data/options.js';
+import React from 'react';
+import { options } from '../../data/options';
 import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
 import cart from '../../assets/cart.svg';
-
-import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export function Navbar({ cartItemCount = 0 }) {
+interface NavbarProps {
+	cartItemCount?: number;
+	handleCartItemCount?: (count: number) => void;
+}
+
+export function Navbar({
+	cartItemCount = 0,
+	handleCartItemCount,
+}: NavbarProps): React.ReactElement {
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -35,7 +42,12 @@ export function Navbar({ cartItemCount = 0 }) {
 					}
 				>
 					<img src={cart} alt="Cart" />
-					<div className="number-of-selected-products">{cartItemCount}</div>
+					<div
+						className="number-of-selected-products"
+						onClick={() => handleCartItemCount?.(cartItemCount + 1)}
+					>
+						{cartItemCount}
+					</div>
 				</NavLink>
 			</div>
 		</div>
