@@ -7,7 +7,7 @@ interface MenuCardProps {
 	title: string;
 	price: number;
 	description: string;
-	onAddToCart: (quantity: number) => void;
+	onAddToCart?: (quantity: number) => void;
 }
 
 export function MenuCard({
@@ -27,7 +27,9 @@ export function MenuCard({
 	};
 
 	const handleAddToCart = (): void => {
-		onAddToCart(quantity);
+		if (onAddToCart) {
+			onAddToCart(quantity);
+		}
 	};
 
 	return (
