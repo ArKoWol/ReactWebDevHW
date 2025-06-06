@@ -1,13 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Navbar } from '../Navbar/Navbar.jsx';
-import { Footer } from '../Footer/Footer.jsx';
+import { Navbar } from '../Navbar/Navbar';
+import { Footer } from '../Footer/Footer';
 
-export function Layout({ cartItemCount }) {
+export function Layout(): React.ReactElement {
 	return (
 		<div className="layout">
-			<Navbar cartItemCount={cartItemCount} />
-
+			<Navbar />
 			<main className="main-content">
 				<Outlet />
 			</main>

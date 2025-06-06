@@ -1,12 +1,12 @@
-import { options } from '../../data/options.js';
+import React from 'react';
+import { options } from '../../data/options';
 import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
 import cart from '../../assets/cart.svg';
-
-import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export function Navbar({ cartItemCount = 0 }) {
+export function Navbar(): React.ReactElement {
+	const cartItemCount = 0; // Статичное значение, так как cart больше не используется
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -35,7 +35,9 @@ export function Navbar({ cartItemCount = 0 }) {
 					}
 				>
 					<img src={cart} alt="Cart" />
-					<div className="number-of-selected-products">{cartItemCount}</div>
+					<div className="number-of-selected-products">
+						{cartItemCount}
+					</div>
 				</NavLink>
 			</div>
 		</div>

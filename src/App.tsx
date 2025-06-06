@@ -1,0 +1,67 @@
+import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { HomePage } from './pages/HomePage/HomePage';
+import { MenuPage } from './pages/MenuPage/MenuPage';
+import { CompanyPage } from './pages/CompanyPage/CompanyPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { CartPage } from './pages/CartPage/CartPage';
+import { Layout } from './components/Layout/Layout';
+import { useFetch } from './hooks/useFetch';
+import { auth } from './firebase/firebaseApp';
+import { onAuthStateChanged } from 'firebase/auth';
+// Raw menu item type for API data
+interface RawMenuItem {
+	id: string;
+	img: string;
+	meal: string;
+	price: number;
+	instructions: string;
+	category: string;
+}
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { setCurrentUser } from './store/slices/authSlice';
+import { processRawMenuData } from './store/slices/menuSlice';
+import '@fontsource/inter';
+
+function App(): React.ReactElement {
+	const dispatch = useAppDispatch();
+	const { loading } = useAppSelector((state) => state.auth);
+
+	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
+		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
+	);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			dispatch(setCurrentUser(user));
+		});
+
+		return () => unsubscribe();
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (!rawMenuData) return;
+		dispatch(processRawMenuData(rawMenuData));
+	}, [rawMenuData, dispatch]);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	return (
+		<Routes>
+			<Route
+				path="/"
+				element={<Layout />}
+			>
+				<Route index element={<HomePage />} />
+				<Route path="menu" element={<MenuPage />} />
+				<Route path="company" element={<CompanyPage />} />
+				<Route path="login" element={<LoginPage />} />
+				<Route path="cart" element={<CartPage />} />
+			</Route>
+		</Routes>
+	);
+}
+
+export default App;

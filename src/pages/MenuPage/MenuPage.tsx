@@ -1,42 +1,30 @@
+import React, { useState } from 'react';
 import './MenuPage.css';
-import { Button } from '../../components/Button/Button.jsx';
-import React, { useState, useEffect } from 'react';
-import { MenuCard } from '../../components/MenuCard/MenuCard.jsx';
-import { MenuSelector } from '../../components/MenuSelector/MenuSelector.jsx';
+import { Button } from '../../components/Button/Button';
+import { MenuCard } from '../../components/MenuCard/MenuCard';
+import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
+import { useAppSelector } from '../../store/hooks';
 
-export function MenuPage({ onAddToCart, menuData, categories }) {
+export function MenuPage(): React.ReactElement {
+	const { menuData, categories } = useAppSelector((state) => state.menu);
 	const numberOfVisibleMeals = 6;
-
-	const [selectedMenu, setSelectedMenu] = useState('');
-	const [visibleCount, setVisibleCount] = useState(numberOfVisibleMeals);
-
-	useEffect(() => {
-		if (categories.length > 0) {
-			setSelectedMenu(categories[0].id);
-		}
-	}, [categories]);
-
-	const handleSeeMore = () => {
-		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
-	};
-
-	const handleMenuChange = (menuId) => {
-		setSelectedMenu(menuId);
-		setVisibleCount(numberOfVisibleMeals);
-	};
+	const [selectedMenu, setSelectedMenu] = useState<string>('');
+	const [visibleCount, setVisibleCount] =
+		useState<number>(numberOfVisibleMeals);
 
 	const filteredCards = selectedMenu
-		? menuData.filter(
-				(card) => card.category.toLowerCase() === selectedMenu.toLowerCase(),
-			)
+		? menuData.filter((card) => card.category === selectedMenu)
 		: menuData;
 
 	const visibleCards = filteredCards.slice(0, visibleCount);
 
-	const handleAddToCart = (quantity) => {
-		if (onAddToCart) {
-			onAddToCart(quantity);
-		}
+	const handleMenuChange = (id: string): void => {
+		setSelectedMenu(id);
+		setVisibleCount(numberOfVisibleMeals);
+	};
+
+	const handleSeeMore = (): void => {
+		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
 	};
 
 	return (
@@ -69,7 +57,6 @@ export function MenuPage({ onAddToCart, menuData, categories }) {
 							title={card.title}
 							price={card.price}
 							description={card.description}
-							onAddToCart={handleAddToCart}
 						/>
 					))
 				) : (

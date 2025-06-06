@@ -1,16 +1,40 @@
 import './LoginPage.css';
 import React, { useState, useEffect } from 'react';
-import { Button } from '../../components/Button/Button.jsx';
+import { Button } from '../../components/Button/Button';
 import { auth } from '../../firebase/firebaseApp';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+	signInWithEmailAndPassword,
+	signOut,
+	AuthError,
+} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 
-const validateEmail = (email) => {
+interface ValidationErrors {
+	email?: string;
+	password?: string;
+	general?: string;
+}
+
+interface TouchedFields {
+	email?: boolean;
+	password?: boolean;
+}
+
+interface PasswordValidation {
+	length: boolean;
+	uppercase: boolean;
+	lowercase: boolean;
+	numbers: boolean;
+	isValid: boolean;
+}
+
+const validateEmail = (email: string): boolean => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return emailRegex.test(email);
 };
 
-const validatePassword = (password) => {
+const validatePassword = (password: string): PasswordValidation => {
 	const minLength = 6;
 	const hasUpperCase = /[A-Z]/.test(password);
 	const hasLowerCase = /[a-z]/.test(password);
@@ -25,7 +49,12 @@ const validatePassword = (password) => {
 	};
 };
 
-async function loginUser(email, password, navigate, setErrors) {
+async function loginUser(
+	email: string,
+	password: string,
+	navigate: ReturnType<typeof useNavigate>,
+	setErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>,
+): Promise<void> {
 	setErrors({});
 
 	const emailValid = validateEmail(email);
@@ -40,6 +69,7 @@ async function loginUser(email, password, navigate, setErrors) {
 		setErrors(prev => ({ ...prev, password: 'Password does not meet requirements' }));
 		return;
 	}
+
 	try {
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
@@ -49,23 +79,23 @@ async function loginUser(email, password, navigate, setErrors) {
 		console.log('Log in success:', userCredential.user.email);
 		alert(`Welcome, ${userCredential.user.email}`);
 		navigate('/');
-	}
-	catch (err) {
-		console.error('Log in Error:', err.message);
+	} catch (err) {
+		const error = err as AuthError;
+		console.error('Log in Error:', error.message);
 		let errorMessage = 'Login failed. Please try again.';
-		if (err.code === 'auth/user-not-found') {
+		if (error.code === 'auth/user-not-found') {
 			errorMessage = 'No account found with this email address.';
 		}
-		else if (err.code === 'auth/wrong-password') {
+		else if (error.code === 'auth/wrong-password') {
 			errorMessage = 'Incorrect password. Please try again.';
 		}
-		else if (err.code === 'auth/invalid-email') {
+		else if (error.code === 'auth/invalid-email') {
 			errorMessage = 'Invalid email address format.';
 		}
-		else if (err.code === 'auth/user-disabled') {
+		else if (error.code === 'auth/user-disabled') {
 			errorMessage = 'This account has been disabled.';
 		}
-		else if (err.code === 'auth/too-many-requests') {
+		else if (error.code === 'auth/too-many-requests') {
 			errorMessage = 'Too many failed attempts. Please try again later.';
 		}
 
@@ -73,26 +103,29 @@ async function loginUser(email, password, navigate, setErrors) {
 	}
 }
 
-async function logoutUser(navigate) {
+async function logoutUser(
+	navigate: ReturnType<typeof useNavigate>,
+): Promise<void> {
 	try {
 		await signOut(auth);
 		console.log('Log out success');
 		alert('You have been logged out');
 		navigate('/');
-	}
-	catch (err) {
-		console.error('Log out Error:', err.message);
-		alert(`Log out Error: ${err.message}`);
+	} catch (err) {
+		const error = err as AuthError;
+		console.error('Log out Error:', error.message);
+		alert(`Log out Error: ${error.message}`);
 	}
 }
 
-export function LoginPage({ currentUser }) {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [errors, setErrors] = useState({});
-	const [touched, setTouched] = useState({});
-	const [isSubmitting, setIsSubmitting] = useState(false);
+export function LoginPage(): React.ReactElement {
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [errors, setErrors] = useState<ValidationErrors>({});
+	const [touched, setTouched] = useState<TouchedFields>({});
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const { currentUser } = useAppSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (touched.email && email) {
@@ -112,7 +145,7 @@ export function LoginPage({ currentUser }) {
 		if (touched.password && password) {
 			const passwordValidation = validatePassword(password);
 			if (!passwordValidation.isValid) {
-				const requirements = [];
+				const requirements: string[] = [];
 				if (!passwordValidation.length) requirements.push('at least 6 characters');
 				if (!passwordValidation.uppercase) requirements.push('one uppercase letter');
 				if (!passwordValidation.lowercase) requirements.push('one lowercase letter');
@@ -132,7 +165,7 @@ export function LoginPage({ currentUser }) {
 		}
 	}, [password, touched.password]);
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 		e.preventDefault();
 		setIsSubmitting(true);
 		setTouched({ email: true, password: true });
@@ -141,11 +174,11 @@ export function LoginPage({ currentUser }) {
 		setIsSubmitting(false);
 	};
 
-	const handleLogout = () => {
+	const handleLogout = (): void => {
 		logoutUser(navigate);
 	};
 
-	const handleEmailChange = (e) => {
+	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setEmail(e.target.value);
 
 		if (errors.general) {
@@ -156,7 +189,7 @@ export function LoginPage({ currentUser }) {
 		}
 	};
 
-	const handlePasswordChange = (e) => {
+	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setPassword(e.target.value);
 		if (errors.general) {
 			setErrors(prev => {
@@ -166,15 +199,15 @@ export function LoginPage({ currentUser }) {
 		}
 	};
 
-	const handleEmailBlur = () => {
+	const handleEmailBlur = (): void => {
 		setTouched(prev => ({ ...prev, email: true }));
 	};
 
-	const handlePasswordBlur = () => {
+	const handlePasswordBlur = (): void => {
 		setTouched(prev => ({ ...prev, password: true }));
 	};
 
-	const isFormValid = () => {
+	const isFormValid = (): boolean => {
 		return validateEmail(email) && validatePassword(password).isValid && !isSubmitting;
 	};
 
@@ -226,7 +259,8 @@ export function LoginPage({ currentUser }) {
 								onBlur={handleEmailBlur}
 								className={errors.email ? 'input-error' : ''}
 								required
-								aria-describedby={errors.email ? 'email-error' : null}
+								autoComplete="email"
+								aria-describedby={errors.email ? 'email-error' : undefined}
 							/>
 						</div>
 						{errors.email && (
@@ -247,7 +281,8 @@ export function LoginPage({ currentUser }) {
 								onBlur={handlePasswordBlur}
 								className={errors.password ? 'input-error' : ''}
 								required
-								aria-describedby={errors.password ? 'password-error' : null}
+								autoComplete="current-password"
+								aria-describedby={errors.password ? 'password-error' : undefined}
 							/>
 						</div>
 						{errors.password && (
