@@ -9,6 +9,12 @@ import { Layout } from './components/Layout/Layout';
 import { useFetch } from './hooks/useFetch';
 import { auth } from './firebase/firebaseApp';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { setCurrentUser } from './store/slices/authSlice';
+import { processRawMenuData } from './store/slices/menuSlice';
+import type { RootState } from './store';
+import '@fontsource/inter';
+
 // Raw menu item type for API data
 interface RawMenuItem {
 	id: string;
@@ -18,11 +24,6 @@ interface RawMenuItem {
 	instructions: string;
 	category: string;
 }
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { setCurrentUser } from './store/slices/authSlice';
-import { processRawMenuData } from './store/slices/menuSlice';
-import type { RootState } from './store';
-import '@fontsource/inter';
 
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
