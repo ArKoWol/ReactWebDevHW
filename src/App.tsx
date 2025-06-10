@@ -23,7 +23,7 @@ import { setCurrentUser } from './store/slices/authSlice';
 import { processRawMenuData } from './store/slices/menuSlice';
 import '@fontsource/inter';
 
-function App(): React.ReactElement {
+function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
 	const { loading } = useAppSelector((state) => state.auth);
 

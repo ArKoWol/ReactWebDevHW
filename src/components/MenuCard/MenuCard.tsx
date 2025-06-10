@@ -1,14 +1,11 @@
 import './MenuCard.css';
 import { Button } from '../Button/Button';
 import React, { useState, ChangeEvent } from 'react';
+import { MenuItem } from '../../types';
 
-interface MenuCardProps {
-	image: string;
-	title: string;
-	price: number;
-	description: string;
-	onAddToCart?: (quantity: number) => void;
-}
+type MenuCardProps = Omit<MenuItem, 'id' | 'category'> & {
+	onAddToCart: (quantity: number) => void;
+};
 
 export function MenuCard({
 	image,
@@ -16,7 +13,7 @@ export function MenuCard({
 	price,
 	description,
 	onAddToCart,
-}: MenuCardProps): React.ReactElement {
+}: MenuCardProps): React.JSX.Element {
 	const [quantity, setQuantity] = useState<number>(1);
 
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
