@@ -15,7 +15,7 @@ import { processRawMenuData } from './store/slices/menuSlice';
 import type { RootState } from './store';
 import '@fontsource/inter';
 
-// Raw menu item type for API data
+
 interface RawMenuItem {
 	id: string;
 	img: string;
@@ -28,6 +28,12 @@ interface RawMenuItem {
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
 	const { loading } = useAppSelector((state: RootState) => state.auth);
+	const [cartItemCount, setCartItemCount] = useState<number>(0);
+	const [menuData, setMenuData] = useState<MenuItem[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [currentUser, setCurrentUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
+
 
 	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
