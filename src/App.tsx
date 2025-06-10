@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { MenuPage } from './pages/MenuPage/MenuPage';
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import { setCurrentUser } from './store/slices/authSlice';
 import { processRawMenuData } from './store/slices/menuSlice';
 import type { RootState } from './store';
+import { MenuItem, Category, User } from './types';
 import '@fontsource/inter';
 
 
@@ -29,11 +30,6 @@ function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
 	const { loading } = useAppSelector((state: RootState) => state.auth);
 	const [cartItemCount, setCartItemCount] = useState<number>(0);
-	const [menuData, setMenuData] = useState<MenuItem[]>([]);
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [currentUser, setCurrentUser] = useState<User | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
-
 
 	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
