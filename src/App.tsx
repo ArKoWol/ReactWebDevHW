@@ -12,7 +12,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { MenuItem, Category } from './types';
 import '@fontsource/inter';
 
-function App(): React.ReactElement {
+function App(): React.JSX.Element {
 	const [cartItemCount, setCartItemCount] = useState<number>(0);
 	const [menuData, setMenuData] = useState<MenuItem[]>([]);
 	const [categories, setCategories] = useState<Category[]>([]);
