@@ -1,14 +1,11 @@
 import './MenuCard.css';
 import { Button } from '../Button/Button';
 import React, { useState, ChangeEvent } from 'react';
+import { MenuItem } from '../../types';
 
-interface MenuCardProps {
-	image: string;
-	title: string;
-	price: number;
-	description: string;
+type MenuCardProps = Omit<MenuItem, 'id' | 'category'> & {
 	onAddToCart: (quantity: number) => void;
-}
+};
 
 export function MenuCard({
 	image,
