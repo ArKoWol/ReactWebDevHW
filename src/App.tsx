@@ -21,11 +21,12 @@ interface RawMenuItem {
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { setCurrentUser } from './store/slices/authSlice';
 import { processRawMenuData } from './store/slices/menuSlice';
+import type { RootState } from './store';
 import '@fontsource/inter';
 
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
-	const { loading } = useAppSelector((state) => state.auth);
+	const { loading } = useAppSelector((state: RootState) => state.auth);
 
 	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
