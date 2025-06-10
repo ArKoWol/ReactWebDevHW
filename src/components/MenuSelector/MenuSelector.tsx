@@ -1,7 +1,22 @@
 import React from 'react';
 import './MenuSelector.css';
 
-export function MenuSelector({ categories, selectedMenu, onMenuChange }) {
+interface Category {
+	id: string;
+	label: string;
+}
+
+interface MenuSelectorProps {
+	categories: Category[];
+	selectedMenu: string;
+	onMenuChange: (id: string) => void;
+}
+
+export function MenuSelector({
+	categories,
+	selectedMenu,
+	onMenuChange,
+}: MenuSelectorProps): React.ReactElement {
 	return (
 		<div className="menu-select">
 			{categories.map((category, index) => (

@@ -1,4 +1,9 @@
-export const footerSections = [
+interface FooterSection {
+	title: string;
+	links: string[];
+}
+
+export const footerSections: FooterSection[] = [
 	{
 		title: 'COMPANY',
 		links: ['Home', 'Order', 'FAQ', 'Contact'],

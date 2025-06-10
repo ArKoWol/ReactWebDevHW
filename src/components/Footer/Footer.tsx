@@ -4,9 +4,9 @@ import logo from '../../assets/logo.svg';
 import instagram from '../../assets/inst.svg';
 import twitter from '../../assets/twitter.svg';
 import youtube from '../../assets/youtube.svg';
-import { footerSections } from '../../data/footerConfObj.js';
+import { footerSections } from '../../data/footerConfObj';
 
-export function Footer() {
+export function Footer(): React.ReactElement {
 	return (
 		<footer className="footer">
 			<div className="info-container">

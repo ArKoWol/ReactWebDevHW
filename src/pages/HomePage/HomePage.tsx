@@ -1,7 +1,8 @@
+import React from 'react';
 import styled from 'styled-components';
 import homePageImage from '../../assets/homePageImage.png';
 import trustpilot from '../../assets/trustpilot.svg';
-import { Button as ButtonComponent } from '../../components/Button/Button.jsx';
+import { Button } from '../../components/Button/Button';
 
 const HomePageContainer = styled.div`
 	width: 100%;
@@ -63,7 +64,7 @@ const HomePageInfoContainer = styled.div`
 	}
 `;
 
-const StyledButton = styled(ButtonComponent)`
+const StyledButton = styled(Button)`
 	width: 30%;
 	font-style: normal;
 	font-size: 110%;
@@ -85,7 +86,7 @@ const RatingContainer = styled.div`
 	}
 `;
 
-export function HomePage() {
+export function HomePage(): React.ReactElement {
 	return (
 		<HomePageContainer>
 			<TriangleVertical />

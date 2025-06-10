@@ -1,25 +1,36 @@
 import './MenuCard.css';
-import { Button } from '../Button/Button.jsx';
-import React, { useState } from 'react';
+import { Button } from '../Button/Button';
+import React, { useState, ChangeEvent } from 'react';
+import { MenuItem } from '../../types';
 
-export function MenuCard({ image, title, price, description, onAddToCart }) {
-	const [quantity, setQuantity] = useState(1);
+type MenuCardProps = Omit<MenuItem, 'id' | 'category'> & {
+	onAddToCart: (quantity: number) => void;
+};
 
-	const handleQuantityChange = (event) => {
+export function MenuCard({
+	image,
+	title,
+	price,
+	description,
+	onAddToCart,
+}: MenuCardProps): React.ReactElement {
+	const [quantity, setQuantity] = useState<number>(1);
+
+	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
 		const value = parseInt(event.target.value);
 		if (!isNaN(value) && value > 0) {
 			setQuantity(value);
 		}
 	};
 
-	const handleAddToCart = () => {
+	const handleAddToCart = (): void => {
 		onAddToCart(quantity);
 	};
 
 	return (
 		<div className="menuCard">
 			<div className="menu-img">
-				<img src={image} alt="" />
+				<img src={image} alt={title} />
 			</div>
 			<div className="menu-content">
 				<div className="card-name-and-price">

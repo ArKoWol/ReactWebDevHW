@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { HomePage } from './pages/HomePage/HomePage.jsx';
-import { MenuPage } from './pages/MenuPage/MenuPage.jsx';
-import { CompanyPage } from './pages/CompanyPage/CompanyPage.jsx';
-import { LoginPage } from './pages/LoginPage/LoginPage.jsx';
-import { CartPage } from './pages/CartPage/CartPage.jsx';
-import { Layout } from './components/Layout/Layout.jsx';
+import { HomePage } from './pages/HomePage/HomePage';
+import { MenuPage } from './pages/MenuPage/MenuPage';
+import { CompanyPage } from './pages/CompanyPage/CompanyPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { CartPage } from './pages/CartPage/CartPage';
+import { Layout } from './components/Layout/Layout';
 import { useFetch } from './hooks/useFetch';
 import { auth } from './firebase/firebaseApp';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { MenuItem, Category } from './types';
 import '@fontsource/inter';
 
-function App() {
-	const [cartItemCount, setCartItemCount] = useState(0);
-	const [menuData, setMenuData] = useState([]);
-	const [categories, setCategories] = useState([]);
-	const [currentUser, setCurrentUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+function App(): React.JSX.Element {
+	const [cartItemCount, setCartItemCount] = useState<number>(0);
+	const [menuData, setMenuData] = useState<MenuItem[]>([]);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [currentUser, setCurrentUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
 
-	const { data: rawMenuData } = useFetch(
+	const { data: rawMenuData } = useFetch<MenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
 	);
 
@@ -31,15 +32,13 @@ function App() {
 		return () => unsubscribe();
 	}, []);
 
-
 	useEffect(() => {
 		if (!rawMenuData) return;
 
 		const formatted = rawMenuData.map((item) => ({
-			id: item.id,
+			...item,
 			image: item.img,
 			title: item.meal,
-			price: item.price,
 			description: item.instructions,
 			category: item.category.toLowerCase(),
 		}));
@@ -55,7 +54,7 @@ function App() {
 		setCategories(formattedCategories);
 	}, [rawMenuData]);
 
-	const addToCart = (quantity) => {
+	const addToCart = (quantity: number): void => {
 		setCartItemCount((prevCount) => prevCount + quantity);
 	};
 

@@ -1,10 +1,31 @@
 import { useEffect, useState } from 'react';
 
-export function useFetch(url, options = {}) {
-	const [data, setData] = useState(null);
-	const [status, setStatus] = useState(null);
-	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(false);
+interface FetchOptions extends RequestInit {
+	body?: string;
+}
+
+interface ApiLog {
+	timestamp: string;
+	url: string;
+	payload: any;
+	status: number | string;
+}
+
+interface FetchResult<T> {
+	data: T | null;
+	status: number | null;
+	error: Error | null;
+	loading: boolean;
+}
+
+export function useFetch<T>(
+	url: string,
+	options: FetchOptions = {},
+): FetchResult<T> {
+	const [data, setData] = useState<T | null>(null);
+	const [status, setStatus] = useState<number | null>(null);
+	const [error, setError] = useState<Error | null>(null);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		let isMounted = true;
@@ -25,7 +46,7 @@ export function useFetch(url, options = {}) {
 				}
 			} catch (err) {
 				if (isMounted) {
-					setError(err);
+					setError(err instanceof Error ? err : new Error(String(err)));
 					logToLocalStorage(url, options.body, 'FETCH_ERROR');
 				}
 			} finally {
@@ -43,11 +64,17 @@ export function useFetch(url, options = {}) {
 	return { data, status, error, loading };
 }
 
-function logToLocalStorage(url, payload, status) {
+function logToLocalStorage(
+	url: string,
+	payload: string | undefined,
+	status: number | string,
+): void {
 	const logsKey = 'apiLogs';
-	const prevLogs = JSON.parse(localStorage.getItem(logsKey)) || [];
+	const prevLogs = JSON.parse(
+		localStorage.getItem(logsKey) || '[]',
+	) as ApiLog[];
 
-	const newLog = {
+	const newLog: ApiLog = {
 		timestamp: new Date().toISOString(),
 		url,
 		payload: safeParse(payload),
@@ -58,9 +85,10 @@ function logToLocalStorage(url, payload, status) {
 	localStorage.setItem(logsKey, JSON.stringify(updatedLogs));
 }
 
-function safeParse(data) {
+function safeParse(data: string | undefined): any {
+	if (!data) return data;
 	try {
-		return typeof data === 'string' ? JSON.parse(data) : data;
+		return JSON.parse(data);
 	} catch {
 		return data;
 	}
