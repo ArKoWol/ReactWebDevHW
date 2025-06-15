@@ -1,0 +1,94 @@
+.cart-item {
+	display: flex;
+	align-items: center;
+	padding: 1.5rem;
+	gap: 1rem;
+	background: white;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	border: 1px solid #e8e8e8;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cart-item:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cart-item-image {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 8px;
+	flex-shrink: 0;
+}
+
+.cart-item-details {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+
+.cart-item-name {
+	font-size: 1.1rem;
+	font-weight: 500;
+	color: #333;
+	margin: 0;
+	line-height: 1.2;
+}
+
+.cart-item-quantity-input {
+	width: 60px;
+	height: 40px;
+	padding: 0.5rem;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 500;
+	color: #333;
+	box-sizing: border-box;
+}
+
+.cart-item-quantity-input:focus {
+	outline: none;
+	border-color: #35B8BE;
+}
+
+.cart-item-price {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #35B8BE;
+	min-width: 80px;
+	text-align: center;
+}
+
+.remove-button {
+	background: #35B8BE;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	width: 60px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	transition: background-color 0.2s;
+	flex-shrink: 0;
+}
+
+.remove-button:hover {
+	background: #2a9aa0;
+}
+
+/* Удаляю неиспользуемые стили */
+.cart-item-description {
+	display: none;
+}
+
+.cart-item-quantity {
+	display: none;
+} 

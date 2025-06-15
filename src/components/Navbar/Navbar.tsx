@@ -4,16 +4,12 @@ import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
 import cart from '../../assets/cart.svg';
 import { NavLink, Link } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import type { RootState } from '../../store';
 
-interface NavbarProps {
-	cartItemCount?: number;
-	handleCartItemCount?: (count: number) => void;
-}
-
-export function Navbar({
-	cartItemCount = 0,
-	handleCartItemCount,
-}: NavbarProps): React.ReactElement {
+export function Navbar(): React.ReactElement {
+	const { totalItems } = useAppSelector((state: RootState) => state.cart);
+	
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -42,11 +38,8 @@ export function Navbar({
 					}
 				>
 					<img src={cart} alt="Cart" />
-					<div
-						className="number-of-selected-products"
-						onClick={() => handleCartItemCount?.(cartItemCount + 1)}
-					>
-						{cartItemCount}
+					<div className="number-of-selected-products">
+						{totalItems}
 					</div>
 				</NavLink>
 			</div>

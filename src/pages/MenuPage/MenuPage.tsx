@@ -3,19 +3,13 @@ import './MenuPage.css';
 import { Button } from '../../components/Button/Button';
 import { MenuCard } from '../../components/MenuCard/MenuCard';
 import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
-import { MenuItem, Category } from '../../types';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../store/slices/cartSlice';
+import { MenuItem } from '../../types';
 
-interface MenuPageProps {
-	onAddToCart: (quantity: number) => void;
-	menuData: MenuItem[];
-	categories: Category[];
-}
-
-export function MenuPage({
-	onAddToCart,
-	menuData,
-	categories,
-}: MenuPageProps): React.ReactElement {
+export function MenuPage(): React.ReactElement {
+	const { menuData, categories } = useAppSelector((state) => state.menu);
+	const dispatch = useAppDispatch();
 	const numberOfVisibleMeals = 6;
 	const [selectedMenu, setSelectedMenu] = useState<string>('');
 	const [visibleCount, setVisibleCount] =
@@ -36,8 +30,10 @@ export function MenuPage({
 		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
 	};
 
-	const handleAddToCart = (quantity: number): void => {
-		onAddToCart(quantity);
+	const handleAddToCart = (item: MenuItem, quantity: number): void => {
+		for (let i = 0; i < quantity; i++) {
+			dispatch(addToCart(item));
+		}
 	};
 
 	return (
@@ -70,7 +66,7 @@ export function MenuPage({
 							title={card.title}
 							price={card.price}
 							description={card.description}
-							onAddToCart={handleAddToCart}
+							onAddToCart={(quantity) => handleAddToCart(card, quantity)}
 						/>
 					))
 				) : (
