@@ -3,10 +3,13 @@ import './MenuPage.css';
 import { Button } from '../../components/Button/Button';
 import { MenuCard } from '../../components/MenuCard/MenuCard';
 import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { addToCart } from '../../store/slices/cartSlice';
+import { MenuItem } from '../../types';
 
 export function MenuPage(): React.ReactElement {
 	const { menuData, categories } = useAppSelector((state) => state.menu);
+	const dispatch = useAppDispatch();
 	const numberOfVisibleMeals = 6;
 	const [selectedMenu, setSelectedMenu] = useState<string>('');
 	const [visibleCount, setVisibleCount] =
@@ -25,6 +28,12 @@ export function MenuPage(): React.ReactElement {
 
 	const handleSeeMore = (): void => {
 		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
+	};
+
+	const handleAddToCart = (item: MenuItem, quantity: number): void => {
+		for (let i = 0; i < quantity; i++) {
+			dispatch(addToCart(item));
+		}
 	};
 
 	return (
@@ -57,6 +66,7 @@ export function MenuPage(): React.ReactElement {
 							title={card.title}
 							price={card.price}
 							description={card.description}
+							onAddToCart={(quantity) => handleAddToCart(card, quantity)}
 						/>
 					))
 				) : (
