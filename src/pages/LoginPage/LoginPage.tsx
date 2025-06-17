@@ -214,7 +214,6 @@ export function LoginPage(): React.ReactElement {
 	if (currentUser) {
 		return (
 			<div className="LoginPage">
-				<div className="triangle"></div>
 				<div className="login-page-container">
 					<h1>Account</h1>
 					<div className="login-form">
@@ -238,7 +237,6 @@ export function LoginPage(): React.ReactElement {
 
 	return (
 		<div className="LoginPage">
-			<div className="triangle"></div>
 			<div className="login-page-container">
 				<h1>Log in</h1>
 				<form className="login-form" onSubmit={handleSubmit}>

@@ -1,24 +1,13 @@
 .LoginPage {
 	width: 100%;
 	height: 100vh;
-	background-color: #f5fbfc;
+	background-color: var(--background-color);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	padding: 1rem;
 	box-sizing: border-box;
-}
-
-.triangle {
-	position: absolute;
-	top: 90px;
-	left: 0;
-	width: 0;
-	height: 7vh;
-	border-left: 100vw solid white;
-	border-bottom: 7vh solid transparent;
-	z-index: 1;
 }
 
 .login-page-container {
@@ -44,7 +33,7 @@
 .login-form {
 	width: 100%;
 	min-height: fit-content;
-	background: white;
+	background: var(--background-color);
 	border-radius: 12px;
 	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 	padding: 2rem;
@@ -56,6 +45,10 @@
 	overflow: hidden;
 }
 
+[data-theme='dark'] .login-form {
+	border: 1px solid var(--shape-color);
+}
+
 .user-info {
 	text-align: center;
 	padding: 1rem 0;
@@ -63,7 +56,7 @@
 
 .user-info p {
 	margin: 0 0 0.5rem 0;
-	color: #666;
+	color: var(--text-color);
 	font-size: 0.95rem;
 }
 
@@ -85,7 +78,7 @@
 
 .login-form-input-container > p {
 	margin: 0 0 0.5rem 0;
-	color: #333;
+	color: var(--text-color);
 	font-weight: 500;
 	font-size: 0.95rem;
 }
@@ -103,26 +96,35 @@
 	border: 2px solid #e1e5e9;
 	border-radius: 8px;
 	font-size: 1rem;
-	background-color: #fafbfc;
+	background-color: var(--background-color);
 	transition: all 0.3s ease;
 	box-sizing: border-box;
 	min-height: 44px;
 }
 
+[data-theme='dark'] .login-form-input input {
+	border: 2px solid var(--shape-color);
+}
+
 .login-form-input input:focus {
 	outline: none;
 	border-color: #35b8be;
-	background-color: white;
 	box-shadow: 0 0 0 3px rgba(53, 184, 190, 0.1);
 }
 
 .login-form-input.error input {
 	border-color: #e74c3c;
+}
+
+[data-theme='light'] .login-form-input.error input {
 	background-color: #fef5f5;
 }
 
 .login-form-input.valid input {
 	border-color: #27ae60;
+}
+
+[data-theme='light'] .login-form-input.valid input {
 	background-color: #f8fff8;
 }
 
@@ -141,9 +143,13 @@
 }
 
 .login-form-button-container Button.secondary {
-	background-color: #f8f9fa;
-	color: #6c757d;
+	background-color: var(--background-color);
+	color: var(--text-color);
 	border: 2px solid #e9ecef;
+}
+
+[data-theme='dark'] .login-form-button-container Button.secondary {
+	border: 2px solid var(--shape-color);
 }
 
 .login-form-button-container Button.secondary:hover:not(:disabled) {
@@ -187,6 +193,10 @@
 	word-wrap: break-word;
 }
 
+[data-theme='dark'] .error-message {
+	color: #ff8a80;
+}
+
 .general-error {
 	background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
 	color: white;
@@ -207,12 +217,16 @@
 .password-requirements {
 	margin-top: 0.75rem;
 	padding: 1rem;
-	background-color: #f8f9fa;
+	background-color: var(--background-color);
 	border-radius: 8px;
 	font-size: 0.875rem;
 	border: 1px solid #e9ecef;
 	box-sizing: border-box;
 	overflow-wrap: break-word;
+}
+
+[data-theme='dark'] .password-requirements {
+	border: 1px solid var(--shape-color);
 }
 
 .password-requirements.met {
@@ -224,7 +238,7 @@
 .password-requirements p {
 	margin: 0 0 0.75rem 0;
 	font-weight: 500;
-	color: #495057;
+	color: var(--text-color);
 }
 
 .password-requirements ul {
@@ -257,6 +271,27 @@
 .password-requirements li.met:before {
 	content: '✓';
 	color: #27ae60;
+}
+
+[data-theme='dark'] .password-requirements li {
+	color: #ff8a80;
+}
+
+[data-theme='dark'] .password-requirements li.met {
+	color: #b9f6ca;
+}
+
+[data-theme='dark'] .password-requirements li:before {
+	color: #ff8a80;
+}
+
+.password-requirements li.met:before {
+	content: '✓';
+	color: #27ae60;
+}
+
+[data-theme='dark'] .password-requirements li.met:before {
+	color: #b9f6ca;
 }
 
 /* Responsive Design */
