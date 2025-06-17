@@ -28,8 +28,8 @@
 }
 
 .custom-button:disabled {
-	background-color: #e9ecef;
-	color: #6c757d;
+	background-color: var(--disabled-background-color);
+	color: var(--disabled-text-color);
 	cursor: not-allowed;
 	transform: none;
 	box-shadow: none;
