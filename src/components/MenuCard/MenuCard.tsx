@@ -13,7 +13,7 @@ export function MenuCard({
 	price,
 	description,
 	onAddToCart,
-}: MenuCardProps): React.ReactElement {
+}: MenuCardProps): React.JSX.Element {
 	const [quantity, setQuantity] = useState<number>(1);
 
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -24,7 +24,9 @@ export function MenuCard({
 	};
 
 	const handleAddToCart = (): void => {
-		onAddToCart(quantity);
+		if (onAddToCart) {
+			onAddToCart(quantity);
+		}
 	};
 
 	return (

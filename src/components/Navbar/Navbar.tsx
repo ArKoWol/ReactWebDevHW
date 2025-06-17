@@ -5,15 +5,8 @@ import logo from '../../assets/logo.svg';
 import cart from '../../assets/cart.svg';
 import { NavLink, Link } from 'react-router-dom';
 
-interface NavbarProps {
-	cartItemCount?: number;
-	handleCartItemCount?: (count: number) => void;
-}
-
-export function Navbar({
-	cartItemCount = 0,
-	handleCartItemCount,
-}: NavbarProps): React.ReactElement {
+export function Navbar(): React.ReactElement {
+	const cartItemCount = 0; // Статичное значение, так как cart больше не используется
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -42,10 +35,7 @@ export function Navbar({
 					}
 				>
 					<img src={cart} alt="Cart" />
-					<div
-						className="number-of-selected-products"
-						onClick={() => handleCartItemCount?.(cartItemCount + 1)}
-					>
+					<div className="number-of-selected-products">
 						{cartItemCount}
 					</div>
 				</NavLink>

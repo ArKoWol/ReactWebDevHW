@@ -5,14 +5,10 @@ import { auth } from '../../firebase/firebaseApp';
 import {
 	signInWithEmailAndPassword,
 	signOut,
-	User,
 	AuthError,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-
-interface LoginPageProps {
-	currentUser: User | null;
-}
+import { useAppSelector } from '../../store/hooks';
 
 interface ValidationErrors {
 	email?: string;
@@ -122,13 +118,14 @@ async function logoutUser(
 	}
 }
 
-export function LoginPage({ currentUser }: LoginPageProps): React.ReactElement {
+export function LoginPage(): React.ReactElement {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [errors, setErrors] = useState<ValidationErrors>({});
 	const [touched, setTouched] = useState<TouchedFields>({});
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const navigate = useNavigate();
+	const { currentUser } = useAppSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (touched.email && email) {

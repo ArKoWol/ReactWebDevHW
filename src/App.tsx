@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { MenuPage } from './pages/MenuPage/MenuPage';
@@ -8,55 +8,45 @@ import { CartPage } from './pages/CartPage/CartPage';
 import { Layout } from './components/Layout/Layout';
 import { useFetch } from './hooks/useFetch';
 import { auth } from './firebase/firebaseApp';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { MenuItem, Category } from './types';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { setCurrentUser } from './store/slices/authSlice';
+import { processRawMenuData } from './store/slices/menuSlice';
+import type { RootState } from './store';
+import { MenuItem, Category, User } from './types';
 import '@fontsource/inter';
 
-function App(): React.JSX.Element {
-	const [cartItemCount, setCartItemCount] = useState<number>(0);
-	const [menuData, setMenuData] = useState<MenuItem[]>([]);
-	const [categories, setCategories] = useState<Category[]>([]);
-	const [currentUser, setCurrentUser] = useState<User | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
 
-	const { data: rawMenuData } = useFetch<MenuItem[]>(
+interface RawMenuItem {
+	id: string;
+	img: string;
+	meal: string;
+	price: number;
+	instructions: string;
+	category: string;
+}
+
+function App(): React.JSX.Element {
+	const dispatch = useAppDispatch();
+	const { loading } = useAppSelector((state: RootState) => state.auth);
+	const [cartItemCount, setCartItemCount] = useState<number>(0);
+
+	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
 	);
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			setCurrentUser(user);
-			setLoading(false);
+			dispatch(setCurrentUser(user));
 		});
 
 		return () => unsubscribe();
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (!rawMenuData) return;
-
-		const formatted = rawMenuData.map((item) => ({
-			...item,
-			image: item.img,
-			title: item.meal,
-			description: item.instructions,
-			category: item.category.toLowerCase(),
-		}));
-		setMenuData(formatted);
-
-		const uniqueCategories = [
-			...new Set(rawMenuData.map((item) => item.category.toLowerCase())),
-		];
-		const formattedCategories = uniqueCategories.map((category) => ({
-			id: category.toLowerCase(),
-			label: category.charAt(0).toUpperCase() + category.slice(1),
-		}));
-		setCategories(formattedCategories);
-	}, [rawMenuData]);
-
-	const addToCart = (quantity: number): void => {
-		setCartItemCount((prevCount) => prevCount + quantity);
-	};
+		dispatch(processRawMenuData(rawMenuData));
+	}, [rawMenuData, dispatch]);
 
 	if (loading) {
 		return <div>Loading...</div>;
@@ -66,23 +56,12 @@ function App(): React.JSX.Element {
 		<Routes>
 			<Route
 				path="/"
-				element={
-					<Layout cartItemCount={cartItemCount} currentUser={currentUser} />
-				}
+				element={<Layout />}
 			>
 				<Route index element={<HomePage />} />
-				<Route
-					path="menu"
-					element={
-						<MenuPage
-							onAddToCart={addToCart}
-							menuData={menuData}
-							categories={categories}
-						/>
-					}
-				/>
+				<Route path="menu" element={<MenuPage />} />
 				<Route path="company" element={<CompanyPage />} />
-				<Route path="login" element={<LoginPage currentUser={currentUser} />} />
+				<Route path="login" element={<LoginPage />} />
 				<Route path="cart" element={<CartPage />} />
 			</Route>
 		</Routes>
