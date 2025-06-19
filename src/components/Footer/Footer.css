@@ -1,7 +1,7 @@
 .footer {
 	display: flex;
 	flex-direction: column;
-	background-image: url('../../assets/background.png');
+	background: var(--footer-background);
 	background-size: cover;
 	background-position: center;
 	height: 79vh;
@@ -24,12 +24,12 @@
 }
 
 .info a,
-span {
-	color: #546285;
+.info span {
+	color: var(--text-color);
 }
 
 .info-container p {
-	color: #546285;
+	color: var(--text-color);
 	font-size: 87%;
 	cursor: pointer;
 }
@@ -73,6 +73,11 @@ hr {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	color: #0c2050;
+}
+
+[data-theme='dark'] .social-links {
+	color: #ffffff;
 }
 
 .social-links img {

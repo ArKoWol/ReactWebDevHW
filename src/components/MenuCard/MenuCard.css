@@ -1,6 +1,6 @@
 .menuCard {
 	display: flex;
-	background-color: white;
+	background-color: var(--background-color);
 	border: 1px solid #35b8be26;
 	border-radius: 6px;
 	width: 48%;
@@ -50,7 +50,7 @@
 }
 
 .card-info p {
-	color: #546285;
+	color: var(--text-color);
 	font-size: 106%;
 	line-height: 24px;
 	letter-spacing: 0.32px;
@@ -76,6 +76,8 @@
 	border-radius: 6px;
 	width: 17%;
 	text-align: center;
+	background-color: var(--background-color);
+	color: var(--text-color);
 }
 
 .menu-add-buttons {

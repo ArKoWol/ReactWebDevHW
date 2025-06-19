@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import homePageImage from '../../assets/homePageImage.png';
 import trustpilot from '../../assets/trustpilot.svg';
@@ -9,7 +10,7 @@ const HomePageContainer = styled.div`
 	height: 100vh;
 	display: flex;
 	justify-content: center;
-	background-color: #f5fbfc;
+	background-color: ${({ theme }) => theme.body};
 `;
 
 const TriangleVertical = styled.div`
@@ -18,7 +19,7 @@ const TriangleVertical = styled.div`
 	right: 82%;
 	width: 19vw;
 	height: 90vh;
-	background-color: white;
+	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(100% 100%, 0 0, 0 100%);
 	z-index: 0;
 `;
@@ -29,7 +30,7 @@ const TriangleHorizontal = styled.div`
 	left: 0;
 	width: 100vw;
 	height: 27vh;
-	background-color: white;
+	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(0 100%, 0 0, 100% 100%);
 	z-index: 0;
 `;
@@ -48,6 +49,7 @@ const HomePageInfoContainer = styled.div`
 		font-size: 400%;
 		line-height: 100%;
 		padding-bottom: 4%;
+		color: ${({ theme }) => theme.text};
 
 		span {
 			font-size: 100%;
@@ -59,7 +61,7 @@ const HomePageInfoContainer = styled.div`
 		width: 86%;
 		font-size: 120%;
 		line-height: 150%;
-		color: #546285;
+		color: ${({ theme }) => theme.text};
 		padding-bottom: 8%;
 	}
 `;
@@ -79,6 +81,7 @@ const RatingContainer = styled.div`
 	padding-top: 6%;
 
 	p {
+		color: ${({ theme }) => theme.text};
 		span {
 			font-weight: 400;
 			color: #35b8be;
@@ -87,6 +90,12 @@ const RatingContainer = styled.div`
 `;
 
 export function HomePage(): React.ReactElement {
+	const navigate = useNavigate();
+
+	const handlePlaceOrder = () => {
+		navigate('/menu');
+	};
+
 	return (
 		<HomePageContainer>
 			<TriangleVertical />
@@ -101,7 +110,7 @@ export function HomePage(): React.ReactElement {
 						industry. Lorem Ipsum has been the industry's standard dummy text
 						ever since the 1500.
 					</p>
-					<StyledButton>Place an Order</StyledButton>
+					<StyledButton onClick={handlePlaceOrder}>Place an Order</StyledButton>
 					<RatingContainer>
 						<img src={trustpilot} alt="Trustpilot logo" />
 						<p>
