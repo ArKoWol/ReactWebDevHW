@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { MenuPage } from './pages/MenuPage/MenuPage';
@@ -6,6 +6,7 @@ import { CompanyPage } from './pages/CompanyPage/CompanyPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { CartPage } from './pages/CartPage/CartPage';
 import { Layout } from './components/Layout/Layout';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { useFetch } from './hooks/useFetch';
 import { auth } from './firebase/firebaseApp';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -29,7 +30,6 @@ interface RawMenuItem {
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
 	const { loading } = useAppSelector((state: RootState) => state.auth);
-	const [cartItemCount, setCartItemCount] = useState<number>(0);
 
 	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
@@ -62,7 +62,14 @@ function App(): React.JSX.Element {
 				<Route path="menu" element={<MenuPage />} />
 				<Route path="company" element={<CompanyPage />} />
 				<Route path="login" element={<LoginPage />} />
-				<Route path="cart" element={<CartPage />} />
+				<Route 
+					path="cart" 
+					element={
+						<PrivateRoute>
+							<CartPage />
+						</PrivateRoute>
+					} 
+				/>
 			</Route>
 		</Routes>
 	);

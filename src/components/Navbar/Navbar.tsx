@@ -4,9 +4,15 @@ import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
 import cart from '../../assets/cart.svg';
 import { NavLink, Link } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import type { RootState } from '../../store';
+import { useTheme } from '../../hooks/useTheme';
+import { Theme } from '../../context/ThemeContext';
 
 export function Navbar(): React.ReactElement {
-	const cartItemCount = 0; // Статичное значение, так как cart больше не используется
+	const { totalItems } = useAppSelector((state: RootState) => state.cart);
+	const { theme, toggleTheme } = useTheme();
+	
 	return (
 		<div className="navbar">
 			<div className="logo">
@@ -36,9 +42,12 @@ export function Navbar(): React.ReactElement {
 				>
 					<img src={cart} alt="Cart" />
 					<div className="number-of-selected-products">
-						{cartItemCount}
+						{totalItems}
 					</div>
 				</NavLink>
+				<button onClick={toggleTheme} className="theme-switcher">
+					{theme === Theme.LIGHT ? '🌙' : '☀️'}
+				</button>
 			</div>
 		</div>
 	);
