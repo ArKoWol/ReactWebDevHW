@@ -1,7 +1,7 @@
 .menuCard {
 	display: flex;
-	background-color: var(--background-color);
-	border: 1px solid #35b8be26;
+	background-color: var(--shape-color);
+	border: 1px solid rgba(53, 184, 190, 0.15);
 	border-radius: 6px;
 	width: 48%;
 	height: 200px;
@@ -9,6 +9,22 @@
 	align-items: center;
 	flex-direction: row;
 	padding: 16px;
+	transition: all 0.2s ease;
+}
+
+[data-theme='dark'] .menuCard {
+	border-color: #414868;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.menuCard:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .menuCard:hover {
+	border-color: #7aa2f7;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .menuCard img {
@@ -57,7 +73,7 @@
 }
 
 .menu-card-prise {
-	color: #35b8be;
+	color: var(--accent-color);
 }
 
 .menu-card-title {
@@ -70,14 +86,30 @@
 	scrollbar-color: #ccc transparent;
 }
 
-.menu-text-input {
-	height: 100%;
-	border: 1px solid #dddddd;
-	border-radius: 6px;
-	width: 17%;
+.menu-quantity-input {
+	width: 60px;
+	height: 40px;
+	padding: 0.5rem;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 	text-align: center;
-	background-color: var(--background-color);
+	font-size: 1rem;
+	font-weight: 500;
 	color: var(--text-color);
+	background-color: var(--background-color);
+	box-sizing: border-box;
+	transition: all 0.2s ease;
+}
+
+[data-theme='dark'] .menu-quantity-input {
+	border: 1px solid #414868;
+	background-color: var(--background-color);
+}
+
+.menu-quantity-input:focus {
+	outline: none;
+	border-color: #7aa2f7;
+	box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.2);
 }
 
 .menu-add-buttons {
