@@ -10,20 +10,32 @@ interface CartItemProps {
 
 export function CartItem({ item }: CartItemProps): React.ReactElement {
 	const dispatch = useAppDispatch();
-	const [quantity, setQuantity] = useState(item.quantity.toString());
+	const [quantity, setQuantity] = useState(item.quantity > 99 ? '99+' : item.quantity.toString());
 
 	// Синхронизируем локальное состояние с Redux состоянием
 	useEffect(() => {
-		setQuantity(item.quantity.toString());
+		setQuantity(item.quantity > 99 ? '99+' : item.quantity.toString());
 	}, [item.quantity]);
 
 	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
-		setQuantity(value);
 		
-		const numValue = parseInt(value);
-		if (!isNaN(numValue) && numValue > 0) {
-			dispatch(updateQuantity({ id: item.id, quantity: numValue }));
+		// Если значение пустое или число
+		if (value === '' || (!isNaN(parseInt(value)) && parseInt(value) > 0)) {
+			const numValue = parseInt(value);
+			
+			// Если число больше 99, устанавливаем 99
+			if (!isNaN(numValue)) {
+				if (numValue > 99) {
+					setQuantity('99');
+					dispatch(updateQuantity({ id: item.id, quantity: 99 }));
+				} else {
+					setQuantity(value);
+					dispatch(updateQuantity({ id: item.id, quantity: numValue }));
+				}
+			} else {
+				setQuantity(value);
+			}
 		}
 	};
 
@@ -37,13 +49,14 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 			<div className="cart-item-details">
 				<h3 className="cart-item-name">{item.title}</h3>
 			</div>
-			<span className="cart-item-price">${item.price.toFixed(2)}</span>
+			<span className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</span>
 			<input
 				type="number"
-				value={quantity}
+				value={quantity === '99+' ? '99' : quantity}
 				onChange={handleQuantityChange}
 				className="cart-item-quantity-input"
 				min="1"
+				max="99"
 			/>
 			<button 
 				className="remove-button" 

@@ -59,10 +59,12 @@
 }
 
 .card-info {
-	overflow-y: auto;
 	max-height: 48px;
-	scrollbar-width: thin;
-	scrollbar-color: #ccc transparent;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .card-info p {
@@ -70,6 +72,7 @@
 	font-size: 106%;
 	line-height: 24px;
 	letter-spacing: 0.32px;
+	margin: 0;
 }
 
 .menu-card-prise {
@@ -79,11 +82,10 @@
 .menu-card-title {
 	font-size: 120%;
 	letter-spacing: 0.6px;
-	overflow-y: auto;
-	max-height: 20px;
 	max-width: 70%;
-	scrollbar-width: thin;
-	scrollbar-color: #ccc transparent;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .menu-quantity-input {

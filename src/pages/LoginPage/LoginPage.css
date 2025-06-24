@@ -91,23 +91,50 @@
 	box-sizing: border-box;
 }
 
-.login-form-input input {
+.login-form-input input,
+.order-input {
 	width: 100%;
 	padding: 0.875rem 1rem;
 	border: 2px solid #e1e5e9;
 	border-radius: 8px;
 	font-size: 1rem;
 	background-color: var(--background-color);
+	color: var(--text-color);
 	transition: all 0.3s ease;
 	box-sizing: border-box;
 	min-height: 44px;
 }
 
-[data-theme='dark'] .login-form-input input {
-	border: 2px solid var(--shape-color);
+/* Стили для автозаполненных полей */
+.login-form-input input:-webkit-autofill,
+.order-input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
+	-webkit-text-fill-color: var(--text-color) !important;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
-.login-form-input input:focus {
+.login-form-input input:-webkit-autofill:hover,
+.order-input:-webkit-autofill:hover,
+.login-form-input input:-webkit-autofill:focus,
+.order-input:-webkit-autofill:focus {
+	-webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
+	-webkit-text-fill-color: var(--text-color) !important;
+}
+
+[data-theme='dark'] .login-form-input input,
+[data-theme='dark'] .order-input {
+	border: 2px solid var(--shape-color);
+	color: var(--text-color);
+}
+
+[data-theme='dark'] .login-form-input input:-webkit-autofill,
+[data-theme='dark'] .order-input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
+	-webkit-text-fill-color: var(--text-color) !important;
+}
+
+.login-form-input input:focus,
+.order-input:focus {
 	outline: none;
 	border-color: var(--accent-color);
 	box-shadow: 0 0 0 3px var(--hover-background-color);
@@ -153,9 +180,20 @@
 	border: 2px solid var(--shape-color);
 }
 
+.login-form-button-container Button.secondary:focus {
+	outline: none;
+	box-shadow: none;
+}
+
 .login-form-button-container Button.secondary:hover:not(:disabled) {
 	background-color: #e9ecef;
 	border-color: #dee2e6;
+	transform: translateY(-1px);
+}
+
+[data-theme='dark'] .login-form-button-container Button.secondary:hover:not(:disabled) {
+	background-color: var(--shape-color);
+	border-color: var(--shape-color);
 	transform: translateY(-1px);
 }
 
@@ -208,6 +246,12 @@
 	font-weight: 500;
 	box-shadow: 0 4px 12px rgba(238, 90, 82, 0.3);
 	word-wrap: break-word;
+}
+
+[data-theme='dark'] .general-error {
+	background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+	color: white;
+	box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3);
 }
 
 .field-error {

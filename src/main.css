@@ -91,3 +91,8 @@ button span,
 .inherit-color span {
 	color: inherit;
 }
+
+.main-content {
+	padding-top: 12vh; /* Same as navbar height */
+	min-height: calc(100vh - 12vh); /* Ensures content fills the viewport minus navbar height */
+}

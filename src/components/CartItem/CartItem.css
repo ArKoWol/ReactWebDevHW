@@ -83,7 +83,7 @@
 
 .remove-button {
 	background: var(--accent-color);
-	color: var(--notification-text-color);
+	color: #ffffff;
 	border: none;
 	border-radius: 4px;
 	width: 60px;
@@ -105,7 +105,7 @@
 
 [data-theme='dark'] .remove-button {
 	background: var(--accent-color);
-	color: var(--notification-text-color);
+	color: #ffffff;
 }
 
 [data-theme='dark'] .remove-button:hover {

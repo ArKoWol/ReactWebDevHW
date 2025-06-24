@@ -42,7 +42,7 @@ export function Navbar(): React.ReactElement {
 				>
 					<img src={cart} alt="Cart" />
 					<div className="number-of-selected-products">
-						{totalItems}
+						{totalItems > 99 ? '99+' : totalItems}
 					</div>
 				</NavLink>
 				<button onClick={toggleTheme} className="theme-switcher">

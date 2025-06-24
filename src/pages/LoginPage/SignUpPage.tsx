@@ -1,9 +1,9 @@
-import './LoginPage.css';
+import './SignUpPage.css';
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/Button/Button';
 import { auth } from '../../firebase/firebaseApp';
 import {
-	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
 	signOut,
 	AuthError,
 } from 'firebase/auth';
@@ -21,16 +21,35 @@ interface TouchedFields {
 	password?: boolean;
 }
 
+interface PasswordValidation {
+	length: boolean;
+	uppercase: boolean;
+	lowercase: boolean;
+	numbers: boolean;
+	isValid: boolean;
+}
+
 const validateEmail = (email: string): boolean => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return emailRegex.test(email);
 };
 
-const validatePassword = (password: string): boolean => {
-	return password.length > 0;
+const validatePassword = (password: string): PasswordValidation => {
+	const minLength = 6;
+	const hasUpperCase = /[A-Z]/.test(password);
+	const hasLowerCase = /[a-z]/.test(password);
+	const hasNumbers = /\d/.test(password);
+
+	return {
+		length: password.length >= minLength,
+		uppercase: hasUpperCase,
+		lowercase: hasLowerCase,
+		numbers: hasNumbers,
+		isValid: password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers,
+	};
 };
 
-async function loginUser(
+async function signUpUser(
 	email: string,
 	password: string,
 	navigate: ReturnType<typeof useNavigate>,
@@ -39,7 +58,7 @@ async function loginUser(
 	setErrors({});
 
 	const emailValid = validateEmail(email);
-	const passwordValid = validatePassword(password);
+	const passwordValid = validatePassword(password).isValid;
 
 	if (!emailValid) {
 		setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
@@ -47,40 +66,37 @@ async function loginUser(
 	}
 
 	if (!passwordValid) {
-		setErrors(prev => ({ ...prev, password: 'Please enter your password' }));
+		setErrors(prev => ({ ...prev, password: 'Password does not meet requirements' }));
 		return;
 	}
 
 	try {
-		const userCredential = await signInWithEmailAndPassword(
+		const userCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
 			password,
 		);
-		console.log('Log in success:', userCredential.user.email);
-		alert(`Welcome back, ${userCredential.user.email}`);
+		console.log('Sign up success:', userCredential.user.email);
+		alert(`Welcome, ${userCredential.user.email}! Your account has been created successfully.`);
 		navigate('/');
 	} catch (err) {
 		const error = err as AuthError;
-		console.error('Log in Error:', error.message);
-		let errorMessage = 'Login failed. Please try again.';
-		if (error.code === 'auth/user-not-found') {
-			errorMessage = 'No account found with this email address.';
-		}
-		else if (error.code === 'auth/wrong-password') {
-			errorMessage = 'Incorrect password. Please try again.';
+		console.error('Sign up Error:', error.message);
+		let errorMessage = 'Registration failed. Please try again.';
+		if (error.code === 'auth/email-already-in-use') {
+			errorMessage = 'An account with this email already exists. Please use a different email or try logging in.';
 		}
 		else if (error.code === 'auth/invalid-email') {
 			errorMessage = 'Invalid email address format.';
 		}
-		else if (error.code === 'auth/user-disabled') {
-			errorMessage = 'This account has been disabled.';
+		else if (error.code === 'auth/weak-password') {
+			errorMessage = 'Password is too weak. Please choose a stronger password.';
+		}
+		else if (error.code === 'auth/operation-not-allowed') {
+			errorMessage = 'Email/password accounts are not enabled. Please contact support.';
 		}
 		else if (error.code === 'auth/too-many-requests') {
-			errorMessage = 'Too many failed attempts. Please try again later.';
-		}
-		else if (error.code === 'auth/invalid-credential') {
-			errorMessage = 'Invalid email or password. Please check your credentials.';
+			errorMessage = 'Too many attempts. Please try again later.';
 		}
 
 		setErrors({ general: errorMessage });
@@ -102,7 +118,7 @@ async function logoutUser(
 	}
 }
 
-export function LoginPage(): React.ReactElement {
+export function SignUpPage(): React.ReactElement {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [errors, setErrors] = useState<ValidationErrors>({});
@@ -127,8 +143,18 @@ export function LoginPage(): React.ReactElement {
 
 	useEffect(() => {
 		if (touched.password && password) {
-			if (!validatePassword(password)) {
-				setErrors(prev => ({ ...prev, password: 'Please enter your password' }));
+			const passwordValidation = validatePassword(password);
+			if (!passwordValidation.isValid) {
+				const requirements: string[] = [];
+				if (!passwordValidation.length) requirements.push('at least 6 characters');
+				if (!passwordValidation.uppercase) requirements.push('one uppercase letter');
+				if (!passwordValidation.lowercase) requirements.push('one lowercase letter');
+				if (!passwordValidation.numbers) requirements.push('one number');
+
+				setErrors(prev => ({
+					...prev,
+					password: `Password must contain ${requirements.join(', ')}`,
+				}));
 			}
 			else {
 				setErrors(prev => {
@@ -144,7 +170,7 @@ export function LoginPage(): React.ReactElement {
 		setIsSubmitting(true);
 		setTouched({ email: true, password: true });
 
-		await loginUser(email, password, navigate, setErrors);
+		await signUpUser(email, password, navigate, setErrors);
 		setIsSubmitting(false);
 	};
 
@@ -182,7 +208,7 @@ export function LoginPage(): React.ReactElement {
 	};
 
 	const isFormValid = (): boolean => {
-		return validateEmail(email) && validatePassword(password) && !isSubmitting;
+		return validateEmail(email) && validatePassword(password).isValid && !isSubmitting;
 	};
 
 	if (currentUser) {
@@ -212,7 +238,7 @@ export function LoginPage(): React.ReactElement {
 	return (
 		<div className="LoginPage">
 			<div className="login-page-container">
-				<h1>Log In</h1>
+				<h1>Sign Up</h1>
 				<form className="login-form" onSubmit={handleSubmit}>
 					{errors.general && (
 						<div className="error-message general-error">
@@ -247,19 +273,43 @@ export function LoginPage(): React.ReactElement {
 						<div className={`login-form-input ${errors.password ? 'error' : ''} ${touched.password && !errors.password && password ? 'valid' : ''}`}>
 							<input
 								type="password"
-								placeholder="Enter your password"
+								placeholder="Create a password"
 								value={password}
 								onChange={handlePasswordChange}
 								onBlur={handlePasswordBlur}
 								className={errors.password ? 'input-error' : ''}
 								required
-								autoComplete="current-password"
+								autoComplete="new-password"
 								aria-describedby={errors.password ? 'password-error' : undefined}
 							/>
 						</div>
 						{errors.password && (
 							<div id="password-error" className="error-message field-error">
 								{errors.password}
+							</div>
+						)}
+						{touched.password && password && !errors.password && (
+							<div className="password-requirements met">
+								✓ Password meets all requirements
+							</div>
+						)}
+						{touched.password && password && errors.password && (
+							<div className="password-requirements">
+								<p>Password requirements:</p>
+								<ul>
+									<li className={validatePassword(password).length ? 'met' : ''}>
+										At least 6 characters
+									</li>
+									<li className={validatePassword(password).uppercase ? 'met' : ''}>
+										One uppercase letter
+									</li>
+									<li className={validatePassword(password).lowercase ? 'met' : ''}>
+										One lowercase letter
+									</li>
+									<li className={validatePassword(password).numbers ? 'met' : ''}>
+										One number
+									</li>
+								</ul>
 							</div>
 						)}
 					</div>
@@ -270,7 +320,7 @@ export function LoginPage(): React.ReactElement {
 							disabled={!isFormValid()}
 							className={isSubmitting ? 'loading' : ''}
 						>
-							{isSubmitting ? 'Signing In...' : 'Sign In'}
+							{isSubmitting ? 'Creating Account...' : 'Create Account'}
 						</Button>
 						<Button
 							type="button"
@@ -289,9 +339,9 @@ export function LoginPage(): React.ReactElement {
 
 					<div style={{ textAlign: 'center', marginTop: '1rem' }}>
 						<p style={{ color: 'var(--text-color)', margin: '0.5rem 0' }}>
-							Don't have an account?{' '}
+							Already have an account?{' '}
 							<span
-								onClick={() => navigate('/signup')}
+								onClick={() => navigate('/login')}
 								style={{
 									color: 'var(--accent-color)',
 									cursor: 'pointer',
@@ -299,7 +349,7 @@ export function LoginPage(): React.ReactElement {
 									fontWeight: 500
 								}}
 							>
-								Sign Up
+								Sign In
 							</span>
 						</p>
 					</div>
@@ -307,4 +357,4 @@ export function LoginPage(): React.ReactElement {
 			</div>
 		</div>
 	);
-}
+} 

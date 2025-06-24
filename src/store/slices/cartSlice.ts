@@ -37,7 +37,9 @@ const cartSlice = createSlice({
 			const existingItem = state.items.find(item => item.id === action.payload.id);
 			
 			if (existingItem) {
-				existingItem.quantity += 1;
+				if (existingItem.quantity < 99) {
+					existingItem.quantity += 1;
+				}
 			} else {
 				state.items.push({ ...action.payload, quantity: 1 });
 			}
@@ -56,7 +58,7 @@ const cartSlice = createSlice({
 				if (quantity <= 0) {
 					state.items = state.items.filter(item => item.id !== id);
 				} else {
-					item.quantity = quantity;
+					item.quantity = Math.min(quantity, 99);
 				}
 			}
 			

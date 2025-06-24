@@ -20,13 +20,13 @@ export function MenuSelector({
 	return (
 		<div className="menu-select">
 			{categories.map((category, index) => (
-				<div key={index} className="radio-item-menu">
+				<div key={index} className="checkbox-item-menu">
 					<input
-						type="radio"
+						type="checkbox"
 						id={category.id}
-						name="menus-radio-group"
+						name="menus-checkbox-group"
 						checked={selectedMenu === category.id}
-						onChange={() => onMenuChange(category.id)}
+						onChange={() => onMenuChange(selectedMenu === category.id ? '' : category.id)}
 					/>
 					<label htmlFor={category.id}>{category.label}</label>
 				</div>

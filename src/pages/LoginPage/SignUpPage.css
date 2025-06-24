@@ -1,0 +1,2 @@
+/* This file imports the same styles as LoginPage.css to ensure consistency */
+@import './LoginPage.css'; 

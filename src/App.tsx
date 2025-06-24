@@ -4,9 +4,11 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { MenuPage } from './pages/MenuPage/MenuPage';
 import { CompanyPage } from './pages/CompanyPage/CompanyPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
+import { SignUpPage } from './pages/LoginPage/SignUpPage';
 import { CartPage } from './pages/CartPage/CartPage';
 import { Layout } from './components/Layout/Layout';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
 import { useFetch } from './hooks/useFetch';
 import { auth } from './firebase/firebaseApp';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -53,25 +55,29 @@ function App(): React.JSX.Element {
 	}
 
 	return (
-		<Routes>
-			<Route
-				path="/"
-				element={<Layout />}
-			>
-				<Route index element={<HomePage />} />
-				<Route path="menu" element={<MenuPage />} />
-				<Route path="company" element={<CompanyPage />} />
-				<Route path="login" element={<LoginPage />} />
-				<Route 
-					path="cart" 
-					element={
-						<PrivateRoute>
-							<CartPage />
-						</PrivateRoute>
-					} 
-				/>
-			</Route>
-		</Routes>
+		<>
+			<ScrollToTop />
+			<Routes>
+				<Route
+					path="/"
+					element={<Layout />}
+				>
+					<Route index element={<HomePage />} />
+					<Route path="menu" element={<MenuPage />} />
+					<Route path="company" element={<CompanyPage />} />
+					<Route path="login" element={<LoginPage />} />
+					<Route path="signup" element={<SignUpPage />} />
+					<Route 
+						path="cart" 
+						element={
+							<PrivateRoute>
+								<CartPage />
+							</PrivateRoute>
+						} 
+					/>
+				</Route>
+			</Routes>
+		</>
 	);
 }
 

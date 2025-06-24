@@ -9,12 +9,12 @@
 
 .menu-page .triangle {
 	position: absolute;
-	top: 0;
+	top: -12vh;
 	left: 0;
 	width: 100%;
-	height: 7vh;
+	height: calc(7vh + 12vh);
 	background: var(--shape-color);
-	clip-path: polygon(0 0, 100% 0, 0 100%);
+	clip-path: polygon(0 0, 100% 0, 100% 12vh, 0 100%);
 }
 
 .title {

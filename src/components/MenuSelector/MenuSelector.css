@@ -11,26 +11,51 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid #61728333;
 	border-radius: 5px;
 	height: 6vh;
 	width: 15vh;
 	line-height: 20px;
 	cursor: pointer;
-	transition: background-color 0.3s ease;
+	transition: all 0.3s ease;
+	color: var(--text-color);
+	background-color: transparent;
 }
 
-.menu-select input:checked + label {
+/* Light theme styles */
+[data-theme='light'] .menu-select label {
+	border: 1px solid #61728333;
+}
+
+[data-theme='light'] .menu-select input:checked + label {
+	background-color: var(--accent-color);
+	color: #ffffff;
+	border-color: var(--accent-color);
+}
+
+[data-theme='light'] .menu-select label:hover:not(:checked + label) {
+	background-color: rgba(53, 184, 190, 0.1);
+	border-color: var(--accent-color);
+	color: var(--accent-color);
+}
+
+/* Dark theme styles */
+[data-theme='dark'] .menu-select label {
+	border: 1px solid var(--text-color);
+}
+
+[data-theme='dark'] .menu-select input:checked + label {
 	background-color: var(--accent-color);
 	color: var(--notification-text-color);
+	border-color: var(--accent-color);
 }
 
-.menu-select label:hover {
-	background-color: var(--accent-color);
-	color: var(--notification-text-color);
+[data-theme='dark'] .menu-select label:hover:not(:checked + label) {
+	background-color: rgba(122, 162, 247, 0.1);
+	border-color: var(--accent-color);
+	color: var(--accent-color);
 }
 
-.radio-item-menu {
+.checkbox-item-menu {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -45,6 +70,6 @@
 		color 0.3s ease;
 }
 
-.radio-item-menu input {
+.checkbox-item-menu input {
 	display: none;
 }
