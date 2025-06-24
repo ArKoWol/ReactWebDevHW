@@ -1,36 +1,42 @@
 :root {
-	--background-color-light: #ffffff;
+	--background-color-light: #f5fbfc;
 	--text-color-light: #28224b;
-	--background-color-dark: #28224b;
-	--text-color-dark: #ffffff;
+	--background-color-dark: #1a1b26;
+	--text-color-dark: #c0caf5;
+	--accent-color-light: #35b8be;
+	--accent-color-dark: #7aa2f7;
 }
 
 [data-theme='light'] {
 	--background-color: var(--background-color-light);
 	--text-color: var(--text-color-light);
+	--accent-color: var(--accent-color-light);
 	--shape-color: #ffffff;
 	--shape-bg-color: #f5fbfc;
 	--footer-background: url('./assets/background.png');
-	--hover-background-color: #e0e0e0;
-	--hover-text-color: #0056b3;
+	--hover-background-color: rgba(53, 184, 190, 0.1);
+	--hover-text-color: #35b8be;
 	--disabled-background-color: #e9ecef;
 	--disabled-text-color: #6c757d;
 	--notification-bg-color: #ffffff;
 	--notification-text-color: #35b8be;
+	--border-color: #e9ecef;
 }
 
 [data-theme='dark'] {
 	--background-color: var(--background-color-dark);
 	--text-color: var(--text-color-dark);
-	--shape-color: #3a3f6a;
-	--shape-bg-color: var(--background-color-dark);
-	--footer-background: var(--background-color-dark);
-	--hover-background-color: #4f5b93;
-	--hover-text-color: #ffffff;
-	--disabled-background-color: #4a4a4a;
-	--disabled-text-color: #9e9e9e;
-	--notification-bg-color: #35b8be;
-	--notification-text-color: #ffffff;
+	--accent-color: var(--accent-color-dark);
+	--shape-color: #24283b;
+	--shape-bg-color: #1a1b26;
+	--footer-background: #1a1b26;
+	--hover-background-color: rgba(122, 162, 247, 0.1);
+	--hover-text-color: #7aa2f7;
+	--disabled-background-color: #16161e;
+	--disabled-text-color: #565f89;
+	--notification-bg-color: #7aa2f7;
+	--notification-text-color: #1a1b26;
+	--border-color: #414868;
 }
 
 body {
@@ -47,4 +53,41 @@ body {
 	font-weight: 400;
 	line-height: 20px;
 	color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: var(--accent-color);
+}
+
+span {
+	color: var(--accent-color);
+}
+
+[data-theme='light'] span {
+	color: var(--accent-color-light);
+}
+
+[data-theme='dark'] span {
+	color: var(--accent-color-dark);
+}
+
+a {
+	color: var(--accent-color);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--hover-text-color);
+}
+
+/* Исключение для span внутри кнопок */
+button span, 
+.custom-button span {
+	color: inherit;
+}
+
+/* Исключение для span, которые должны наследовать цвет родителя */
+.inherit-color span {
+	color: inherit;
 }

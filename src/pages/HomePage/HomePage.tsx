@@ -44,6 +44,12 @@ const HomePageMainContent = styled.div`
 	z-index: 1;
 `;
 
+const MainImage = styled.img`
+	width: 600px;
+	height: 580px;
+	object-fit: cover;
+`;
+
 const HomePageInfoContainer = styled.div`
 	h1 {
 		font-size: 400%;
@@ -53,7 +59,7 @@ const HomePageInfoContainer = styled.div`
 
 		span {
 			font-size: 100%;
-			color: #35b8be;
+			color: ${({ theme }) => theme.palette.primary.main};
 		}
 	}
 
@@ -84,7 +90,7 @@ const RatingContainer = styled.div`
 		color: ${({ theme }) => theme.text};
 		span {
 			font-weight: 400;
-			color: #35b8be;
+			color: ${({ theme }) => theme.palette.primary.main};
 		}
 	}
 `;
@@ -118,7 +124,7 @@ export function HomePage(): React.ReactElement {
 						</p>
 					</RatingContainer>
 				</HomePageInfoContainer>
-				<img src={homePageImage} alt="homePageImage" />
+				<MainImage src={homePageImage} alt="homePageImage" />
 			</HomePageMainContent>
 		</HomePageContainer>
 	);

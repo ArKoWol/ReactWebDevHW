@@ -14,18 +14,48 @@ export function MenuCard({
 	description,
 	onAddToCart,
 }: MenuCardProps): React.JSX.Element {
-	const [quantity, setQuantity] = useState<number>(1);
+	const [quantity, setQuantity] = useState<string>('1');
 
 	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		const value = parseInt(event.target.value);
-		if (!isNaN(value) && value > 0) {
-			setQuantity(value);
+		const value = event.target.value;
+		// Разрешаем пустые значения и числа от 0 до 99
+		if (value === '' || (!isNaN(parseInt(value)) && parseInt(value) >= 0)) {
+			// Если число больше 99, устанавливаем 99
+			if (!isNaN(parseInt(value)) && parseInt(value) > 99) {
+				setQuantity('99');
+			} else {
+				setQuantity(value);
+			}
+		}
+	};
+
+	const handleQuantityBlur = (): void => {
+		// Если поле пустое или содержит некорректное значение, устанавливаем 1
+		if (quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1) {
+			setQuantity('1');
+		} else if (parseInt(quantity) > 99) {
+			setQuantity('99');
 		}
 	};
 
 	const handleAddToCart = (): void => {
 		if (onAddToCart) {
-			onAddToCart(quantity);
+			// Определяем финальное количество с учетом ограничений
+			let finalQuantity = quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1 
+				? 1 
+				: parseInt(quantity);
+			
+			// Ограничиваем максимальное значение
+			finalQuantity = Math.min(finalQuantity, 99);
+			
+			// Обновляем состояние, если нужно
+			if (quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1) {
+				setQuantity('1');
+			} else if (parseInt(quantity) > 99) {
+				setQuantity('99');
+			}
+			
+			onAddToCart(finalQuantity);
 		}
 	};
 
@@ -44,10 +74,13 @@ export function MenuCard({
 				</div>
 				<div className="menu-add-buttons">
 					<input
-						type="text"
+						type="number"
 						value={quantity}
 						onChange={handleQuantityChange}
-						className="menu-text-input"
+						onBlur={handleQuantityBlur}
+						className="menu-quantity-input"
+						min="1"
+						max="99"
 					/>
 					<Button onClick={handleAddToCart}>Add to Cart</Button>
 				</div>

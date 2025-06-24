@@ -25,7 +25,7 @@ const lightTheme = {
 			white: '#ffffff',
 		},
 		primary: {
-			main: '#76d275',
+			main: '#35b8be',
 			contrastText: '#ffffff',
 		},
 		secondary: {
@@ -47,16 +47,16 @@ const darkTheme = {
 	borderRadius: '5px',
 	palette: {
 		common: {
-			black: '#222831',
+			black: '#1a1b26',
 			white: '#ffffff',
 		},
 		primary: {
-			main: '#76d275',
-			contrastText: '#ffffff',
+			main: '#7aa2f7',
+			contrastText: '#1a1b26',
 		},
 		secondary: {
-			main: '#28224b',
-			contrastText: '#ffffff',
+			main: '#bb9af7',
+			contrastText: '#1a1b26',
 		},
 	},
 	typography: {
@@ -64,9 +64,9 @@ const darkTheme = {
 			fontSize: '2rem',
 		},
 	},
-	body: '#28224b',
-	text: '#ffffff',
-	shape: '#3a3f6a',
+	body: '#1a1b26',
+	text: '#c0caf5',
+	shape: '#24283b',
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {

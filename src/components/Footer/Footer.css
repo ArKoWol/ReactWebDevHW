@@ -49,6 +49,15 @@
 	margin-right: 18%;
 }
 
+.logo-and-info img {
+	transition: filter 0.3s ease;
+}
+
+/* На темной теме меняем цвет логотипа на голубой (#7aa2f7) */
+[data-theme='dark'] .logo-and-info img {
+	filter: hue-rotate(50deg) saturate(0.8) brightness(1.4);
+}
+
 hr {
 	align-self: center;
 	width: 80%;
@@ -82,4 +91,10 @@ hr {
 
 .social-links img {
 	cursor: pointer;
+	transition: filter 0.3s ease;
+}
+
+/* На темной теме делаем иконки социальных сетей светлыми */
+[data-theme='dark'] .social-links img {
+	filter: brightness(3) contrast(2) saturate(0) invert(1);
 }

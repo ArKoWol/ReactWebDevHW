@@ -21,5 +21,8 @@ declare module 'styled-components' {
         fontSize: string;
       };
     };
+    body: string;
+    text: string;
+    shape: string;
   }
 } 
