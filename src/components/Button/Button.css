@@ -1,7 +1,7 @@
 .custom-button {
 	padding: 12px 24px;
 	background-color: #35b8be;
-	color: white;
+	color: #ffffff;
 	border: none;
 	border-radius: 6px;
 	font-size: 16px;
@@ -16,15 +16,29 @@
 	font-family: inherit;
 }
 
+[data-theme='dark'] .custom-button {
+	background-color: #7aa2f7;
+	color: #1a1b26;
+}
+
 .custom-button:hover:not(:disabled) {
 	background-color: #2da6ac;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 12px rgba(53, 184, 190, 0.3);
 }
 
+[data-theme='dark'] .custom-button:hover:not(:disabled) {
+	background-color: #5d91f5;
+	box-shadow: 0 4px 12px rgba(122, 162, 247, 0.3);
+}
+
 .custom-button:active:not(:disabled) {
 	transform: translateY(0);
 	box-shadow: 0 2px 8px rgba(53, 184, 190, 0.4);
+}
+
+[data-theme='dark'] .custom-button:active:not(:disabled) {
+	box-shadow: 0 2px 8px rgba(122, 162, 247, 0.4);
 }
 
 .custom-button:disabled {
@@ -38,4 +52,8 @@
 .custom-button:focus {
 	outline: none;
 	box-shadow: 0 0 0 3px rgba(53, 184, 190, 0.2);
+}
+
+[data-theme='dark'] .custom-button:focus {
+	box-shadow: 0 0 0 3px rgba(122, 162, 247, 0.2);
 }

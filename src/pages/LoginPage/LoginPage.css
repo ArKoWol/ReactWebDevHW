@@ -23,7 +23,7 @@
 }
 
 .login-page-container h1 {
-	color: #35b8be;
+	color: var(--accent-color);
 	font-size: clamp(2rem, 8vw, 3.3rem);
 	font-weight: 400;
 	margin-bottom: 2rem;
@@ -33,20 +33,21 @@
 .login-form {
 	width: 100%;
 	min-height: fit-content;
-	background: var(--background-color);
+	background: var(--shape-color);
 	border-radius: 12px;
 	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
-	border: 1px solid #35b8be26;
+	border: 1px solid var(--accent-color);
 	box-sizing: border-box;
 	overflow: hidden;
 }
 
 [data-theme='dark'] .login-form {
 	border: 1px solid var(--shape-color);
+	background: var(--background-color);
 }
 
 .user-info {
@@ -62,7 +63,7 @@
 
 .user-info h3 {
 	margin: 0;
-	color: #35b8be;
+	color: var(--accent-color);
 	font-size: 1.25rem;
 	font-weight: 500;
 	word-break: break-word;
@@ -108,8 +109,8 @@
 
 .login-form-input input:focus {
 	outline: none;
-	border-color: #35b8be;
-	box-shadow: 0 0 0 3px rgba(53, 184, 190, 0.1);
+	border-color: var(--accent-color);
+	box-shadow: 0 0 0 3px var(--hover-background-color);
 }
 
 .login-form-input.error input {
