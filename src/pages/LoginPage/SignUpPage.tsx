@@ -110,7 +110,7 @@ async function logoutUser(
 		await signOut(auth);
 		console.log('Log out success');
 		alert('You have been logged out');
-		navigate('/');
+		navigate('/login');
 	} catch (err) {
 		const error = err as AuthError;
 		console.error('Log out Error:', error.message);
@@ -257,7 +257,8 @@ export function SignUpPage(): React.ReactElement {
 								onBlur={handleEmailBlur}
 								className={errors.email ? 'input-error' : ''}
 								required
-								autoComplete="email"
+								name="email"
+								autoComplete="username email"
 								aria-describedby={errors.email ? 'email-error' : undefined}
 							/>
 						</div>
@@ -273,12 +274,13 @@ export function SignUpPage(): React.ReactElement {
 						<div className={`login-form-input ${errors.password ? 'error' : ''} ${touched.password && !errors.password && password ? 'valid' : ''}`}>
 							<input
 								type="password"
-								placeholder="Create a password"
+								placeholder="Enter your password"
 								value={password}
 								onChange={handlePasswordChange}
 								onBlur={handlePasswordBlur}
 								className={errors.password ? 'input-error' : ''}
 								required
+								name="new-password"
 								autoComplete="new-password"
 								aria-describedby={errors.password ? 'password-error' : undefined}
 							/>

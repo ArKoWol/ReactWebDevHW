@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MenuItem } from '../../types';
+import { db } from '../../firebase/firebaseApp';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export interface CartItem extends MenuItem {
 	quantity: number;
@@ -28,6 +30,31 @@ const initialState: CartState = {
 	totalPrice: 0,
 	orders: [],
 };
+
+// Helper function to sync cart with Firestore
+export async function syncCartWithFirestore(userId: string, cartItems: CartItem[]): Promise<void> {
+	try {
+		const userCartRef = doc(db, 'carts', userId);
+		await setDoc(userCartRef, { items: cartItems }, { merge: true });
+	} catch (error) {
+		console.error('Error syncing cart with Firestore:', error);
+	}
+}
+
+// Helper function to load cart from Firestore
+export async function loadCartFromFirestore(userId: string): Promise<CartItem[]> {
+	try {
+		const userCartRef = doc(db, 'carts', userId);
+		const cartDoc = await getDoc(userCartRef);
+		if (cartDoc.exists()) {
+			return cartDoc.data().items;
+		}
+		return [];
+	} catch (error) {
+		console.error('Error loading cart from Firestore:', error);
+		return [];
+	}
+}
 
 const cartSlice = createSlice({
 	name: 'cart',
@@ -98,6 +125,11 @@ const cartSlice = createSlice({
 				order.status = status;
 			}
 		},
+		// New reducer to set cart items from Firestore
+		setCartItems: (state, action: PayloadAction<CartItem[]>) => {
+			state.items = action.payload;
+			cartSlice.caseReducers.calculateTotals(state);
+		},
 	},
 });
 
@@ -109,6 +141,7 @@ export const {
 	calculateTotals,
 	placeOrder,
 	updateOrderStatus,
+	setCartItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer; 

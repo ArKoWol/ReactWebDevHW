@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAppDispatch } from '../../store/hooks';
-import { updateQuantity, removeFromCart } from '../../store/slices/cartSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { updateQuantity, removeFromCart, syncCartWithFirestore } from '../../store/slices/cartSlice';
 import { CartItem as CartItemType } from '../../store/slices/cartSlice';
 import './CartItem.css';
 
@@ -10,6 +10,8 @@ interface CartItemProps {
 
 export function CartItem({ item }: CartItemProps): React.ReactElement {
 	const dispatch = useAppDispatch();
+	const { items: cartItems } = useAppSelector((state) => state.cart);
+	const { currentUser } = useAppSelector((state) => state.auth);
 	const [quantity, setQuantity] = useState(item.quantity > 99 ? '99+' : item.quantity.toString());
 
 	// Синхронизируем локальное состояние с Redux состоянием
@@ -17,7 +19,7 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 		setQuantity(item.quantity > 99 ? '99+' : item.quantity.toString());
 	}, [item.quantity]);
 
-	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleQuantityChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		
 		// Если значение пустое или число
@@ -29,9 +31,25 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 				if (numValue > 99) {
 					setQuantity('99');
 					dispatch(updateQuantity({ id: item.id, quantity: 99 }));
+					if (currentUser) {
+						const updatedItems = cartItems.map(cartItem => 
+							cartItem.id === item.id 
+								? { ...cartItem, quantity: 99 }
+								: cartItem
+						);
+						await syncCartWithFirestore(currentUser.uid, updatedItems);
+					}
 				} else {
 					setQuantity(value);
 					dispatch(updateQuantity({ id: item.id, quantity: numValue }));
+					if (currentUser) {
+						const updatedItems = cartItems.map(cartItem => 
+							cartItem.id === item.id 
+								? { ...cartItem, quantity: numValue }
+								: cartItem
+						);
+						await syncCartWithFirestore(currentUser.uid, updatedItems);
+					}
 				}
 			} else {
 				setQuantity(value);
@@ -39,8 +57,12 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 		}
 	};
 
-	const handleRemoveItem = () => {
+	const handleRemoveItem = async () => {
 		dispatch(removeFromCart(item.id));
+		if (currentUser) {
+			const updatedItems = cartItems.filter(cartItem => cartItem.id !== item.id);
+			await syncCartWithFirestore(currentUser.uid, updatedItems);
+		}
 	};
 
 	return (

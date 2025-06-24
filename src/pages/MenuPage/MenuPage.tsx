@@ -4,11 +4,13 @@ import { Button } from '../../components/Button/Button';
 import { MenuCard } from '../../components/MenuCard/MenuCard';
 import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addToCart } from '../../store/slices/cartSlice';
+import { addToCart, syncCartWithFirestore } from '../../store/slices/cartSlice';
 import { MenuItem } from '../../types';
 
 export function MenuPage(): React.ReactElement {
 	const { menuData, categories } = useAppSelector((state) => state.menu);
+	const { items: cartItems } = useAppSelector((state) => state.cart);
+	const { currentUser } = useAppSelector((state) => state.auth);
 	const dispatch = useAppDispatch();
 	const numberOfVisibleMeals = 6;
 	const [selectedMenu, setSelectedMenu] = useState<string>('');
@@ -30,9 +32,28 @@ export function MenuPage(): React.ReactElement {
 		setVisibleCount((prevCount) => prevCount + numberOfVisibleMeals);
 	};
 
-	const handleAddToCart = (item: MenuItem, quantity: number): void => {
+	const handleAddToCart = async (item: MenuItem, quantity: number): Promise<void> => {
 		for (let i = 0; i < quantity; i++) {
 			dispatch(addToCart(item));
+		}
+		
+		// Sync with Firestore if user is logged in
+		if (currentUser) {
+			// We need to calculate the new cart state after adding items
+			const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+			let newCartItems = [...cartItems];
+			
+			if (existingItem) {
+				newCartItems = newCartItems.map(cartItem => 
+					cartItem.id === item.id 
+						? { ...cartItem, quantity: Math.min(cartItem.quantity + quantity, 99) }
+						: cartItem
+				);
+			} else {
+				newCartItems.push({ ...item, quantity });
+			}
+			
+			await syncCartWithFirestore(currentUser.uid, newCartItems);
 		}
 	};
 

@@ -15,6 +15,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { setCurrentUser } from './store/slices/authSlice';
 import { processRawMenuData } from './store/slices/menuSlice';
+import { loadCartFromFirestore, setCartItems } from './store/slices/cartSlice';
 import type { RootState } from './store';
 import { MenuItem, Category, User } from './types';
 import '@fontsource/inter';
@@ -38,8 +39,16 @@ function App(): React.JSX.Element {
 	);
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			dispatch(setCurrentUser(user));
+			if (user) {
+				// Load cart data from Firestore when user logs in
+				const cartItems = await loadCartFromFirestore(user.uid);
+				dispatch(setCartItems(cartItems));
+			} else {
+				// Clear cart when user logs out
+				dispatch(setCartItems([]));
+			}
 		});
 
 		return () => unsubscribe();

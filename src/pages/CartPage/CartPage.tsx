@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { CartItem } from '../../components/CartItem/CartItem';
 import { Button } from '../../components/Button/Button';
-import { placeOrder } from '../../store/slices/cartSlice';
+import { placeOrder, syncCartWithFirestore } from '../../store/slices/cartSlice';
 import type { RootState } from '../../store';
 import './CartPage.css';
 
@@ -11,15 +11,22 @@ export function CartPage(): React.ReactElement {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { items, totalPrice } = useAppSelector((state: RootState) => state.cart);
+	const { currentUser } = useAppSelector((state: RootState) => state.auth);
 	const [street, setStreet] = useState('');
 	const [house, setHouse] = useState('');
 	const [streetFocused, setStreetFocused] = useState(false);
 	const [houseFocused, setHouseFocused] = useState(false);
 
-	const handleOrder = () => {
+	const handleOrder = async () => {
 		if (!street || !house) return;
 		
 		dispatch(placeOrder({ street, house }));
+		
+		// Sync empty cart with Firestore after order is placed
+		if (currentUser) {
+			await syncCartWithFirestore(currentUser.uid, []);
+		}
+		
 		alert(`Order placed successfully! Delivery to: ${street}, ${house}. Total: $${totalPrice.toFixed(2)}`);
 		
 		// Reset form
