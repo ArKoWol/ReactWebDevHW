@@ -52,7 +52,7 @@ export const syncCartWithFirestore = createAsyncThunk(
 	'cart/syncWithFirestore',
 	async ({ userId, cartItems }: { userId: string; cartItems: CartItem[] }) => {
 		try {
-			if (!userId || cartItems.length === 0) {
+			if (!userId) {
 				return;
 			}
 
