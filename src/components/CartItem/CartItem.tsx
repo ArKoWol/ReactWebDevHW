@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateQuantity, removeFromCart, syncCartAfterChange } from '../../store/slices/cartSlice';
 import { CartItem as CartItemType } from '../../store/slices/cartSlice';
+import { Button } from '../Button/Button';
 import './CartItem.css';
 
 interface CartItemProps {
@@ -80,12 +81,12 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 				min="1"
 				max="99"
 			/>
-			<button 
+			<Button 
 				className="remove-button" 
 				onClick={handleRemoveItem}
 			>
 				×
-			</button>
+			</Button>
 		</div>
 	);
 } 

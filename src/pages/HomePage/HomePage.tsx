@@ -85,6 +85,7 @@ const RatingContainer = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	padding-top: 6%;
+	user-select: none;
 
 	p {
 		color: ${({ theme }) => theme.text};

@@ -7,6 +7,10 @@
 	--accent-color-dark: #7aa2f7;
 }
 
+img {
+	user-select: none;
+}
+
 [data-theme='light'] {
 	--background-color: var(--background-color-light);
 	--text-color: var(--text-color-light);

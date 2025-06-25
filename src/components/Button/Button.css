@@ -14,6 +14,7 @@
 	justify-content: center;
 	text-align: center;
 	font-family: inherit;
+	user-select: none;
 }
 
 [data-theme='dark'] .custom-button {

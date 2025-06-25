@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 import logo from '../../assets/logo.svg';
 import instagram from '../../assets/inst.svg';
@@ -30,7 +31,15 @@ export function Footer(): React.ReactElement {
 										{link}
 									</a>
 								) : (
-									<span>{link}</span>
+									<Link 
+										to={link.toLowerCase() === 'home' ? '/' : `/${link.toLowerCase()}`}
+										onClick={(e) => {
+											// Prevent navigation for now as these pages don't exist yet
+											e.preventDefault();
+										}}
+									>
+										{link}
+									</Link>
 								)}
 							</p>
 						))}

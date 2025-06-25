@@ -16,15 +16,16 @@
 .logo {
 	width: 10vw;
 	height: auto;
+	user-select: none;
 }
 
 .logo img {
 	transition: filter 0.3s ease;
 }
 
-/* На темной теме меняем цвет логотипа на голубой (#7aa2f7) */
+/* На темной теме меняем цвет логотипа на цвет текста */
 [data-theme='dark'] .logo img {
-	filter: hue-rotate(50deg) saturate(0.8) brightness(1.4);
+	filter: brightness(0) saturate(100%) invert(65%) sepia(43%) saturate(2350%) hue-rotate(194deg) brightness(103%) contrast(89%);
 }
 
 .navigation {
@@ -47,6 +48,7 @@
 	color: var(--text-color);
 	text-decoration: none;
 	transition: all 0.2s ease;
+	user-select: none;
 }
 
 .radio-item-navbar:hover {
@@ -98,6 +100,7 @@
 	align-items: center;
 	font-size: 12px;
 	font-weight: 600;
+	user-select: none;
 }
 
 .theme-switcher {
@@ -109,6 +112,7 @@
 	margin-left: 16px;
 	border-radius: 4px;
 	transition: all 0.2s ease;
+	user-select: none;
 }
 
 .theme-switcher:hover {

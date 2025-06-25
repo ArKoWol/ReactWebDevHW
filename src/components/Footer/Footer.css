@@ -26,6 +26,14 @@
 .info a,
 .info span {
 	color: var(--text-color);
+	text-decoration: none;
+	transition: color 0.3s ease;
+	cursor: pointer;
+}
+
+.info a:hover,
+.info span:hover {
+	color: var(--accent-color);
 }
 
 .info-container p {
@@ -53,9 +61,9 @@
 	transition: filter 0.3s ease;
 }
 
-/* На темной теме меняем цвет логотипа на голубой (#7aa2f7) */
+/* На темной теме меняем цвет логотипа на цвет текста */
 [data-theme='dark'] .logo-and-info img {
-	filter: hue-rotate(50deg) saturate(0.8) brightness(1.4);
+	filter: brightness(0) saturate(100%) invert(65%) sepia(43%) saturate(2350%) hue-rotate(194deg) brightness(103%) contrast(89%);
 }
 
 hr {
