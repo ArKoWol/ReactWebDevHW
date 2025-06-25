@@ -4,7 +4,7 @@ import { Button } from '../../components/Button/Button';
 import { MenuCard } from '../../components/MenuCard/MenuCard';
 import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { addToCart, syncCartWithFirestore } from '../../store/slices/cartSlice';
+import { addToCart, syncCartAfterChange } from '../../store/slices/cartSlice';
 import { MenuItem } from '../../types';
 
 export function MenuPage(): React.ReactElement {
@@ -33,13 +33,14 @@ export function MenuPage(): React.ReactElement {
 	};
 
 	const handleAddToCart = async (item: MenuItem, quantity: number): Promise<void> => {
+		// Add items to cart
 		for (let i = 0; i < quantity; i++) {
 			dispatch(addToCart(item));
 		}
 		
 		// Sync with Firestore if user is logged in
 		if (currentUser) {
-			// We need to calculate the new cart state after adding items
+			// Calculate the new cart state after adding items
 			const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
 			let newCartItems = [...cartItems];
 			
@@ -53,7 +54,7 @@ export function MenuPage(): React.ReactElement {
 				newCartItems.push({ ...item, quantity });
 			}
 			
-			await syncCartWithFirestore(currentUser.uid, newCartItems);
+			dispatch(syncCartAfterChange(newCartItems));
 		}
 	};
 

@@ -8,7 +8,8 @@ import {
 	AuthError,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setCurrentUser } from '../../store/slices/authSlice';
 
 interface ValidationErrors {
 	email?: string;
@@ -35,6 +36,7 @@ async function loginUser(
 	password: string,
 	navigate: ReturnType<typeof useNavigate>,
 	setErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>,
+	dispatch: ReturnType<typeof useAppDispatch>,
 ): Promise<void> {
 	setErrors({});
 
@@ -57,8 +59,7 @@ async function loginUser(
 			email,
 			password,
 		);
-		console.log('Log in success:', userCredential.user.email);
-		alert(`Welcome back, ${userCredential.user.email}`);
+		dispatch(setCurrentUser(userCredential.user));
 		navigate('/');
 	} catch (err) {
 		const error = err as AuthError;
@@ -87,14 +88,11 @@ async function loginUser(
 	}
 }
 
-async function logoutUser(
+const logoutUser = async (
 	navigate: ReturnType<typeof useNavigate>,
-): Promise<void> {
+): Promise<void> => {
 	try {
 		await signOut(auth);
-		console.log('Log out success');
-		alert('You have been logged out');
-		navigate('/login');
 	} catch (err) {
 		const error = err as AuthError;
 		console.error('Log out Error:', error.message);
@@ -110,6 +108,7 @@ export function LoginPage(): React.ReactElement {
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const { currentUser } = useAppSelector((state) => state.auth);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		if (touched.email && email) {
@@ -144,7 +143,7 @@ export function LoginPage(): React.ReactElement {
 		setIsSubmitting(true);
 		setTouched({ email: true, password: true });
 
-		await loginUser(email, password, navigate, setErrors);
+		await loginUser(email, password, navigate, setErrors, dispatch);
 		setIsSubmitting(false);
 	};
 

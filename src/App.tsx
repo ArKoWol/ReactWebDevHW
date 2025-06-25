@@ -15,7 +15,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { setCurrentUser } from './store/slices/authSlice';
 import { processRawMenuData } from './store/slices/menuSlice';
-import { loadCartFromFirestore, setCartItems } from './store/slices/cartSlice';
+import { loadCartFromFirestore, setCartItems, setCurrentUserId } from './store/slices/cartSlice';
 import type { RootState } from './store';
 import { MenuItem, Category, User } from './types';
 import '@fontsource/inter';
@@ -32,34 +32,94 @@ interface RawMenuItem {
 
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
-	const { loading } = useAppSelector((state: RootState) => state.auth);
+	const { loading, user } = useAppSelector((state: RootState) => state.auth);
+	const [firebaseInitialized, setFirebaseInitialized] = React.useState(false);
+	const [error, setError] = React.useState<string | null>(null);
 
 	const { data: rawMenuData } = useFetch<RawMenuItem[]>(
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
 	);
 
+	// Effect for handling auth state changes
 	useEffect(() => {
+		let isMounted = true;
+
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			if (!isMounted) {
+				return;
+			}
+
+			// Update auth state
 			dispatch(setCurrentUser(user));
-			if (user) {
-				// Load cart data from Firestore when user logs in
-				const cartItems = await loadCartFromFirestore(user.uid);
-				dispatch(setCartItems(cartItems));
-			} else {
-				// Clear cart when user logs out
+			
+			// Set current user ID for cart sync
+			setCurrentUserId(user?.uid || null);
+
+			try {
+				if (user) {
+					const cartItems = await dispatch(loadCartFromFirestore(user.uid)).unwrap();
+					if (isMounted) {
+						dispatch(setCartItems(cartItems));
+					}
+				} else {
+					dispatch(setCartItems([]));
+				}
+			} catch (error) {
+				console.error('Error loading cart:', error);
+				// Continue anyway, don't block app loading
 				dispatch(setCartItems([]));
+			}
+
+			if (isMounted) {
+				setFirebaseInitialized(true);
 			}
 		});
 
-		return () => unsubscribe();
-	}, [dispatch]);
+		// Fallback timeout to prevent infinite loading
+		const fallbackTimeout = setTimeout(() => {
+			if (isMounted && !firebaseInitialized) {
+				console.warn('Firebase initialization timeout, proceeding without auth');
+				dispatch(setCurrentUser(null));
+				setCurrentUserId(null);
+				setFirebaseInitialized(true);
+			}
+		}, 5000); // 5 second timeout
 
+		return () => {
+			isMounted = false;
+			unsubscribe();
+			clearTimeout(fallbackTimeout);
+		};
+	}, [dispatch, firebaseInitialized]);
+
+	// Effect for processing menu data
 	useEffect(() => {
-		if (!rawMenuData) return;
-		dispatch(processRawMenuData(rawMenuData));
-	}, [rawMenuData, dispatch]);
+		const processMenuData = async () => {
+			if (!rawMenuData) return;
+			dispatch(processRawMenuData(rawMenuData));
+		};
 
-	if (loading) {
+		if (firebaseInitialized) {
+			processMenuData();
+		}
+	}, [firebaseInitialized, dispatch, rawMenuData]);
+
+	if (error) {
+		return (
+			<div style={{ padding: '20px', color: 'red' }}>
+				<h3>Error</h3>
+				<p>{error}</p>
+				<button 
+					onClick={() => setError(null)}
+					style={{ padding: '8px 16px', marginTop: '10px' }}
+				>
+					Dismiss
+				</button>
+			</div>
+		);
+	}
+
+	if (loading || !firebaseInitialized) {
 		return <div>Loading...</div>;
 	}
 
@@ -67,10 +127,7 @@ function App(): React.JSX.Element {
 		<>
 			<ScrollToTop />
 			<Routes>
-				<Route
-					path="/"
-					element={<Layout />}
-				>
+				<Route path="/" element={<Layout />}>
 					<Route index element={<HomePage />} />
 					<Route path="menu" element={<MenuPage />} />
 					<Route path="company" element={<CompanyPage />} />

@@ -10,7 +10,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { Theme } from '../../context/ThemeContext';
 
 export function Navbar(): React.ReactElement {
-	const { totalItems } = useAppSelector((state: RootState) => state.cart);
+	const { totalQuantity } = useAppSelector((state: RootState) => state.cart);
 	const { theme, toggleTheme } = useTheme();
 	
 	return (
@@ -42,7 +42,7 @@ export function Navbar(): React.ReactElement {
 				>
 					<img src={cart} alt="Cart" />
 					<div className="number-of-selected-products">
-						{totalItems > 99 ? '99+' : totalItems}
+						{totalQuantity > 99 ? '99+' : totalQuantity}
 					</div>
 				</NavLink>
 				<button onClick={toggleTheme} className="theme-switcher">

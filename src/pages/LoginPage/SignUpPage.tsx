@@ -6,9 +6,11 @@ import {
 	createUserWithEmailAndPassword,
 	signOut,
 	AuthError,
+	updateProfile,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { setCurrentUser } from '../../store/slices/authSlice';
 
 interface ValidationErrors {
 	email?: string;
@@ -76,8 +78,8 @@ async function signUpUser(
 			email,
 			password,
 		);
-		console.log('Sign up success:', userCredential.user.email);
-		alert(`Welcome, ${userCredential.user.email}! Your account has been created successfully.`);
+		await updateProfile(userCredential.user, { displayName: fullName });
+		dispatch(setCurrentUser(userCredential.user));
 		navigate('/');
 	} catch (err) {
 		const error = err as AuthError;
@@ -108,9 +110,6 @@ async function logoutUser(
 ): Promise<void> {
 	try {
 		await signOut(auth);
-		console.log('Log out success');
-		alert('You have been logged out');
-		navigate('/login');
 	} catch (err) {
 		const error = err as AuthError;
 		console.error('Log out Error:', error.message);
@@ -126,6 +125,7 @@ export function SignUpPage(): React.ReactElement {
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const navigate = useNavigate();
 	const { currentUser } = useAppSelector((state) => state.auth);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		if (touched.email && email) {

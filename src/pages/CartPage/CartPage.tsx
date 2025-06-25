@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { CartItem } from '../../components/CartItem/CartItem';
 import { Button } from '../../components/Button/Button';
-import { placeOrder, syncCartWithFirestore } from '../../store/slices/cartSlice';
+import { clearCart, syncCartWithFirestore } from '../../store/slices/cartSlice';
 import type { RootState } from '../../store';
 import './CartPage.css';
 
 export function CartPage(): React.ReactElement {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { items, totalPrice } = useAppSelector((state: RootState) => state.cart);
+	const { items, totalAmount } = useAppSelector((state: RootState) => state.cart);
 	const { currentUser } = useAppSelector((state: RootState) => state.auth);
 	const [street, setStreet] = useState('');
 	const [house, setHouse] = useState('');
@@ -20,14 +20,15 @@ export function CartPage(): React.ReactElement {
 	const handleOrder = async () => {
 		if (!street || !house) return;
 		
-		dispatch(placeOrder({ street, house }));
+		// Clear the cart
+		dispatch(clearCart());
 		
 		// Sync empty cart with Firestore after order is placed
 		if (currentUser) {
-			await syncCartWithFirestore(currentUser.uid, []);
+			await dispatch(syncCartWithFirestore({ userId: currentUser.uid, cartItems: [] }));
 		}
 		
-		alert(`Order placed successfully! Delivery to: ${street}, ${house}. Total: $${totalPrice.toFixed(2)}`);
+		alert(`Order placed successfully! Delivery to: ${street}, ${house}. Total: $${totalAmount.toFixed(2)}`);
 		
 		// Reset form
 		setStreet('');

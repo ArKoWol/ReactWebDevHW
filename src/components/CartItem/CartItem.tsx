@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { updateQuantity, removeFromCart, syncCartWithFirestore } from '../../store/slices/cartSlice';
+import { updateQuantity, removeFromCart, syncCartAfterChange } from '../../store/slices/cartSlice';
 import { CartItem as CartItemType } from '../../store/slices/cartSlice';
 import './CartItem.css';
 
@@ -37,7 +37,7 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 								? { ...cartItem, quantity: 99 }
 								: cartItem
 						);
-						await syncCartWithFirestore(currentUser.uid, updatedItems);
+						dispatch(syncCartAfterChange(updatedItems));
 					}
 				} else {
 					setQuantity(value);
@@ -48,7 +48,7 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 								? { ...cartItem, quantity: numValue }
 								: cartItem
 						);
-						await syncCartWithFirestore(currentUser.uid, updatedItems);
+						dispatch(syncCartAfterChange(updatedItems));
 					}
 				}
 			} else {
@@ -61,7 +61,7 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 		dispatch(removeFromCart(item.id));
 		if (currentUser) {
 			const updatedItems = cartItems.filter(cartItem => cartItem.id !== item.id);
-			await syncCartWithFirestore(currentUser.uid, updatedItems);
+			dispatch(syncCartAfterChange(updatedItems));
 		}
 	};
 
