@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { options } from '../../data/options';
 import '../Navbar/NavBar.css';
 import logo from '../../assets/logo.svg';
@@ -12,16 +12,33 @@ import { Theme } from '../../context/ThemeContext';
 export function Navbar(): React.ReactElement {
 	const { totalQuantity } = useAppSelector((state: RootState) => state.cart);
 	const { theme, toggleTheme } = useTheme();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const closeMenu = () => {
+		setIsMenuOpen(false);
+	};
 	
 	return (
 		<div className="navbar">
 			<div className="logo">
-				<Link to="/">
+				<Link to="/" onClick={closeMenu}>
 					<img src={logo} alt="Logo" />
 				</Link>
 			</div>
 
-			<div className="navigation">
+			{/* Бургер кнопка */}
+			<button className="burger-menu" onClick={toggleMenu}>
+				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
+				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
+				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
+			</button>
+
+			{/* Навигация для десктопа */}
+			<div className="navigation desktop-nav">
 				{options.map((item, index) => (
 					<NavLink
 						key={index}
@@ -48,6 +65,43 @@ export function Navbar(): React.ReactElement {
 				<button onClick={toggleTheme} className="theme-switcher">
 					{theme === Theme.LIGHT ? '🌙' : '☀️'}
 				</button>
+			</div>
+
+			{/* Мобильное меню */}
+			<div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+				<div className="mobile-menu-content">
+					{options.map((item, index) => (
+						<NavLink
+							key={index}
+							to={`/${item.id}`}
+							className={({ isActive }) =>
+								`mobile-nav-item ${isActive ? 'active' : ''}`
+							}
+							onClick={closeMenu}
+						>
+							{item.label}
+						</NavLink>
+					))}
+					
+					<div className="mobile-menu-actions">
+						<NavLink
+							to="/cart"
+							className={({ isActive }) =>
+								`mobile-cart-button ${isActive ? 'active' : ''}`
+							}
+							onClick={closeMenu}
+						>
+							<img src={cart} alt="Cart" />
+							<span>Cart</span>
+							<div className="number-of-selected-products">
+								{totalQuantity > 99 ? '99+' : totalQuantity}
+							</div>
+						</NavLink>
+						<button onClick={toggleTheme} className="mobile-theme-switcher">
+							{theme === Theme.LIGHT ? '🌙 Dark' : '☀️ Light'}
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

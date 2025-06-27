@@ -14,13 +14,23 @@
 }
 
 .logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 10vw;
-	height: auto;
+	height: 8vh;
 	user-select: none;
+	min-width: 80px;
+	max-width: 120px;
+	flex-shrink: 0;
 }
 
 .logo img {
 	transition: filter 0.3s ease;
+	width: auto;
+	height: 80%;
+	max-width: 100%;
+	object-fit: contain;
 }
 
 /* На темной теме меняем цвет логотипа на цвет текста */
@@ -35,6 +45,7 @@
 	align-items: center;
 	width: 40%;
 	height: 100%;
+	min-width: 320px;
 }
 
 .radio-item-navbar {
@@ -49,6 +60,7 @@
 	text-decoration: none;
 	transition: all 0.2s ease;
 	user-select: none;
+	white-space: nowrap;
 }
 
 .radio-item-navbar:hover {
@@ -73,6 +85,7 @@
 	border-radius: 8px;
 	position: relative;
 	transition: all 0.2s ease;
+	flex-shrink: 0;
 }
 
 .cart-button img {
@@ -113,10 +126,431 @@
 	border-radius: 4px;
 	transition: all 0.2s ease;
 	user-select: none;
+	flex-shrink: 0;
+	min-width: 40px;
+	max-width: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .theme-switcher:hover {
 	background-color: var(--hover-background-color);
 	transform: translateY(-1px);
+}
+
+/* Бургер меню - скрыто по умолчанию */
+.burger-menu {
+	display: none;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 30px;
+	height: 30px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	z-index: 1001;
+}
+
+.burger-line {
+	width: 100%;
+	height: 3px;
+	background-color: var(--text-color);
+	border-radius: 2px;
+	transition: all 0.3s ease;
+	transform-origin: center;
+}
+
+.burger-line.open:nth-child(1) {
+	transform: rotate(45deg) translate(7px, 7px);
+}
+
+.burger-line.open:nth-child(2) {
+	opacity: 0;
+}
+
+.burger-line.open:nth-child(3) {
+	transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Мобильное меню - скрыто по умолчанию */
+.mobile-menu {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: var(--shape-color);
+	z-index: 999;
+	transform: translateX(-100%);
+	transition: transform 0.3s ease;
+}
+
+.mobile-menu.open {
+	transform: translateX(0);
+}
+
+.mobile-menu-content {
+	display: flex;
+	flex-direction: column;
+	padding: 80px 20px 20px;
+	height: 100%;
+	gap: 20px;
+}
+
+.mobile-nav-item {
+	display: flex;
+	align-items: center;
+	padding: 16px 20px;
+	border-radius: 8px;
+	font-size: 18px;
+	font-weight: 500;
+	color: var(--text-color);
+	text-decoration: none;
+	transition: all 0.2s ease;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-item:hover {
+	background-color: var(--hover-background-color);
+	color: var(--hover-text-color);
+}
+
+.mobile-nav-item.active {
+	color: var(--accent-color);
+	background-color: rgba(53, 184, 190, 0.1);
+	font-weight: 600;
+}
+
+.mobile-menu-actions {
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding-top: 20px;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-cart-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 20px;
+	border-radius: 8px;
+	background-color: var(--accent-color);
+	color: white;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 16px;
+	position: relative;
+	transition: all 0.2s ease;
+}
+
+.mobile-cart-button:hover {
+	background-color: var(--hover-text-color);
+	transform: translateY(-1px);
+}
+
+.mobile-cart-button img {
+	width: 20px;
+	height: 20px;
+	margin-right: 12px;
+}
+
+.mobile-cart-button .number-of-selected-products {
+	position: static;
+	width: 24px;
+	height: 24px;
+	background-color: white;
+	color: var(--accent-color);
+	margin-left: auto;
+}
+
+.mobile-theme-switcher {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px 20px;
+	border-radius: 8px;
+	background-color: var(--hover-background-color);
+	color: var(--text-color);
+	border: none;
+	font-size: 16px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.mobile-theme-switcher:hover {
+	background-color: var(--accent-color);
+	color: white;
+}
+
+/* Адаптивность для больших планшетов */
+@media (max-width: 1024px) {
+	.navbar {
+		padding: 0 4%;
+		height: 10vh;
+	}
+	
+	.main-content {
+		padding-top: 10vh;
+		min-height: calc(100vh - 10vh);
+	}
+	
+	.logo {
+		width: 12vw;
+		height: 7vh;
+		min-width: 70px;
+		max-width: 100px;
+	}
+	
+	.navigation {
+		width: 55%;
+		min-width: 350px;
+		max-width: 450px;
+	}
+	
+	.radio-item-navbar {
+		padding: 6px 8px;
+		font-size: 14px;
+		white-space: nowrap;
+	}
+	
+	.theme-switcher {
+		font-size: 20px;
+		margin-left: 8px;
+		flex-shrink: 0;
+	}
+	
+	.cart-button {
+		flex-shrink: 0;
+	}
+}
+
+/* Дополнительная адаптивность для узких экранов */
+@media (max-width: 850px) {
+	.navigation {
+		width: 60%;
+		min-width: 300px;
+		max-width: 400px;
+	}
+	
+	.radio-item-navbar {
+		padding: 5px 6px;
+		font-size: 13px;
+	}
+	
+	.theme-switcher {
+		font-size: 18px;
+		margin-left: 6px;
+		padding: 6px;
+	}
+}
+
+/* Адаптивность для средних планшетов - переключение на бургер */
+@media (max-width: 900px) {
+	.navbar {
+		padding: 0 3%;
+		height: 9vh;
+	}
+	
+	.main-content {
+		padding-top: 9vh;
+		min-height: calc(100vh - 9vh);
+	}
+	
+	.logo {
+		width: 15vw;
+		height: 6.5vh;
+		min-width: 60px;
+		max-width: 90px;
+	}
+	
+	/* Скрываем десктопную навигацию раньше */
+	.desktop-nav {
+		display: none;
+	}
+	
+	/* Показываем бургер меню раньше */
+	.burger-menu {
+		display: flex;
+	}
+	
+	/* Показываем мобильное меню */
+	.mobile-menu {
+		display: block;
+	}
+}
+
+/* Адаптивность для маленьких планшетов */
+@media (max-width: 768px) {
+	.navbar {
+		padding: 0 3%;
+		height: 9vh;
+	}
+	
+	.main-content {
+		padding-top: 9vh;
+		min-height: calc(100vh - 9vh);
+	}
+	
+	.logo {
+		width: 15vw;
+		height: 6.5vh;
+		min-width: 60px;
+		max-width: 90px;
+	}
+	
+	/* Скрываем десктопную навигацию */
+	.desktop-nav {
+		display: none;
+	}
+	
+	/* Показываем бургер меню */
+	.burger-menu {
+		display: flex;
+	}
+	
+	/* Показываем мобильное меню */
+	.mobile-menu {
+		display: block;
+	}
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+	.navbar {
+		padding: 0 2%;
+		height: 8vh;
+		flex-wrap: nowrap;
+	}
+	
+	.main-content {
+		padding-top: 8vh;
+		min-height: calc(100vh - 8vh);
+	}
+	
+	.logo {
+		width: 20vw;
+		height: 6vh;
+		min-width: 50px;
+		max-width: 80px;
+	}
+	
+	/* Скрываем десктопную навигацию */
+	.desktop-nav {
+		display: none;
+	}
+	
+	/* Показываем бургер меню */
+	.burger-menu {
+		display: flex;
+	}
+	
+	/* Показываем мобильное меню */
+	.mobile-menu {
+		display: block;
+	}
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+	.navbar {
+		padding: 0 1.5%;
+		height: 7vh;
+	}
+	
+	.main-content {
+		padding-top: 7vh;
+		min-height: calc(100vh - 7vh);
+	}
+	
+	.logo {
+		width: 25vw;
+		height: 5vh;
+		min-width: 45px;
+		max-width: 70px;
+	}
+	
+	/* Скрываем десктопную навигацию */
+	.desktop-nav {
+		display: none;
+	}
+	
+	/* Показываем бургер меню */
+	.burger-menu {
+		display: flex;
+		width: 28px;
+		height: 28px;
+	}
+	
+	/* Показываем мобильное меню */
+	.mobile-menu {
+		display: block;
+	}
+	
+	.mobile-menu-content {
+		padding: 70px 15px 15px;
+		gap: 16px;
+	}
+	
+	.mobile-nav-item {
+		padding: 14px 16px;
+		font-size: 16px;
+	}
+}
+
+/* Адаптивность для очень узких экранов (сплит-скрин) */
+@media (max-width: 360px) {
+	.navbar {
+		padding: 0 1%;
+		height: 6vh;
+	}
+	
+	.main-content {
+		padding-top: 6vh;
+		min-height: calc(100vh - 6vh);
+	}
+	
+	.logo {
+		width: 30vw;
+		height: 4vh;
+		min-width: 40px;
+		max-width: 60px;
+	}
+	
+	/* Скрываем десктопную навигацию */
+	.desktop-nav {
+		display: none;
+	}
+	
+	/* Показываем бургер меню */
+	.burger-menu {
+		display: flex;
+		width: 26px;
+		height: 26px;
+	}
+	
+	/* Показываем мобильное меню */
+	.mobile-menu {
+		display: block;
+	}
+	
+	.mobile-menu-content {
+		padding: 60px 12px 12px;
+		gap: 14px;
+	}
+	
+	.mobile-nav-item {
+		padding: 12px 14px;
+		font-size: 15px;
+	}
+	
+	.mobile-menu-actions {
+		gap: 12px;
+	}
 }
 

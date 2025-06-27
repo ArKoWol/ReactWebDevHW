@@ -5,6 +5,8 @@
 	width: 100%;
 	background-color: var(--shape-bg-color);
 	position: relative;
+	padding: 0 2%;
+	box-sizing: border-box;
 }
 
 .menu-page .triangle {
@@ -23,6 +25,8 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	padding: 0 2%;
+	text-align: center;
 }
 
 .title h1 {
@@ -32,6 +36,7 @@
 	letter-spacing: 1.65px;
 	color: var(--accent-color);
 	padding: 1%;
+	text-align: center;
 }
 
 .title p {
@@ -42,6 +47,7 @@
 	text-align: center;
 	width: 70%;
 	color: var(--text-color);
+	max-width: 800px;
 }
 
 .title span {
@@ -55,6 +61,9 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	max-width: 800px;
 }
 
 .menu-select label {
@@ -66,6 +75,8 @@
 	height: 6vh;
 	width: 15vh;
 	line-height: 20px;
+	min-width: 120px;
+	min-height: 40px;
 }
 
 .menu-select label {
@@ -85,12 +96,28 @@
 }
 
 .menu-page-content {
-	margin: 5% 5% 5% 5%;
+	margin: clamp(3%, 5vw, 5%) auto;
 	display: flex;
 	justify-content: center;
-	width: 80%;
+	width: clamp(85%, 80vw, 90%);
 	flex-wrap: wrap;
-	gap: 2rem;
+	gap: clamp(1.2rem, 3vw, 2.5rem);
+	max-width: 1400px;
+	padding: 0 clamp(1%, 2vw, 3%);
+	box-sizing: border-box;
+}
+
+/* На 1200px переходим на одну колонку */
+@media (max-width: 1200px) {
+	.menu-page-content {
+		width: 100%;
+		max-width: 700px;
+		margin: 3% auto 5% auto;
+		padding: 0 clamp(16px, 3vw, 32px);
+		gap: clamp(1.2rem, 2.5vw, 2rem);
+		flex-direction: column;
+		align-items: center;
+	}
 }
 
 .tooltip-container {
@@ -153,4 +180,278 @@
 
 .radio-item-menu input {
 	display: none;
+}
+
+/* Адаптивность внутри одноколоночного режима - планшеты */
+@media (max-width: 1024px) {
+	.menu-page .triangle {
+		top: -10vh;
+		height: calc(5vh + 10vh);
+		clip-path: polygon(0 0, 100% 0, 100% 10vh, 0 100%);
+	}
+	
+	.title {
+		margin-top: 8%;
+	}
+	
+	.title h1 {
+		font-size: 280%;
+		line-height: 48px;
+		letter-spacing: 1.4px;
+	}
+	
+	.title p {
+		font-size: 100%;
+		line-height: 25px;
+		width: 80%;
+	}
+	
+	.menu-select {
+		width: 75%;
+		gap: 10px;
+	}
+	
+	.menu-select label {
+		width: 14vh;
+		height: 5.5vh;
+		min-width: 110px;
+		min-height: 38px;
+		font-size: 15px;
+	}
+	
+	.menu-page-content {
+		max-width: 600px;
+		gap: clamp(1rem, 2vw, 1.8rem);
+	}
+}
+
+/* Адаптивность для маленьких планшетов */
+@media (max-width: 768px) {
+	.menu-page {
+		padding: 0 3%;
+	}
+	
+	.menu-page .triangle {
+		top: -9vh;
+		height: calc(4vh + 9vh);
+		clip-path: polygon(0 0, 100% 0, 100% 9vh, 0 100%);
+	}
+	
+	.title {
+		margin-top: 6%;
+	}
+	
+	.title h1 {
+		font-size: 220%;
+		line-height: 42px;
+		letter-spacing: 1.2px;
+	}
+	
+	.title p {
+		font-size: 95%;
+		line-height: 24px;
+		width: 90%;
+	}
+	
+	.menu-select {
+		width: 85%;
+		gap: 8px;
+		justify-content: center;
+	}
+	
+	.menu-select label {
+		width: 13vh;
+		height: 5vh;
+		min-width: 100px;
+		min-height: 36px;
+		font-size: 14px;
+	}
+	
+	.menu-page-content {
+		width: 90%;
+		gap: 1.5rem;
+		margin: 4% 5% 5% 5%;
+	}
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+	.menu-page {
+		padding: 0 4%;
+	}
+	
+	.menu-page .triangle {
+		top: -8vh;
+		height: calc(3vh + 8vh);
+		clip-path: polygon(0 0, 100% 0, 100% 8vh, 0 100%);
+	}
+	
+	.title {
+		margin-top: 5%;
+	}
+	
+	.title h1 {
+		font-size: 180%;
+		line-height: 38px;
+		letter-spacing: 1px;
+		padding: 2%;
+	}
+	
+	.title p {
+		font-size: 90%;
+		line-height: 22px;
+		width: 95%;
+		padding: 2%;
+	}
+	
+	.menu-select {
+		width: 95%;
+		gap: 8px;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding-top: 6%;
+	}
+	
+	.menu-select label {
+		width: auto;
+		height: auto;
+		min-width: 90px;
+		min-height: 32px;
+		font-size: 13px;
+		padding: 8px 12px;
+		flex: 1 1 calc(50% - 4px);
+		max-width: 150px;
+	}
+	
+	.menu-page-content {
+		width: 95%;
+		gap: 1.2rem;
+		margin: 3% 2.5% 5% 2.5%;
+	}
+	
+	.tooltip-container .tooltip-text {
+		max-width: 150px;
+		font-size: 12px;
+		padding: 6px 8px;
+	}
+}
+
+
+
+/* Адаптивность для очень маленьких экранов - внутри одноколоночного режима */
+@media (max-width: 400px) {
+	.menu-page {
+		padding: 0 5%;
+	}
+	
+	.menu-page .triangle {
+		top: -7vh;
+		height: calc(2vh + 7vh);
+		clip-path: polygon(0 0, 100% 0, 100% 7vh, 0 100%);
+	}
+	
+	.title {
+		margin-top: 4%;
+	}
+	
+	.title h1 {
+		font-size: 150%;
+		line-height: 34px;
+		letter-spacing: 0.8px;
+		padding: 3%;
+	}
+	
+	.title p {
+		font-size: 85%;
+		line-height: 20px;
+		width: 98%;
+		padding: 3%;
+	}
+	
+	.menu-select {
+		width: 100%;
+		gap: 6px;
+		padding-top: 8%;
+	}
+	
+	.menu-select label {
+		min-width: 80px;
+		min-height: 30px;
+		font-size: 12px;
+		padding: 6px 10px;
+		flex: 1 1 calc(50% - 3px);
+		max-width: 140px;
+	}
+	
+	.menu-page-content {
+		width: 100%;
+		max-width: 380px;
+		margin: 2% auto 5% auto;
+		padding: 0 clamp(4px, 2vw, 16px);
+		gap: clamp(0.6rem, 1.5vw, 1rem);
+	}
+}
+
+/* Адаптивность для очень узких экранов (сплит-скрин) */
+@media (max-width: 360px) {
+	.menu-page {
+		padding: 0 2%;
+	}
+	
+	.menu-page .triangle {
+		top: -6vh;
+		height: calc(1vh + 6vh);
+		clip-path: polygon(0 0, 100% 0, 100% 6vh, 0 100%);
+	}
+	
+	.title {
+		margin-top: 3%;
+	}
+	
+	.title h1 {
+		font-size: 130%;
+		line-height: 30px;
+		letter-spacing: 0.6px;
+		padding: 4%;
+	}
+	
+	.title p {
+		font-size: 80%;
+		line-height: 18px;
+		width: 100%;
+		padding: 4%;
+	}
+	
+	.menu-select {
+		width: 100%;
+		gap: 4px;
+		padding-top: 10%;
+		flex-direction: column;
+	}
+	
+	.menu-select label {
+		width: 100%;
+		min-width: 70px;
+		min-height: 28px;
+		font-size: 11px;
+		padding: 6px 8px;
+		flex: none;
+		max-width: none;
+	}
+	
+	.menu-page-content {
+		width: 100%;
+		max-width: 340px;
+		margin: 1% auto 5% auto;
+		padding: 0 clamp(2px, 1vw, 12px);
+		gap: clamp(0.4rem, 1vw, 0.8rem);
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.tooltip-container .tooltip-text {
+		max-width: 120px;
+		font-size: 10px;
+		padding: 4px 6px;
+	}
 }

@@ -1,10 +1,14 @@
 .menu-select {
 	padding-top: 5%;
-	width: 65%;
+	width: 80%;
+	max-width: 600px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	box-sizing: border-box;
 }
 
 .menu-select label {
@@ -13,12 +17,23 @@
 	align-items: center;
 	border-radius: 5px;
 	height: 6vh;
-	width: 15vh;
+	width: auto;
+	min-width: 140px;
+	max-width: 180px;
+	flex: 1;
 	line-height: 20px;
 	cursor: pointer;
 	transition: all 0.3s ease;
 	color: var(--text-color);
 	background-color: transparent;
+	min-height: 40px;
+	box-sizing: border-box;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: clamp(13px, 1.4vw, 16px);
+	padding: 0 16px;
 }
 
 /* Light theme styles */
@@ -68,8 +83,127 @@
 	transition:
 		background-color 0.3s ease,
 		color 0.3s ease;
+	box-sizing: border-box;
 }
 
 .checkbox-item-menu input {
 	display: none;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+	.menu-select {
+		width: 75%;
+		gap: 10px;
+	}
+	
+	.menu-select label {
+		width: 14vh;
+		height: 5.5vh;
+		min-width: 110px;
+		min-height: 38px;
+		font-size: 15px;
+	}
+	
+	.checkbox-item-menu {
+		padding: 7px 14px;
+		font-size: 15px;
+	}
+}
+
+/* Адаптивность для маленьких планшетов */
+@media (max-width: 768px) {
+	.menu-select {
+		width: 85%;
+		gap: 8px;
+		justify-content: center;
+	}
+	
+	.menu-select label {
+		width: 13vh;
+		height: 5vh;
+		min-width: 100px;
+		min-height: 36px;
+		font-size: 14px;
+	}
+	
+	.checkbox-item-menu {
+		padding: 6px 12px;
+		font-size: 14px;
+	}
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+	.menu-select {
+		width: 95%;
+		gap: 8px;
+		justify-content: center;
+		flex-wrap: wrap;
+		padding-top: 6%;
+	}
+	
+	.menu-select label {
+		width: auto;
+		height: auto;
+		min-width: 100px;
+		min-height: 36px;
+		font-size: clamp(12px, 2vw, 14px);
+		padding: 8px 12px;
+		flex: 1 1 calc(33.333% - 6px);
+		max-width: none;
+	}
+	
+	.checkbox-item-menu {
+		padding: 6px 10px;
+		font-size: 13px;
+	}
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+	.menu-select {
+		width: 100%;
+		gap: 6px;
+		padding-top: 8%;
+	}
+	
+	.menu-select label {
+		min-width: 90px;
+		min-height: 32px;
+		font-size: clamp(11px, 2.2vw, 13px);
+		padding: 6px 10px;
+		flex: 1 1 calc(33.333% - 4px);
+		max-width: none;
+	}
+	
+	.checkbox-item-menu {
+		padding: 5px 8px;
+		font-size: 12px;
+	}
+}
+
+/* Адаптивность для очень узких экранов (сплит-скрин) */
+@media (max-width: 360px) {
+	.menu-select {
+		width: 100%;
+		gap: 4px;
+		padding-top: 10%;
+		flex-direction: column;
+	}
+	
+	.menu-select label {
+		width: 100%;
+		min-width: 70px;
+		min-height: 28px;
+		font-size: 11px;
+		padding: 6px 8px;
+		flex: none;
+		max-width: none;
+	}
+	
+	.checkbox-item-menu {
+		padding: 4px 6px;
+		font-size: 11px;
+	}
 }

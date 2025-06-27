@@ -8,6 +8,8 @@
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	border: 1px solid #e8e8e8;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	box-sizing: border-box;
+	flex-wrap: wrap;
 }
 
 [data-theme='dark'] .cart-item {
@@ -38,6 +40,7 @@
 	flex: 1;
 	display: flex;
 	align-items: center;
+	min-width: 0;
 }
 
 .cart-item-name {
@@ -46,6 +49,8 @@
 	color: var(--text-color);
 	margin: 0;
 	line-height: 1.2;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 .cart-item-quantity-input {
@@ -60,6 +65,7 @@
 	color: var(--text-color);
 	background-color: var(--background-color);
 	box-sizing: border-box;
+	flex-shrink: 0;
 }
 
 [data-theme='dark'] .cart-item-quantity-input {
@@ -79,6 +85,8 @@
 	color: var(--accent-color);
 	min-width: 80px;
 	text-align: center;
+	flex-shrink: 0;
+	white-space: nowrap;
 }
 
 .remove-button {
@@ -108,4 +116,213 @@
 
 .cart-item-quantity {
 	display: none;
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 1024px) {
+	.cart-item {
+		padding: 1.3rem;
+		gap: 0.8rem;
+	}
+	
+	.cart-item-image {
+		width: 70px;
+		height: 70px;
+	}
+	
+	.cart-item-name {
+		font-size: 1rem;
+	}
+	
+	.cart-item-quantity-input {
+		width: 55px;
+		height: 36px;
+		font-size: 0.95rem;
+	}
+	
+	.cart-item-price {
+		font-size: 0.95rem;
+		min-width: 70px;
+	}
+	
+	.remove-button {
+		width: 55px !important;
+		height: 36px !important;
+		font-size: 20px !important;
+	}
+}
+
+/* Адаптивность для маленьких планшетов */
+@media (max-width: 768px) {
+	.cart-item {
+		padding: 1.2rem;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+	
+	.cart-item-image {
+		width: 65px;
+		height: 65px;
+	}
+	
+	.cart-item-details {
+		flex: 1;
+		min-width: calc(100% - 140px);
+	}
+	
+	.cart-item-name {
+		font-size: 0.95rem;
+		line-height: 1.3;
+	}
+	
+	.cart-item-quantity-input {
+		width: 50px;
+		height: 34px;
+		font-size: 0.9rem;
+	}
+	
+	.cart-item-price {
+		font-size: 0.9rem;
+		min-width: 65px;
+	}
+	
+	.remove-button {
+		width: 50px !important;
+		height: 34px !important;
+		font-size: 18px !important;
+	}
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+	.cart-item {
+		padding: 1rem;
+		gap: 0.8rem;
+		flex-direction: column;
+		text-align: center;
+	}
+	
+	.cart-item-image {
+		width: 80px;
+		height: 80px;
+		align-self: center;
+	}
+	
+	.cart-item-details {
+		flex: none;
+		width: 100%;
+		justify-content: center;
+		min-width: 0;
+	}
+	
+	.cart-item-name {
+		font-size: 1rem;
+		text-align: center;
+		line-height: 1.4;
+	}
+	
+	.cart-item-controls {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		width: 100%;
+		flex-wrap: wrap;
+	}
+	
+	.cart-item-quantity-input {
+		width: 60px;
+		height: 40px;
+		font-size: 1rem;
+	}
+	
+	.cart-item-price {
+		font-size: 1.1rem;
+		min-width: auto;
+		text-align: center;
+		font-weight: 700;
+	}
+	
+	.remove-button {
+		width: 60px !important;
+		height: 40px !important;
+		font-size: 20px !important;
+	}
+}
+
+/* Адаптивность для очень маленьких экранов */
+@media (max-width: 480px) {
+	.cart-item {
+		padding: 0.8rem;
+		gap: 0.6rem;
+	}
+	
+	.cart-item-image {
+		width: 70px;
+		height: 70px;
+	}
+	
+	.cart-item-name {
+		font-size: 0.95rem;
+		line-height: 1.3;
+	}
+	
+	.cart-item-controls {
+		gap: 0.8rem;
+	}
+	
+	.cart-item-quantity-input {
+		width: 55px;
+		height: 36px;
+		font-size: 0.9rem;
+	}
+	
+	.cart-item-price {
+		font-size: 1rem;
+	}
+	
+	.remove-button {
+		width: 55px !important;
+		height: 36px !important;
+		font-size: 18px !important;
+	}
+}
+
+/* Адаптивность для очень узких экранов (сплит-скрин) */
+@media (max-width: 360px) {
+	.cart-item {
+		padding: 0.6rem;
+		gap: 0.5rem;
+	}
+	
+	.cart-item-image {
+		width: 60px;
+		height: 60px;
+	}
+	
+	.cart-item-name {
+		font-size: 0.9rem;
+		line-height: 1.2;
+	}
+	
+	.cart-item-controls {
+		gap: 0.6rem;
+		flex-direction: column;
+	}
+	
+	.cart-item-quantity-input {
+		width: 50px;
+		height: 32px;
+		font-size: 0.85rem;
+	}
+	
+	.cart-item-price {
+		font-size: 0.95rem;
+	}
+	
+	.remove-button {
+		width: 50px !important;
+		height: 32px !important;
+		font-size: 16px !important;
+	}
 } 

@@ -11,6 +11,14 @@ const HomePageContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	background-color: ${({ theme }) => theme.body};
+	
+	@media (max-width: 768px) {
+		height: auto;
+		min-height: 100vh;
+		align-items: flex-start;
+		padding: 2rem 0;
+		flex-direction: column;
+	}
 `;
 
 const TriangleVertical = styled.div`
@@ -22,6 +30,10 @@ const TriangleVertical = styled.div`
 	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(100% 100%, 0 0, 0 100%);
 	z-index: 0;
+	
+	@media (max-width: 768px) {
+		display: none;
+	}
 `;
 
 const TriangleHorizontal = styled.div`
@@ -33,6 +45,10 @@ const TriangleHorizontal = styled.div`
 	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(0 100%, 0 0, 100% 100%);
 	z-index: 0;
+	
+	@media (max-width: 768px) {
+		display: none;
+	}
 `;
 
 const HomePageMainContent = styled.div`
@@ -42,18 +58,37 @@ const HomePageMainContent = styled.div`
 	justify-content: center;
 	align-items: center;
 	z-index: 1;
+	gap: 2rem;
+	
+	@media (max-width: 768px) {
+		width: 95%;
+		gap: 1rem;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		min-height: auto;
+		padding: 0 1rem;
+	}
 `;
 
 const MainImage = styled.img`
-	width: 600px;
-	height: 580px;
+	width: clamp(300px, 40vw, 600px);
+	height: clamp(280px, 38vw, 580px);
 	object-fit: cover;
+	flex-shrink: 0;
+	
+	@media (max-width: 768px) {
+		display: none;
+	}
 `;
 
 const HomePageInfoContainer = styled.div`
+	flex: 1;
+	min-width: 0;
+	
 	h1 {
-		font-size: 400%;
-		line-height: 100%;
+		font-size: clamp(2rem, 6vw, 4rem);
+		line-height: 1.1;
 		padding-bottom: 4%;
 		color: ${({ theme }) => theme.text};
 
@@ -65,19 +100,49 @@ const HomePageInfoContainer = styled.div`
 
 	p {
 		width: 86%;
-		font-size: 120%;
-		line-height: 150%;
+		font-size: clamp(1rem, 2vw, 1.2rem);
+		line-height: 1.5;
 		color: ${({ theme }) => theme.text};
 		padding-bottom: 8%;
+		
+		@media (max-width: 768px) {
+			width: 100%;
+			text-align: center;
+		}
+	}
+	
+	@media (max-width: 768px) {
+		text-align: center;
+		
+		h1 {
+			text-align: center;
+		}
+	}
+`;
+
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	
+	@media (max-width: 768px) {
+		justify-content: center;
+		margin: 2rem 0;
 	}
 `;
 
 const StyledButton = styled(Button)`
-	width: 30%;
+	width: clamp(200px, 30%, 300px);
 	font-style: normal;
-	font-size: 110%;
+	font-size: clamp(14px, 1.8vw, 18px);
 	font-weight: 300;
-	height: 52px;
+	height: clamp(40px, 8vw, 52px);
+	
+	@media (max-width: 600px) {
+		width: 100%;
+		max-width: 250px;
+	}
 `;
 
 const RatingContainer = styled.div`
@@ -93,6 +158,13 @@ const RatingContainer = styled.div`
 			font-weight: 400;
 			color: ${({ theme }) => theme.palette.primary.main};
 		}
+	}
+	
+	@media (max-width: 768px) {
+		align-items: center;
+		text-align: center;
+		padding-top: 2rem;
+		width: 100%;
 	}
 `;
 
@@ -117,7 +189,9 @@ export function HomePage(): React.ReactElement {
 						industry. Lorem Ipsum has been the industry's standard dummy text
 						ever since the 1500.
 					</p>
-					<StyledButton onClick={handlePlaceOrder}>Place an Order</StyledButton>
+					<ButtonContainer>
+						<StyledButton onClick={handlePlaceOrder}>Place an Order</StyledButton>
+					</ButtonContainer>
 					<RatingContainer>
 						<img src={trustpilot} alt="Trustpilot logo" />
 						<p>
