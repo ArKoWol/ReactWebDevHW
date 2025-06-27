@@ -27,6 +27,12 @@ img {
 	--notification-bg-color: #ffffff;
 	--notification-text-color: #35b8be;
 	--border-color: #e9ecef;
+	
+	/* Company Page specific variables */
+	--background-primary: #ffffff;
+	--background-secondary: #f8f9fa;
+	--primary-color: #35b8be;
+	--text-color-secondary: #6c757d;
 }
 
 [data-theme='dark'] {
@@ -43,6 +49,12 @@ img {
 	--notification-bg-color: #7aa2f7;
 	--notification-text-color: #1a1b26;
 	--border-color: #414868;
+	
+	/* Company Page specific variables for better dark theme visibility */
+	--background-primary: #24283b;
+	--background-secondary: #1f2335;
+	--primary-color: #7aa2f7;
+	--text-color-secondary: #9aa5ce;
 }
 
 body {
