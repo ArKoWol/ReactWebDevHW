@@ -181,6 +181,7 @@
   margin-bottom: clamp(15px, 3vw, 25px);
   color: var(--accent-color);
   box-sizing: border-box;
+  line-height: 1.4;
 }
 
 .value-card p {
