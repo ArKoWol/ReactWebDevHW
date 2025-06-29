@@ -1,18 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import logo from '../../assets/logo.svg';
+import { Logo } from '../Logo';
 import instagram from '../../assets/inst.svg';
 import twitter from '../../assets/twitter.svg';
 import youtube from '../../assets/youtube.svg';
 import { footerSections } from '../../data/footerConfObj';
+import { useTheme } from '../../hooks/useTheme';
+import { Theme } from '../../context/ThemeContext';
 
 export function Footer(): React.ReactElement {
+	const { theme } = useTheme();
+	
+	// Определяем цвет логотипа в зависимости от темы
+	const logoColor = theme === Theme.LIGHT ? '#35b8be' : '#7aa2f7';
+
 	return (
 		<footer className="footer">
 			<div className="info-container">
 				<div className="logo-and-info">
-					<img src={logo} alt="Logo" />
+					<Link to="/">
+						<Logo color={logoColor} width={42} height={52} />
+					</Link>
 					<p>Takeaway & Delivery template</p>
 					<p>for small - medium businesses.</p>
 				</div>

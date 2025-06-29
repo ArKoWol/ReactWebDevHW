@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { options } from '../../data/options';
 import '../Navbar/NavBar.css';
-import logo from '../../assets/logo.svg';
+import { Logo } from '../Logo';
 import cart from '../../assets/cart.svg';
 import { NavLink, Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
@@ -13,6 +13,9 @@ export function Navbar(): React.ReactElement {
 	const { totalQuantity } = useAppSelector((state: RootState) => state.cart);
 	const { theme, toggleTheme } = useTheme();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	// Определяем цвет логотипа в зависимости от темы
+	const logoColor = theme === Theme.LIGHT ? '#35b8be' : '#7aa2f7';
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
@@ -26,7 +29,7 @@ export function Navbar(): React.ReactElement {
 		<div className="navbar">
 			<div className="logo">
 				<Link to="/" onClick={closeMenu}>
-					<img src={logo} alt="Logo" />
+					<Logo color={logoColor} width={42} height={52} />
 				</Link>
 			</div>
 

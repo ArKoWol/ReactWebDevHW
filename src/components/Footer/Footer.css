@@ -68,15 +68,19 @@
 	padding-left: 6%;
 }
 
-.logo-and-info img {
-	transition: filter 0.3s ease;
+.logo-and-info svg {
+	transition: all 0.3s ease;
 	max-width: 150px;
 	height: auto;
 }
 
-/* На темной теме меняем цвет логотипа на цвет текста */
-[data-theme='dark'] .logo-and-info img {
-	filter: brightness(0) saturate(100%) invert(65%) sepia(43%) saturate(2350%) hue-rotate(194deg) brightness(103%) contrast(89%);
+.logo-and-info a {
+	display: inline-block;
+	transition: transform 0.3s ease;
+}
+
+.logo-and-info a:hover {
+	transform: scale(1.05);
 }
 
 hr {
