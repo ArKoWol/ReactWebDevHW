@@ -147,6 +147,60 @@
 	box-sizing: border-box;
 }
 
+.total-price-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+	padding: 0 2rem;
+	box-sizing: border-box;
+}
+
+.total-price-card {
+	background: var(--shape-color);
+	border: 2px solid transparent;
+	border-radius: 12px;
+	padding: 1.5rem 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-width: 300px;
+	max-width: 400px;
+	width: 100%;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	box-sizing: border-box;
+}
+
+[data-theme='dark'] .total-price-card {
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.total-price-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+	border-color: var(--accent-color);
+}
+
+[data-theme='dark'] .total-price-card:hover {
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+	border-color: var(--accent-color);
+}
+
+.total-price-label {
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: var(--text-color) !important;
+	letter-spacing: 0.5px;
+}
+
+.total-price-amount {
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: var(--accent-color) !important;
+	letter-spacing: 0.5px;
+}
+
 /* Адаптивность для планшетов */
 @media (max-width: 1024px) {
 	.cart-container {
@@ -172,6 +226,25 @@
 	
 	.form-field {
 		width: 280px;
+	}
+	
+	.total-price-container {
+		padding: 0 1.5rem;
+		margin-top: 1.8rem;
+	}
+	
+	.total-price-card {
+		min-width: 280px;
+		max-width: 380px;
+		padding: 1.3rem 1.8rem;
+	}
+	
+	.total-price-label {
+		font-size: 1.3rem;
+	}
+	
+	.total-price-amount {
+		font-size: 1.5rem;
 	}
 }
 
@@ -222,6 +295,25 @@
 	.order-button {
 		padding: 0.9rem 1.8rem;
 		font-size: 1rem;
+	}
+	
+	.total-price-container {
+		padding: 0 1.2rem;
+		margin-top: 1.5rem;
+	}
+	
+	.total-price-card {
+		min-width: 260px;
+		max-width: 360px;
+		padding: 1.2rem 1.5rem;
+	}
+	
+	.total-price-label {
+		font-size: 1.2rem;
+	}
+	
+	.total-price-amount {
+		font-size: 1.4rem;
 	}
 }
 
@@ -287,6 +379,25 @@
 		font-size: 0.95rem;
 		width: 100%;
 	}
+	
+	.total-price-container {
+		padding: 0 1rem;
+		margin-top: 1.2rem;
+	}
+	
+	.total-price-card {
+		min-width: 100%;
+		max-width: 100%;
+		padding: 1rem 1.2rem;
+	}
+	
+	.total-price-label {
+		font-size: 1.1rem;
+	}
+	
+	.total-price-amount {
+		font-size: 1.3rem;
+	}
 }
 
 /* Адаптивность для очень маленьких экранов */
@@ -347,6 +458,23 @@
 		padding: 0.7rem 1.2rem;
 		font-size: 0.9rem;
 	}
+	
+	.total-price-container {
+		padding: 0 0.8rem;
+		margin-top: 1rem;
+	}
+	
+	.total-price-card {
+		padding: 0.8rem 1rem;
+	}
+	
+	.total-price-label {
+		font-size: 1rem;
+	}
+	
+	.total-price-amount {
+		font-size: 1.2rem;
+	}
 }
 
 /* Адаптивность для очень узких экранов (сплит-скрин) */
@@ -406,5 +534,22 @@
 	.order-button {
 		padding: 0.6rem 1rem;
 		font-size: 0.85rem;
+	}
+	
+	.total-price-container {
+		padding: 0 0.6rem;
+		margin-top: 0.8rem;
+	}
+	
+	.total-price-card {
+		padding: 0.6rem 0.8rem;
+	}
+	
+	.total-price-label {
+		font-size: 0.9rem;
+	}
+	
+	.total-price-amount {
+		font-size: 1.1rem;
 	}
 }

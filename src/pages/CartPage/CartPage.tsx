@@ -69,6 +69,13 @@ export function CartPage(): React.ReactElement {
 				))}
 			</div>
 			
+			<div className="total-price-container">
+				<div className="total-price-card">
+					<span className="total-price-label">Total:</span>
+					<span className="total-price-amount">${totalAmount.toFixed(2)}</span>
+				</div>
+			</div>
+			
 			<div className="order-form">
 				<div className="form-field">
 					<label 
