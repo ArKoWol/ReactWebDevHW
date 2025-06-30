@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import homePageImage from '../../assets/homePageImage.png';
 import trustpilot from '../../assets/trustpilot.svg';
@@ -87,6 +88,12 @@ const RatingContainer = styled.div`
 `;
 
 export function HomePage(): React.ReactElement {
+	const navigate = useNavigate();
+
+	const handlePlaceOrder = () => {
+		navigate('/menu');
+	};
+
 	return (
 		<HomePageContainer>
 			<TriangleVertical />
@@ -101,7 +108,7 @@ export function HomePage(): React.ReactElement {
 						industry. Lorem Ipsum has been the industry's standard dummy text
 						ever since the 1500.
 					</p>
-					<StyledButton>Place an Order</StyledButton>
+					<StyledButton onClick={handlePlaceOrder}>Place an Order</StyledButton>
 					<RatingContainer>
 						<img src={trustpilot} alt="Trustpilot logo" />
 						<p>
