@@ -6,9 +6,12 @@ import cart from '../../assets/cart.svg';
 import { NavLink, Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import type { RootState } from '../../store';
+import { useTheme } from '../../hooks/useTheme';
+import { Theme } from '../../context/ThemeContext';
 
 export function Navbar(): React.ReactElement {
 	const { totalItems } = useAppSelector((state: RootState) => state.cart);
+	const { theme, toggleTheme } = useTheme();
 	
 	return (
 		<div className="navbar">
@@ -42,6 +45,9 @@ export function Navbar(): React.ReactElement {
 						{totalItems}
 					</div>
 				</NavLink>
+				<button onClick={toggleTheme} className="theme-switcher">
+					{theme === Theme.LIGHT ? '🌙' : '☀️'}
+				</button>
 			</div>
 		</div>
 	);

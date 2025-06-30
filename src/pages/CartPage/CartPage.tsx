@@ -13,6 +13,8 @@ export function CartPage(): React.ReactElement {
 	const { items, totalPrice } = useAppSelector((state: RootState) => state.cart);
 	const [street, setStreet] = useState('');
 	const [house, setHouse] = useState('');
+	const [streetFocused, setStreetFocused] = useState(false);
+	const [houseFocused, setHouseFocused] = useState(false);
 
 	const handleOrder = () => {
 		if (!street || !house) return;
@@ -20,9 +22,11 @@ export function CartPage(): React.ReactElement {
 		dispatch(placeOrder({ street, house }));
 		alert(`Order placed successfully! Delivery to: ${street}, ${house}. Total: $${totalPrice.toFixed(2)}`);
 		
-		// Reset form in a single state update to avoid multiple re-renders
+		// Reset form
 		setStreet('');
 		setHouse('');
+		setStreetFocused(false);
+		setHouseFocused(false);
 		
 		// Navigate to menu or home page
 		navigate('/menu');
@@ -61,7 +65,8 @@ export function CartPage(): React.ReactElement {
 				<div className="form-field">
 					<label 
 						htmlFor="street" 
-						className={street ? 'active' : ''}
+						className={streetFocused || street ? 'active' : ''}
+
 					>
 						Street
 					</label>
@@ -70,6 +75,8 @@ export function CartPage(): React.ReactElement {
 						type="text"
 						value={street}
 						onChange={(e) => setStreet(e.target.value)}
+						onFocus={() => setStreetFocused(true)}
+						onBlur={() => setStreetFocused(false)}
 						className="order-input"
 					/>
 				</div>
@@ -77,7 +84,7 @@ export function CartPage(): React.ReactElement {
 				<div className="form-field">
 					<label 
 						htmlFor="house" 
-						className={house ? 'active' : ''}
+						className={houseFocused || house ? 'active' : ''}
 					>
 						House
 					</label>
@@ -86,6 +93,8 @@ export function CartPage(): React.ReactElement {
 						type="text"
 						value={house}
 						onChange={(e) => setHouse(e.target.value)}
+						onFocus={() => setHouseFocused(true)}
+						onBlur={() => setHouseFocused(false)}
 						className="order-input"
 					/>
 				</div>
