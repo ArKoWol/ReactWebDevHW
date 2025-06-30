@@ -57,6 +57,7 @@
 	cursor: pointer;
 	transition: background-color 0.2s;
 	display: inline-block;
+	text-decoration: none;
 }
 
 .continue-shopping-button:hover {
@@ -96,7 +97,8 @@
 	padding: 0 0.25rem;
 }
 
-.form-field label.active {
+.form-field label.active,
+.form-field:focus-within label {
 	top: 0.75rem;
 	left: -4rem;
 	font-size: 1rem;
@@ -132,4 +134,5 @@
 	padding: 1rem 2rem;
 	font-size: 1.1rem;
 	font-weight: 600;
-}
+} 
+

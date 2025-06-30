@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { CartItem } from '../../components/CartItem/CartItem';
 import { Button } from '../../components/Button/Button';
@@ -41,12 +41,12 @@ export function CartPage(): React.ReactElement {
 					<p className="empty-cart-message">
 						Add some delicious items to your cart to get started!
 					</p>
-					<Button 
-						className="continue-shopping-button" 
-						onClick={() => navigate('/menu')}
+					<Link 
+						to="/menu"
+						className="continue-shopping-button"
 					>
 						Continue Shopping
-					</Button>
+					</Link>
 				</div>
 			</div>
 		);
@@ -66,6 +66,7 @@ export function CartPage(): React.ReactElement {
 					<label 
 						htmlFor="street" 
 						className={streetFocused || street ? 'active' : ''}
+
 					>
 						Street
 					</label>

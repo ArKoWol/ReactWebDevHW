@@ -18,5 +18,5 @@ export function PrivateRoute({ children }: PrivateRouteProps): React.ReactElemen
 		return <Navigate to="/login" replace />;
 	}
 
-	return <>{children}</>;
+	return children;
 } 
