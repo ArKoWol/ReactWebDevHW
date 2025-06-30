@@ -21,13 +21,13 @@
 }
 
 .menu-select input:checked + label {
-	background-color: #35b8be;
-	color: white;
+	background-color: var(--accent-color);
+	color: var(--notification-text-color);
 }
 
 .menu-select label:hover {
-	background-color: #35b8be;
-	color: white;
+	background-color: var(--accent-color);
+	color: var(--notification-text-color);
 }
 
 .radio-item-menu {
@@ -38,7 +38,7 @@
 	border-radius: 6px;
 	font-size: 16px;
 	font-weight: 500;
-	color: black;
+	color: var(--text-color);
 	text-decoration: none;
 	transition:
 		background-color 0.3s ease,

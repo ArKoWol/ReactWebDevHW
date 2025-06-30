@@ -3,16 +3,27 @@
 	align-items: center;
 	padding: 1.5rem;
 	gap: 1rem;
-	background: white;
+	background: var(--background-color);
 	border-radius: 12px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	border: 1px solid #e8e8e8;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+[data-theme='dark'] .cart-item {
+	border: 1px solid #414868;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	background: var(--shape-color);
+}
+
 .cart-item:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .cart-item:hover {
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+	border-color: #7aa2f7;
 }
 
 .cart-item-image {
@@ -32,7 +43,7 @@
 .cart-item-name {
 	font-size: 1.1rem;
 	font-weight: 500;
-	color: #333;
+	color: var(--text-color);
 	margin: 0;
 	line-height: 1.2;
 }
@@ -46,26 +57,33 @@
 	text-align: center;
 	font-size: 1rem;
 	font-weight: 500;
-	color: #333;
+	color: var(--text-color);
+	background-color: var(--background-color);
 	box-sizing: border-box;
+}
+
+[data-theme='dark'] .cart-item-quantity-input {
+	border: 1px solid #414868;
+	background-color: var(--background-color);
 }
 
 .cart-item-quantity-input:focus {
 	outline: none;
-	border-color: #35B8BE;
+	border-color: #7aa2f7;
+	box-shadow: 0 0 0 2px rgba(122, 162, 247, 0.2);
 }
 
 .cart-item-price {
 	font-size: 1rem;
 	font-weight: 600;
-	color: #35B8BE;
+	color: var(--accent-color);
 	min-width: 80px;
 	text-align: center;
 }
 
 .remove-button {
-	background: #35B8BE;
-	color: white;
+	background: var(--accent-color);
+	color: var(--notification-text-color);
 	border: none;
 	border-radius: 4px;
 	width: 60px;
@@ -76,12 +94,22 @@
 	cursor: pointer;
 	font-size: 18px;
 	font-weight: bold;
-	transition: background-color 0.2s;
+	transition: all 0.2s ease;
 	flex-shrink: 0;
 }
 
 .remove-button:hover {
-	background: #2a9aa0;
+	background: var(--hover-text-color);
+	transform: translateY(-1px);
+}
+
+[data-theme='dark'] .remove-button {
+	background: var(--accent-color);
+	color: var(--notification-text-color);
+}
+
+[data-theme='dark'] .remove-button:hover {
+	background: var(--hover-text-color);
 }
 
 /* Удаляю неиспользуемые стили */

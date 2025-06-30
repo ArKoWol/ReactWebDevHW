@@ -10,7 +10,7 @@ const HomePageContainer = styled.div`
 	height: 100vh;
 	display: flex;
 	justify-content: center;
-	background-color: #f5fbfc;
+	background-color: ${({ theme }) => theme.body};
 `;
 
 const TriangleVertical = styled.div`
@@ -19,7 +19,7 @@ const TriangleVertical = styled.div`
 	right: 82%;
 	width: 19vw;
 	height: 90vh;
-	background-color: white;
+	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(100% 100%, 0 0, 0 100%);
 	z-index: 0;
 `;
@@ -30,7 +30,7 @@ const TriangleHorizontal = styled.div`
 	left: 0;
 	width: 100vw;
 	height: 27vh;
-	background-color: white;
+	background-color: ${({ theme }) => theme.shape};
 	clip-path: polygon(0 100%, 0 0, 100% 100%);
 	z-index: 0;
 `;
@@ -44,15 +44,22 @@ const HomePageMainContent = styled.div`
 	z-index: 1;
 `;
 
+const MainImage = styled.img`
+	width: 600px;
+	height: 580px;
+	object-fit: cover;
+`;
+
 const HomePageInfoContainer = styled.div`
 	h1 {
 		font-size: 400%;
 		line-height: 100%;
 		padding-bottom: 4%;
+		color: ${({ theme }) => theme.text};
 
 		span {
 			font-size: 100%;
-			color: #35b8be;
+			color: ${({ theme }) => theme.palette.primary.main};
 		}
 	}
 
@@ -60,7 +67,7 @@ const HomePageInfoContainer = styled.div`
 		width: 86%;
 		font-size: 120%;
 		line-height: 150%;
-		color: #546285;
+		color: ${({ theme }) => theme.text};
 		padding-bottom: 8%;
 	}
 `;
@@ -80,9 +87,10 @@ const RatingContainer = styled.div`
 	padding-top: 6%;
 
 	p {
+		color: ${({ theme }) => theme.text};
 		span {
 			font-weight: 400;
-			color: #35b8be;
+			color: ${({ theme }) => theme.palette.primary.main};
 		}
 	}
 `;
@@ -116,7 +124,7 @@ export function HomePage(): React.ReactElement {
 						</p>
 					</RatingContainer>
 				</HomePageInfoContainer>
-				<img src={homePageImage} alt="homePageImage" />
+				<MainImage src={homePageImage} alt="homePageImage" />
 			</HomePageMainContent>
 		</HomePageContainer>
 	);

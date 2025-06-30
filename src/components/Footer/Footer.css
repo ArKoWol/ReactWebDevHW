@@ -1,7 +1,7 @@
 .footer {
 	display: flex;
 	flex-direction: column;
-	background-image: url('../../assets/background.png');
+	background: var(--footer-background);
 	background-size: cover;
 	background-position: center;
 	height: 79vh;
@@ -24,12 +24,12 @@
 }
 
 .info a,
-span {
-	color: #546285;
+.info span {
+	color: var(--text-color);
 }
 
 .info-container p {
-	color: #546285;
+	color: var(--text-color);
 	font-size: 87%;
 	cursor: pointer;
 }
@@ -47,6 +47,15 @@ span {
 	margin-bottom: 5%;
 	gap: 3%;
 	margin-right: 18%;
+}
+
+.logo-and-info img {
+	transition: filter 0.3s ease;
+}
+
+/* На темной теме меняем цвет логотипа на голубой (#7aa2f7) */
+[data-theme='dark'] .logo-and-info img {
+	filter: hue-rotate(50deg) saturate(0.8) brightness(1.4);
 }
 
 hr {
@@ -73,8 +82,19 @@ hr {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	color: #0c2050;
+}
+
+[data-theme='dark'] .social-links {
+	color: #ffffff;
 }
 
 .social-links img {
 	cursor: pointer;
+	transition: filter 0.3s ease;
+}
+
+/* На темной теме делаем иконки социальных сетей светлыми */
+[data-theme='dark'] .social-links img {
+	filter: brightness(3) contrast(2) saturate(0) invert(1);
 }
