@@ -13,8 +13,6 @@ export function Navbar(): React.ReactElement {
 	const { totalQuantity } = useAppSelector((state: RootState) => state.cart);
 	const { theme, toggleTheme } = useTheme();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-	// Определяем цвет логотипа в зависимости от темы
 	const logoColor = theme === Theme.LIGHT ? '#35b8be' : '#7aa2f7';
 
 	const toggleMenu = () => {
@@ -33,14 +31,12 @@ export function Navbar(): React.ReactElement {
 				</Link>
 			</div>
 
-			{/* Бургер кнопка */}
 			<button className="burger-menu" onClick={toggleMenu}>
 				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
 				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
 				<span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
 			</button>
 
-			{/* Навигация для десктопа */}
 			<div className="navigation desktop-nav">
 				{options.map((item, index) => (
 					<NavLink
@@ -70,7 +66,6 @@ export function Navbar(): React.ReactElement {
 				</button>
 			</div>
 
-			{/* Мобильное меню */}
 			<div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
 				<div className="mobile-menu-content">
 					{options.map((item, index) => (

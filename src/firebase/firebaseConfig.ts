@@ -8,7 +8,6 @@ interface FirebaseConfig {
 	region?: string;
 }
 
-// Validate environment variables
 const requiredEnvVars = {
 	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -18,7 +17,6 @@ const requiredEnvVars = {
 	appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Check for missing or empty values
 Object.entries(requiredEnvVars).forEach(([key, value]) => {
 	if (!value) {
 		throw new Error(`Missing required Firebase config: ${key}`);
@@ -32,5 +30,5 @@ export const firebaseConfig: FirebaseConfig = {
 	storageBucket: requiredEnvVars.storageBucket,
 	messagingSenderId: requiredEnvVars.messagingSenderId,
 	appId: requiredEnvVars.appId,
-	region: 'europe-west3' // Add explicit region
+	region: 'europe-west3' 
 };

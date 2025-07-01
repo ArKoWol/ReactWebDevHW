@@ -43,7 +43,7 @@ const menuSlice = createSlice({
 		processRawMenuData: (state, action: PayloadAction<RawMenuItem[]>) => {
 			const rawMenuData = action.payload;
 			
-			// Format menu data
+			
 			const formatted: MenuItem[] = rawMenuData.map((item) => ({
 				id: item.id,
 				image: item.img,
@@ -54,7 +54,7 @@ const menuSlice = createSlice({
 			}));
 			state.menuData = formatted;
 
-			// Extract and format categories
+			
 			const uniqueCategories = [
 				...new Set(rawMenuData.map((item) => item.category.toLowerCase())),
 			];

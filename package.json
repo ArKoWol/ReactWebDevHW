@@ -12,7 +12,8 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"@fontsource/inter": "^5.2.5",
+		"@fontsource/inter": "^5.2.6",
+		"@fontsource/poppins": "^5.2.6",
 		"@reduxjs/toolkit": "^2.8.2",
 		"firebase": "^11.7.3",
 		"react": "^19.0.0",

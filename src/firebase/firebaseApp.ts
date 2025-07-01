@@ -1,18 +1,19 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, type Auth } from 'firebase/auth';
 import { 
     getFirestore, 
     initializeFirestore, 
     persistentLocalCache,
-    persistentSingleTabManager
+    persistentSingleTabManager,
+    type Firestore
 } from 'firebase/firestore';
 import { firebaseConfig } from './firebaseConfig';
 
-let auth;
-let db;
+let auth: Auth;
+let db: Firestore;
 
 try {
-    // Check if Firebase is already initialized
+    
     const existingApps = getApps();
     let app;
 
@@ -22,14 +23,14 @@ try {
         app = existingApps[0];
     }
 
-    // Initialize Auth
+    
     auth = getAuth(app);
 
-    // Initialize Firestore with persistent cache
+    
     try {
         db = initializeFirestore(app, {
             localCache: persistentLocalCache({
-                tabManager: persistentSingleTabManager()
+                tabManager: persistentSingleTabManager(undefined)
             })
         });
     } catch (firestoreError) {
@@ -37,7 +38,7 @@ try {
         db = getFirestore(app);
     }
 
-    // Verify initialization
+    
     if (!auth) throw new Error('Firebase Auth failed to initialize');
     if (!db) throw new Error('Firestore failed to initialize');
 

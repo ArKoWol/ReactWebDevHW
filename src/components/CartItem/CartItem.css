@@ -7,7 +7,7 @@
 	border-radius: 12px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	border: 1px solid #e8e8e8;
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	box-sizing: border-box;
 	flex-wrap: wrap;
 }
@@ -34,6 +34,19 @@
 	object-fit: cover;
 	border-radius: 8px;
 	flex-shrink: 0;
+	transition: all 0.3s ease;
+	
+	
+	filter: drop-shadow(0 0 0 transparent);
+}
+
+.cart-item:hover .cart-item-image {
+	
+	filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+[data-theme='dark'] .cart-item:hover .cart-item-image {
+	filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 .cart-item-details {
@@ -51,21 +64,28 @@
 	line-height: 1.2;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	
+	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 200px;
 }
 
 .cart-item-quantity-input {
 	width: 60px;
 	height: 40px;
 	padding: 0.5rem;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+	border: 2px solid rgba(0, 0, 0, 0.3);
+	border-radius: 8px;
 	text-align: center;
 	font-size: 1rem;
 	font-weight: 500;
 	color: var(--text-color);
-	background-color: var(--background-color);
+	background: rgba(255, 255, 255, 0.8);
 	box-sizing: border-box;
 	flex-shrink: 0;
+	transition: all 0.3s ease;
 }
 
 [data-theme='dark'] .cart-item-quantity-input {
@@ -109,7 +129,6 @@
 	background: var(--hover-text-color);
 }
 
-/* Удаляю неиспользуемые стили */
 .cart-item-description {
 	display: none;
 }
@@ -118,7 +137,6 @@
 	display: none;
 }
 
-/* Адаптивность для планшетов */
 @media (max-width: 1024px) {
 	.cart-item {
 		padding: 1.3rem;
@@ -152,7 +170,6 @@
 	}
 }
 
-/* Адаптивность для маленьких планшетов */
 @media (max-width: 768px) {
 	.cart-item {
 		padding: 1.2rem;
@@ -193,7 +210,6 @@
 	}
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 600px) {
 	.cart-item {
 		padding: 1rem;
@@ -250,7 +266,6 @@
 	}
 }
 
-/* Адаптивность для очень маленьких экранов */
 @media (max-width: 480px) {
 	.cart-item {
 		padding: 0.8rem;
@@ -288,7 +303,6 @@
 	}
 }
 
-/* Адаптивность для очень узких экранов (сплит-скрин) */
 @media (max-width: 360px) {
 	.cart-item {
 		padding: 0.6rem;

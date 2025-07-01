@@ -15,19 +15,14 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 	const { currentUser } = useAppSelector((state) => state.auth);
 	const [quantity, setQuantity] = useState(item.quantity > 99 ? '99+' : item.quantity.toString());
 
-	// Синхронизируем локальное состояние с Redux состоянием
 	useEffect(() => {
 		setQuantity(item.quantity > 99 ? '99+' : item.quantity.toString());
 	}, [item.quantity]);
 
 	const handleQuantityChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
-		
-		// Если значение пустое или число
 		if (value === '' || (!isNaN(parseInt(value)) && parseInt(value) > 0)) {
 			const numValue = parseInt(value);
-			
-			// Если число больше 99, устанавливаем 99
 			if (!isNaN(numValue)) {
 				if (numValue > 99) {
 					setQuantity('99');
@@ -72,7 +67,7 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 			<div className="cart-item-details">
 				<h3 className="cart-item-name">{item.title}</h3>
 			</div>
-			<span className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</span>
+			<span className="cart-item-price accent-span">${(item.price * item.quantity).toFixed(2)}</span>
 			<input
 				type="number"
 				value={quantity === '99+' ? '99' : quantity}

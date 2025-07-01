@@ -118,7 +118,7 @@ describe('CartPage component', () => {
         const streetLabel = streetInput.parentElement?.querySelector('label');
         const houseLabel = houseInput.parentElement?.querySelector('label');
 
-        // Test focus and blur for Street input
+        
         fireEvent.focus(streetInput);
         expect(streetLabel).toHaveClass('active');
         fireEvent.blur(streetInput);
@@ -127,8 +127,7 @@ describe('CartPage component', () => {
         fireEvent.blur(streetInput);
         expect(streetLabel).toHaveClass('active');
 
-
-        // Test focus and blur for House input
+        
         fireEvent.focus(houseInput);
         expect(houseLabel).toHaveClass('active');
         fireEvent.blur(houseInput);

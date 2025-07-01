@@ -3,6 +3,9 @@ import './MenuPage.css';
 import { Button } from '../../components/Button/Button';
 import { MenuCard } from '../../components/MenuCard/MenuCard';
 import { MenuSelector } from '../../components/MenuSelector/MenuSelector';
+import { DecorativeBackground } from '../../components/DecorativeBackground';
+import { SectionDivider } from '../../components/SectionDivider';
+import { stablePositions, createDecorativeElement } from '../../utils/decorativePositions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { addToCart, syncCartAfterChange } from '../../store/slices/cartSlice';
 import { MenuItem } from '../../types';
@@ -57,7 +60,14 @@ export function MenuPage(): React.ReactElement {
 
 	return (
 		<div className="menu-page">
-			<div className="triangle"></div>
+			{}
+			<DecorativeBackground density="medium" variant="playful" />
+			
+			{}
+			{stablePositions.menu.map((element, index) => 
+				createDecorativeElement(element, `menu-${index}`)
+			)}
+			
 			<div className="title">
 				<h1>Browse our menu</h1>
 				<p>
@@ -76,15 +86,20 @@ export function MenuPage(): React.ReactElement {
 				/>
 			</div>
 
+			{}
+			<SectionDivider variant="curved" height="small" />
+
 			<div className="menu-page-content">
 				{visibleCards.length > 0 ? (
 					visibleCards.map((card, index) => (
 						<MenuCard
-							key={index}
+							key={`${card.id}-${index}`}
+							id={card.id}
 							image={card.image}
 							title={card.title}
 							price={card.price}
 							description={card.description}
+							category={card.category}
 							onAddToCart={(quantity) => handleAddToCart(card, quantity)}
 						/>
 					))
@@ -94,7 +109,9 @@ export function MenuPage(): React.ReactElement {
 			</div>
 
 			{visibleCount < filteredCards.length && (
-				<Button onClick={handleSeeMore}>See more</Button>
+				<Button onClick={handleSeeMore} className="floating">
+					See more
+				</Button>
 			)}
 		</div>
 	);

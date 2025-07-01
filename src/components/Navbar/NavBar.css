@@ -33,7 +33,6 @@
 	object-fit: contain;
 }
 
-/* На темной теме меняем цвет логотипа на цвет текста */
 [data-theme='dark'] .logo img {
 	filter: brightness(0) saturate(100%) invert(65%) sepia(43%) saturate(2350%) hue-rotate(194deg) brightness(103%) contrast(89%);
 }
@@ -102,9 +101,10 @@
 	position: absolute;
 	top: -5px;
 	right: -5px;
-	width: 20px;
+	min-width: 20px;
 	height: 20px;
-	border-radius: 50%;
+	padding: 0 4px;
+	border-radius: 10px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	background-color: var(--shape-color);
 	color: var(--accent-color);
@@ -139,7 +139,6 @@
 	transform: translateY(-1px);
 }
 
-/* Бургер меню - скрыто по умолчанию */
 .burger-menu {
 	display: none;
 	flex-direction: column;
@@ -174,7 +173,6 @@
 	transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* Мобильное меню - скрыто по умолчанию */
 .mobile-menu {
 	display: none;
 	position: fixed;
@@ -239,18 +237,20 @@
 	justify-content: space-between;
 	padding: 16px 20px;
 	border-radius: 8px;
-	background-color: var(--accent-color);
+	background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
 	color: white;
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 16px;
 	position: relative;
 	transition: all 0.2s ease;
+	box-shadow: 0 4px 15px rgba(53, 184, 190, 0.2);
 }
 
 .mobile-cart-button:hover {
-	background-color: var(--hover-text-color);
+	background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
 	transform: translateY(-1px);
+	box-shadow: 0 6px 20px rgba(53, 184, 190, 0.3);
 }
 
 .mobile-cart-button img {
@@ -261,8 +261,10 @@
 
 .mobile-cart-button .number-of-selected-products {
 	position: static;
-	width: 24px;
+	min-width: 24px;
 	height: 24px;
+	padding: 0 4px;
+	border-radius: 12px;
 	background-color: white;
 	color: var(--accent-color);
 	margin-left: auto;
@@ -284,11 +286,11 @@
 }
 
 .mobile-theme-switcher:hover {
-	background-color: var(--accent-color);
+	background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
 	color: white;
+	box-shadow: 0 4px 15px rgba(53, 184, 190, 0.2);
 }
 
-/* Адаптивность для больших планшетов */
 @media (max-width: 1024px) {
 	.navbar {
 		padding: 0 4%;
@@ -330,7 +332,6 @@
 	}
 }
 
-/* Дополнительная адаптивность для узких экранов */
 @media (max-width: 850px) {
 	.navigation {
 		width: 60%;
@@ -350,7 +351,6 @@
 	}
 }
 
-/* Адаптивность для средних планшетов - переключение на бургер */
 @media (max-width: 900px) {
 	.navbar {
 		padding: 0 3%;
@@ -369,23 +369,22 @@
 		max-width: 90px;
 	}
 	
-	/* Скрываем десктопную навигацию раньше */
+	
 	.desktop-nav {
 		display: none;
 	}
 	
-	/* Показываем бургер меню раньше */
+	
 	.burger-menu {
 		display: flex;
 	}
 	
-	/* Показываем мобильное меню */
+	
 	.mobile-menu {
 		display: block;
 	}
 }
 
-/* Адаптивность для маленьких планшетов */
 @media (max-width: 768px) {
 	.navbar {
 		padding: 0 3%;
@@ -404,23 +403,22 @@
 		max-width: 90px;
 	}
 	
-	/* Скрываем десктопную навигацию */
+	
 	.desktop-nav {
 		display: none;
 	}
 	
-	/* Показываем бургер меню */
+	
 	.burger-menu {
 		display: flex;
 	}
 	
-	/* Показываем мобильное меню */
+	
 	.mobile-menu {
 		display: block;
 	}
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 600px) {
 	.navbar {
 		padding: 0 2%;
@@ -440,23 +438,22 @@
 		max-width: 80px;
 	}
 	
-	/* Скрываем десктопную навигацию */
+	
 	.desktop-nav {
 		display: none;
 	}
 	
-	/* Показываем бургер меню */
+	
 	.burger-menu {
 		display: flex;
 	}
 	
-	/* Показываем мобильное меню */
+	
 	.mobile-menu {
 		display: block;
 	}
 }
 
-/* Адаптивность для очень маленьких экранов */
 @media (max-width: 480px) {
 	.navbar {
 		padding: 0 1.5%;
@@ -475,19 +472,19 @@
 		max-width: 70px;
 	}
 	
-	/* Скрываем десктопную навигацию */
+	
 	.desktop-nav {
 		display: none;
 	}
 	
-	/* Показываем бургер меню */
+	
 	.burger-menu {
 		display: flex;
 		width: 28px;
 		height: 28px;
 	}
 	
-	/* Показываем мобильное меню */
+	
 	.mobile-menu {
 		display: block;
 	}
@@ -503,7 +500,6 @@
 	}
 }
 
-/* Адаптивность для очень узких экранов (сплит-скрин) */
 @media (max-width: 360px) {
 	.navbar {
 		padding: 0 1%;
@@ -522,19 +518,19 @@
 		max-width: 60px;
 	}
 	
-	/* Скрываем десктопную навигацию */
+	
 	.desktop-nav {
 		display: none;
 	}
 	
-	/* Показываем бургер меню */
+	
 	.burger-menu {
 		display: flex;
 		width: 26px;
 		height: 26px;
 	}
 	
-	/* Показываем мобильное меню */
+	
 	.mobile-menu {
 		display: block;
 	}

@@ -68,7 +68,7 @@
 }
 
 .error-actions .primary-button {
-	background-color: var(--accent-color);
+	background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
 	color: white;
 	border: none;
 	padding: 1rem 2rem;
@@ -80,12 +80,13 @@
 	text-decoration: none;
 	display: inline-block;
 	box-sizing: border-box;
+	box-shadow: 0 4px 15px rgba(53, 184, 190, 0.2);
 }
 
 .error-actions .primary-button:hover {
-	background-color: var(--accent-hover-color, #2da5b0);
+	background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
 	transform: translateY(-2px);
-	box-shadow: 0 4px 15px rgba(53, 184, 190, 0.3);
+	box-shadow: 0 8px 25px rgba(53, 184, 190, 0.4);
 }
 
 .error-actions .secondary-button {
@@ -142,7 +143,7 @@
 	position: absolute;
 	width: 100px;
 	height: 4px;
-	background-color: var(--accent-color);
+	background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
 	border-radius: 2px;
 	transform: rotate(45deg);
 	animation: rotate 3s linear infinite;
@@ -153,7 +154,7 @@
 	position: absolute;
 	width: 20px;
 	height: 20px;
-	background-color: var(--accent-color);
+	background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
 	border-radius: 50%;
 	top: 20%;
 	right: 20%;
@@ -190,7 +191,6 @@
 	}
 }
 
-/* Адаптивность для планшетов */
 @media (max-width: 1024px) {
 	.error-container {
 		gap: 3rem;
@@ -219,7 +219,6 @@
 	}
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
 	.error-page {
 		padding: 1rem;
@@ -277,7 +276,6 @@
 	}
 }
 
-/* Адаптивность для маленьких мобильных устройств */
 @media (max-width: 480px) {
 	.error-page {
 		padding: 0.5rem;

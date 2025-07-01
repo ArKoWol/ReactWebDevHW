@@ -1,12 +1,13 @@
 import './SignUpPage.css';
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/Button/Button';
+import { DecorativeBackground } from '../../components/DecorativeBackground';
+import { stablePositions, createDecorativeElement } from '../../utils/decorativePositions';
 import { auth } from '../../firebase/firebaseApp';
 import {
 	createUserWithEmailAndPassword,
 	signOut,
 	AuthError,
-	updateProfile,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -56,6 +57,7 @@ async function signUpUser(
 	password: string,
 	navigate: ReturnType<typeof useNavigate>,
 	setErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>,
+	dispatch: ReturnType<typeof useAppDispatch>,
 ): Promise<void> {
 	setErrors({});
 
@@ -78,7 +80,6 @@ async function signUpUser(
 			email,
 			password,
 		);
-		await updateProfile(userCredential.user, { displayName: fullName });
 		dispatch(setCurrentUser(userCredential.user));
 		navigate('/');
 	} catch (err) {
@@ -170,7 +171,7 @@ export function SignUpPage(): React.ReactElement {
 		setIsSubmitting(true);
 		setTouched({ email: true, password: true });
 
-		await signUpUser(email, password, navigate, setErrors);
+		await signUpUser(email, password, navigate, setErrors, dispatch);
 		setIsSubmitting(false);
 	};
 
@@ -213,15 +214,23 @@ export function SignUpPage(): React.ReactElement {
 
 	if (currentUser) {
 		return (
-			<div className="LoginPage">
-				<div className="login-page-container">
+			<div className="signup-page">
+				{}
+				<DecorativeBackground density="light" variant="elegant" />
+				
+				{}
+				{stablePositions.signup.loggedIn.map((element, index) => 
+					createDecorativeElement(element, `signup-loggedin-${index}`)
+				)}
+				
+				<div className="signup-page-container">
 					<h1>Account</h1>
-					<div className="login-form">
+					<div className="signup-form">
 						<div className="user-info">
 							<p>You are logged in as:</p>
 							<h3>{currentUser.email}</h3>
 						</div>
-						<div className="login-form-button-container">
+						<div className="signup-form-button-container">
 							<Button type="button" onClick={handleLogout}>
 								Log Out
 							</Button>
@@ -236,19 +245,27 @@ export function SignUpPage(): React.ReactElement {
 	}
 
 	return (
-		<div className="LoginPage">
-			<div className="login-page-container">
+		<div className="signup-page">
+			{}
+			<DecorativeBackground density="medium" variant="default" />
+			
+			{}
+			{stablePositions.signup.form.map((element, index) => 
+				createDecorativeElement(element, `signup-form-${index}`)
+			)}
+			
+			<div className="signup-page-container">
 				<h1>Sign Up</h1>
-				<form className="login-form" onSubmit={handleSubmit}>
+				<form className="signup-form" onSubmit={handleSubmit}>
 					{errors.general && (
 						<div className="error-message general-error">
 							{errors.general}
 						</div>
 					)}
 
-					<div className="login-form-input-container">
+					<div className="signup-form-input-container">
 						<p>Email</p>
-						<div className={`login-form-input ${errors.email ? 'error' : ''} ${touched.email && !errors.email && email ? 'valid' : ''}`}>
+						<div className={`signup-form-input ${errors.email ? 'error' : ''} ${touched.email && !errors.email && email ? 'valid' : ''}`}>
 							<input
 								type="email"
 								placeholder="Enter your email"
@@ -269,9 +286,9 @@ export function SignUpPage(): React.ReactElement {
 						)}
 					</div>
 
-					<div className="login-form-input-container">
+					<div className="signup-form-input-container">
 						<p>Password</p>
-						<div className={`login-form-input ${errors.password ? 'error' : ''} ${touched.password && !errors.password && password ? 'valid' : ''}`}>
+						<div className={`signup-form-input ${errors.password ? 'error' : ''} ${touched.password && !errors.password && password ? 'valid' : ''}`}>
 							<input
 								type="password"
 								placeholder="Enter your password"
@@ -316,7 +333,7 @@ export function SignUpPage(): React.ReactElement {
 						)}
 					</div>
 
-					<div className="login-form-button-container">
+					<div className="signup-form-button-container">
 						<Button
 							type="submit"
 							disabled={!isFormValid()}
@@ -343,9 +360,9 @@ export function SignUpPage(): React.ReactElement {
 						<p style={{ color: 'var(--text-color)', margin: '0.5rem 0' }}>
 							Already have an account?{' '}
 							<span
+								className="accent-span"
 								onClick={() => navigate('/login')}
 								style={{
-									color: 'var(--accent-color)',
 									cursor: 'pointer',
 									textDecoration: 'none',
 									fontWeight: 500

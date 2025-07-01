@@ -21,7 +21,6 @@ import type { RootState } from './store';
 import { MenuItem, Category, User } from './types';
 import '@fontsource/inter';
 
-
 interface RawMenuItem {
 	id: string;
 	img: string;
@@ -33,7 +32,7 @@ interface RawMenuItem {
 
 function App(): React.JSX.Element {
 	const dispatch = useAppDispatch();
-	const { loading, user } = useAppSelector((state: RootState) => state.auth);
+	const { loading, currentUser } = useAppSelector((state: RootState) => state.auth);
 	const [firebaseInitialized, setFirebaseInitialized] = React.useState(false);
 	const [error, setError] = React.useState<string | null>(null);
 
@@ -41,7 +40,6 @@ function App(): React.JSX.Element {
 		'https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals',
 	);
 
-	// Effect for handling auth state changes
 	useEffect(() => {
 		let isMounted = true;
 
@@ -49,11 +47,8 @@ function App(): React.JSX.Element {
 			if (!isMounted) {
 				return;
 			}
-
-			// Update auth state
-			dispatch(setCurrentUser(user));
 			
-			// Set current user ID for cart sync
+			dispatch(setCurrentUser(user));
 			setCurrentUserId(user?.uid || null);
 
 			try {
@@ -67,7 +62,6 @@ function App(): React.JSX.Element {
 				}
 			} catch (error) {
 				console.error('Error loading cart:', error);
-				// Continue anyway, don't block app loading
 				dispatch(setCartItems([]));
 			}
 
@@ -76,7 +70,6 @@ function App(): React.JSX.Element {
 			}
 		});
 
-		// Fallback timeout to prevent infinite loading
 		const fallbackTimeout = setTimeout(() => {
 			if (isMounted && !firebaseInitialized) {
 				console.warn('Firebase initialization timeout, proceeding without auth');
@@ -84,7 +77,7 @@ function App(): React.JSX.Element {
 				setCurrentUserId(null);
 				setFirebaseInitialized(true);
 			}
-		}, 5000); // 5 second timeout
+		}, 5000); 
 
 		return () => {
 			isMounted = false;
@@ -93,7 +86,6 @@ function App(): React.JSX.Element {
 		};
 	}, [dispatch, firebaseInitialized]);
 
-	// Effect for processing menu data
 	useEffect(() => {
 		const processMenuData = async () => {
 			if (!rawMenuData) return;

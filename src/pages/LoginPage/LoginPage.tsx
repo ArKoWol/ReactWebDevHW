@@ -1,6 +1,8 @@
 import './LoginPage.css';
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/Button/Button';
+import { DecorativeBackground } from '../../components/DecorativeBackground';
+import { stablePositions, createDecorativeElement } from '../../utils/decorativePositions';
 import { auth } from '../../firebase/firebaseApp';
 import {
 	signInWithEmailAndPassword,
@@ -186,7 +188,15 @@ export function LoginPage(): React.ReactElement {
 
 	if (currentUser) {
 		return (
-			<div className="LoginPage">
+			<div className="login-page">
+				{}
+				<DecorativeBackground density="light" variant="elegant" />
+				
+				{}
+				{stablePositions.login.loggedIn.map((element, index) => 
+					createDecorativeElement(element, `login-loggedin-${index}`)
+				)}
+				
 				<div className="login-page-container">
 					<h1>Account</h1>
 					<div className="login-form">
@@ -209,7 +219,15 @@ export function LoginPage(): React.ReactElement {
 	}
 
 	return (
-		<div className="LoginPage">
+		<div className="login-page">
+			{}
+			<DecorativeBackground density="medium" variant="default" />
+			
+			{}
+			{stablePositions.login.form.map((element, index) => 
+				createDecorativeElement(element, `login-form-${index}`)
+			)}
+			
 			<div className="login-page-container">
 				<h1>Log In</h1>
 				<form className="login-form" onSubmit={handleSubmit}>
@@ -292,9 +310,9 @@ export function LoginPage(): React.ReactElement {
 						<p style={{ color: 'var(--text-color)', margin: '0.5rem 0' }}>
 							Don't have an account?{' '}
 							<span
+								className="accent-span"
 								onClick={() => navigate('/signup')}
 								style={{
-									color: 'var(--accent-color)',
 									cursor: 'pointer',
 									textDecoration: 'none',
 									fontWeight: 500

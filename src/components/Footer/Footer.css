@@ -7,6 +7,9 @@
 	height: 79vh;
 	box-sizing: border-box;
 	width: 100%;
+	box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+	position: relative;
+	z-index: 1;
 }
 
 .info-container {
@@ -124,12 +127,10 @@ hr {
 	height: 24px;
 }
 
-/* На темной теме делаем иконки социальных сетей светлыми */
 [data-theme='dark'] .social-links img {
 	filter: brightness(3) contrast(2) saturate(0) invert(1);
 }
 
-/* Увеличиваем иконки социальных сетей на больших экранах */
 @media (min-width: 1440px) {
 	.social-links img {
 		width: 36px;
@@ -151,7 +152,6 @@ hr {
 	}
 }
 
-/* Адаптивность для планшетов */
 @media (max-width: 1024px) {
 	.footer {
 		height: 70vh;
@@ -201,7 +201,6 @@ hr {
 	}
 }
 
-/* Адаптивность для маленьких планшетов */
 @media (max-width: 768px) {
 	.footer {
 		height: auto;
@@ -295,7 +294,6 @@ hr {
 	}
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 600px) {
 	.info-container p {
 		font-size: 78%;
@@ -320,7 +318,6 @@ hr {
 	}
 }
 
-/* Адаптивность для очень маленьких экранов */
 @media (max-width: 480px) {
 	.footer {
 		min-height: 55vh;
@@ -376,7 +373,6 @@ hr {
 	}
 }
 
-/* Адаптивность для очень узких экранов (сплит-скрин) */
 @media (max-width: 360px) {
 	.footer {
 		min-height: 50vh;

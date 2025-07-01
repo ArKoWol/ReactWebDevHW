@@ -11,8 +11,6 @@ import { Theme } from '../../context/ThemeContext';
 
 export function Footer(): React.ReactElement {
 	const { theme } = useTheme();
-	
-	// Определяем цвет логотипа в зависимости от темы
 	const logoColor = theme === Theme.LIGHT ? '#35b8be' : '#7aa2f7';
 
 	return (
@@ -33,7 +31,7 @@ export function Footer(): React.ReactElement {
 							<p key={linkIndex}>
 								{section.title === 'TEMPLATE' ? (
 									<a
-										href="https://www.google.com"
+										href="https://example.com"
 										target="_blank"
 										rel="noopener noreferrer"
 									>
@@ -43,7 +41,6 @@ export function Footer(): React.ReactElement {
 									<Link 
 										to={link.toLowerCase() === 'home' ? '/' : `/${link.toLowerCase()}`}
 										onClick={(e) => {
-											// Prevent navigation for now as these pages don't exist yet
 											e.preventDefault();
 										}}
 									>
@@ -61,17 +58,17 @@ export function Footer(): React.ReactElement {
 			<div className="links-and-info">
 				<div className="footer-info">
 					<p>
-						Built by <span>Flowbase</span>· Powered by <span>Webflow</span>
+						Built by <span className="accent-span">Flowbase</span>· Powered by <span className="accent-span">Webflow</span>
 					</p>
 				</div>
 				<div className="social-links">
-					<a href="https://www.instagram.com/">
+					<a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
 						<img src={instagram} alt="instagram" />
 					</a>
-					<a href="https://x.com/">
+					<a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
 						<img src={twitter} alt="twitter" />
 					</a>
-					<a href="https://www.youtube.com/">
+					<a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
 						<img src={youtube} alt="youtube" />
 					</a>
 				</div>
