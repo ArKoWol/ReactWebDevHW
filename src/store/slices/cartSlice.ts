@@ -20,21 +20,18 @@ const initialState: CartState = {
 	totalAmount: 0,
 };
 
-// Helper function to calculate totals
 const calculateTotals = (items: CartItem[]) => {
 	const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
 	const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 	return { totalQuantity, totalAmount };
 };
 
-// Helper function to sync cart with current user
 let currentUserId: string | null = null;
 
 export const setCurrentUserId = (userId: string | null) => {
 	currentUserId = userId;
 };
 
-// Helper function to sync cart after state changes
 export const syncCartAfterChange = (cartItems: CartItem[]) => {
 	return async (dispatch: any) => {
 		if (currentUserId && cartItems.length >= 0) {
@@ -47,7 +44,6 @@ export const syncCartAfterChange = (cartItems: CartItem[]) => {
 	};
 };
 
-// Async thunk to sync cart with Firestore
 export const syncCartWithFirestore = createAsyncThunk(
 	'cart/syncWithFirestore',
 	async ({ userId, cartItems }: { userId: string; cartItems: CartItem[] }) => {
@@ -69,7 +65,6 @@ export const syncCartWithFirestore = createAsyncThunk(
 	}
 );
 
-// Async thunk to load cart from Firestore
 export const loadCartFromFirestore = createAsyncThunk(
 	'cart/loadFromFirestore',
 	async (userId: string): Promise<CartItem[]> => {
@@ -156,7 +151,6 @@ const cartSlice = createSlice({
 			state.totalAmount = 0;
 		},
 
-		// New reducer to set cart items from Firestore
 		setCartItems: (state, action: PayloadAction<CartItem[]>) => {
 			state.items = action.payload;
 			const totals = calculateTotals(state.items);
@@ -174,7 +168,6 @@ const cartSlice = createSlice({
 			})
 			.addCase(loadCartFromFirestore.rejected, (state, action) => {
 				console.error('Failed to load cart:', action.error);
-				// Keep current state, don't clear it
 			});
 	},
 });

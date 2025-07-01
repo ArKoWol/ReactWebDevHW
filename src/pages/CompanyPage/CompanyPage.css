@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Hero Section */
 .hero-section {
   color: var(--text-color);
   text-align: center;
@@ -38,7 +37,6 @@
   overflow-wrap: break-word;
 }
 
-/* Container */
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -46,7 +44,6 @@
   box-sizing: border-box;
 }
 
-/* Mission Section */
 .mission-section {
   text-align: center;
   margin-bottom: 140px;
@@ -70,7 +67,6 @@
   box-sizing: border-box;
 }
 
-/* Values Section */
 .values-section {
   padding: 140px 0;
   margin-bottom: 140px;
@@ -97,7 +93,6 @@
   margin: 0 auto;
 }
 
-/* Центрирование неполных строк для values */
 @supports (grid-template-columns: subgrid) {
   .values-grid {
     display: grid;
@@ -106,14 +101,12 @@
   }
 }
 
-/* Альтернативное центрирование для браузеров без subgrid */
 @media (min-width: 1400px) {
   .values-grid {
     grid-template-columns: repeat(4, 1fr);
     max-width: 1400px;
   }
   
-  /* Убираем центрирование когда все 4 помещаются */
   .values-grid .value-card:nth-child(4):nth-last-child(1) {
     grid-column: auto;
     justify-self: center;
@@ -126,7 +119,6 @@
     max-width: 1200px;
   }
   
-  /* Центрируем 4-ю карточку когда она одна */
   .values-grid .value-card:nth-child(4):nth-last-child(1) {
     grid-column: 2;
     justify-self: center;
@@ -139,7 +131,6 @@
     max-width: 800px;
   }
   
-  /* Центрируем 3-ю и 4-ю когда они вместе во второй строке */
   .values-grid .value-card:nth-child(3):nth-last-child(2),
   .values-grid .value-card:nth-child(4):nth-last-child(1) {
     justify-self: center;
@@ -191,7 +182,6 @@
   box-sizing: border-box;
 }
 
-/* Stats Section */
 .stats-section {
   margin-bottom: 140px;
   padding: 0 20px;
@@ -211,7 +201,6 @@
   padding: 0 20px;
 }
 
-/* Центрирование неполных строк для stats */
 @supports (grid-template-columns: subgrid) {
   .stats-grid {
     display: grid;
@@ -220,14 +209,12 @@
   }
 }
 
-/* Альтернативное центрирование для браузеров без subgrid */
 @media (min-width: 1200px) {
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
     max-width: 1200px;
   }
   
-  /* Убираем центрирование когда все 4 помещаются */
   .stats-grid .stat-card:nth-child(4):nth-last-child(1) {
     grid-column: auto;
     justify-self: center;
@@ -240,7 +227,6 @@
     max-width: 1000px;
   }
   
-  /* Центрируем 4-ю карточку когда она одна */
   .stats-grid .stat-card:nth-child(4):nth-last-child(1) {
     grid-column: 2;
     justify-self: center;
@@ -253,7 +239,6 @@
     max-width: 700px;
   }
   
-  /* Центрируем 3-ю и 4-ю когда они вместе во второй строке */
   .stats-grid .stat-card:nth-child(3):nth-last-child(2),
   .stats-grid .stat-card:nth-child(4):nth-last-child(1) {
     justify-self: center;
@@ -310,7 +295,6 @@
   margin: 0;
 }
 
-/* Team Section */
 .team-section {
   margin-bottom: 140px;
   text-align: center;
@@ -337,7 +321,6 @@
   padding: 0 20px;
 }
 
-/* Центрирование неполных строк для team */
 @supports (grid-template-columns: subgrid) {
   .team-grid {
     display: grid;
@@ -346,14 +329,12 @@
   }
 }
 
-/* Альтернативное центрирование для браузеров без subgrid */
 @media (min-width: 1024px) {
   .team-grid {
     grid-template-columns: repeat(3, 1fr);
     max-width: 1200px;
   }
   
-  /* Убираем центрирование когда все 3 помещаются */
   .team-grid .team-member:nth-child(3):nth-last-child(1) {
     grid-column: auto;
     justify-self: center;
@@ -366,7 +347,6 @@
     max-width: 800px;
   }
   
-  /* Центрируем 3-й элемент когда он один во второй строке */
   .team-grid .team-member:nth-child(3):nth-last-child(1) {
     grid-column: 1 / -1;
     justify-self: center;
@@ -437,7 +417,6 @@
   font-size: clamp(1rem, 1.6vw, 1.2rem);
 }
 
-/* Contact Section */
 .contact-section {
   padding: 140px 0;
 }
@@ -460,7 +439,6 @@
   margin: 0 auto;
 }
 
-/* Центрирование неполных строк для contact */
 @supports (grid-template-columns: subgrid) {
   .contact-info {
     display: grid;
@@ -469,14 +447,12 @@
   }
 }
 
-/* Альтернативное центрирование для браузеров без subgrid */
 @media (min-width: 1024px) {
   .contact-info {
     grid-template-columns: repeat(3, 1fr);
     max-width: 1200px;
   }
   
-  /* Убираем центрирование когда все 3 помещаются */
   .contact-info .contact-item:nth-child(3):nth-last-child(1) {
     grid-column: auto;
     justify-self: center;
@@ -489,7 +465,6 @@
     max-width: 800px;
   }
   
-  /* Центрируем 3-й элемент когда он один во второй строке */
   .contact-info .contact-item:nth-child(3):nth-last-child(1) {
     grid-column: 1 / -1;
     justify-self: center;
@@ -534,7 +509,6 @@
   font-size: clamp(1rem, 1.8vw, 1.3rem);
 }
 
-/* Responsive Design for smaller screens */
 @media (max-width: 768px) {
   .hero-section {
     padding: clamp(80px, 15vw, 120px) 20px;
@@ -550,7 +524,6 @@
   }
 }
 
-/* Adjustments for mobile devices */
 @media (max-width: 600px) {
   .hero-section {
     padding: clamp(60px, 12vw, 100px) 15px;
@@ -573,7 +546,6 @@
   }
 }
 
-/* Very small screens adjustments */
 @media (max-width: 480px) {
   .hero-section {
     padding: clamp(50px, 10vw, 80px) 12px;

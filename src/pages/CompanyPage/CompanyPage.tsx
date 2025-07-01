@@ -7,13 +7,11 @@ import photo3 from '../../assets/photos/IMG_0440.jpg';
 export function CompanyPage(): React.ReactElement {
 	return (
 		<div className="company-page">
-			{/* Hero Section */}
 			<section className="hero-section">
 				<h1>Delivering Happiness, One Meal at a Time</h1>
 				<p>We're not just a food delivery service - we're your partner in creating memorable dining experiences</p>
 			</section>
 
-			{/* Mission Section */}
 			<section className="mission-section">
 				<div className="container">
 					<h2>Our Mission</h2>
@@ -24,7 +22,6 @@ export function CompanyPage(): React.ReactElement {
 				</div>
 			</section>
 
-			{/* Values Section */}
 			<section className="values-section">
 				<div className="container">
 					<h2>Our Values</h2>
@@ -49,7 +46,6 @@ export function CompanyPage(): React.ReactElement {
 				</div>
 			</section>
 
-			{/* Stats Section */}
 			<section className="stats-section">
 				<div className="container">
 					<div className="stats-grid">
@@ -73,7 +69,6 @@ export function CompanyPage(): React.ReactElement {
 				</div>
 			</section>
 
-			{/* Team Section */}
 			<section className="team-section">
 				<div className="container">
 					<h2>Our Leadership Team</h2>
@@ -97,7 +92,6 @@ export function CompanyPage(): React.ReactElement {
 				</div>
 			</section>
 
-			{/* Contact Section */}
 			<section className="contact-section">
 				<div className="container">
 					<h2>Get in Touch</h2>

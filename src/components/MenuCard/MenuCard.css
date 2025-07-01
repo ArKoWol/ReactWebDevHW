@@ -16,8 +16,8 @@
 }
 
 [data-theme='dark'] .menuCard {
-	border-color: #414868;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	border-color: var(--border-color);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .menuCard:hover {
@@ -188,7 +188,7 @@
 }
 
 [data-theme='dark'] .menu-quantity-input {
-	border: 1px solid #414868;
+	border: 1px solid var(--border-color);
 	background-color: var(--background-color);
 }
 

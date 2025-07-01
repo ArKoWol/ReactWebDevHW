@@ -233,7 +233,7 @@
 }
 
 [data-theme='dark'] .error-message {
-	color: #ff8a80;
+	color: var(--error-color);
 }
 
 .general-error {
@@ -249,9 +249,9 @@
 }
 
 [data-theme='dark'] .general-error {
-	background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
-	color: white;
-	box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3);
+	background: linear-gradient(135deg, var(--error-color) 0%, #d32f2f 100%);
+	color: #1a1b26;
+	box-shadow: 0 4px 12px rgba(247, 118, 142, 0.3);
 }
 
 .field-error {
@@ -278,6 +278,12 @@
 	background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
 	color: #155724;
 	border-color: #c3e6cb;
+}
+
+[data-theme='dark'] .password-requirements.met {
+	background: var(--success-background);
+	color: var(--success-color);
+	border-color: var(--success-color);
 }
 
 .password-requirements p {
@@ -319,15 +325,15 @@
 }
 
 [data-theme='dark'] .password-requirements li {
-	color: #ff8a80;
+	color: var(--error-color);
 }
 
 [data-theme='dark'] .password-requirements li.met {
-	color: #b9f6ca;
+	color: var(--success-color);
 }
 
 [data-theme='dark'] .password-requirements li:before {
-	color: #ff8a80;
+	color: var(--error-color);
 }
 
 .password-requirements li.met:before {
@@ -336,7 +342,7 @@
 }
 
 [data-theme='dark'] .password-requirements li.met:before {
-	color: #b9f6ca;
+	color: var(--success-color);
 }
 
 /* Responsive Design */
@@ -387,4 +393,37 @@
 		padding: 0.75rem;
 		font-size: 0.95rem;
 	}
+}
+
+/* Стили для ошибок валидации */
+.error {
+	border-color: #e74c3c;
+}
+
+[data-theme='dark'] .error {
+	border-color: var(--error-color);
+}
+
+.error-background {
+	background-color: #fef5f5;
+}
+
+[data-theme='dark'] .error-background {
+	background-color: var(--error-background);
+}
+
+.success {
+	border-color: #27ae60;
+}
+
+[data-theme='dark'] .success {
+	border-color: var(--success-color);
+}
+
+.success-background {
+	background-color: #f8fff8;
+}
+
+[data-theme='dark'] .success-background {
+	background-color: var(--success-background);
 }

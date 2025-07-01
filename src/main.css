@@ -28,11 +28,18 @@ img {
 	--notification-text-color: #35b8be;
 	--border-color: #e9ecef;
 	
-	/* Company Page specific variables */
 	--background-primary: #ffffff;
 	--background-secondary: #f8f9fa;
 	--primary-color: #35b8be;
 	--text-color-secondary: #6c757d;
+	
+	/* Цветовые переменные для светлой темы */
+	--error-color: #dc3545;
+	--error-background: rgba(220, 53, 69, 0.1);
+	--success-color: #28a745;
+	--success-background: rgba(40, 167, 69, 0.1);
+	--warning-color: #ffc107;
+	--warning-background: rgba(255, 193, 7, 0.1);
 }
 
 [data-theme='dark'] {
@@ -45,16 +52,24 @@ img {
 	--hover-background-color: rgba(122, 162, 247, 0.1);
 	--hover-text-color: #7aa2f7;
 	--disabled-background-color: #16161e;
-	--disabled-text-color: #565f89;
+	--disabled-text-color: #787c99;
 	--notification-bg-color: #7aa2f7;
 	--notification-text-color: #1a1b26;
-	--border-color: #414868;
+	--border-color: #545c7e;
 	
 	/* Company Page specific variables for better dark theme visibility */
 	--background-primary: #24283b;
 	--background-secondary: #1f2335;
 	--primary-color: #7aa2f7;
-	--text-color-secondary: #9aa5ce;
+	--text-color-secondary: #a9b1d6;
+	
+	/* Новые переменные для лучшей контрастности */
+	--error-color: #f7768e;
+	--error-background: rgba(247, 118, 142, 0.1);
+	--success-color: #9ece6a;
+	--success-background: rgba(158, 206, 106, 0.1);
+	--warning-color: #e0af68;
+	--warning-background: rgba(224, 175, 104, 0.1);
 }
 
 body {
@@ -100,25 +115,22 @@ a:hover {
 	color: var(--hover-text-color);
 }
 
-/* Исключение для span внутри кнопок */
 button span, 
 .custom-button span {
 	color: inherit;
 }
 
-/* Исключение для span, которые должны наследовать цвет родителя */
 .inherit-color span {
 	color: inherit;
 }
 
 .main-content {
-	padding-top: 12vh; /* Same as navbar height */
-	min-height: calc(100vh - 12vh); /* Ensures content fills the viewport minus navbar height */
+	padding-top: 12vh; 
+	min-height: calc(100vh - 12vh); 
 	width: 100%;
 	box-sizing: border-box;
 }
 
-/* Адаптивность для планшетов */
 @media (max-width: 1024px) {
 	* {
 		font-size: 14px;
@@ -131,7 +143,6 @@ button span,
 	}
 }
 
-/* Адаптивность для маленьких планшетов */
 @media (max-width: 768px) {
 	* {
 		font-size: 14px;
@@ -144,7 +155,6 @@ button span,
 	}
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 600px) {
 	* {
 		font-size: 13px;
@@ -157,7 +167,6 @@ button span,
 	}
 }
 
-/* Адаптивность для очень маленьких экранов */
 @media (max-width: 480px) {
 	* {
 		font-size: 13px;
@@ -170,7 +179,6 @@ button span,
 	}
 }
 
-/* Адаптивность для очень узких экранов (сплит-скрин) */
 @media (max-width: 360px) {
 	* {
 		font-size: 12px;
@@ -183,7 +191,6 @@ button span,
 	}
 }
 
-/* Утилитарные классы для адаптивности */
 .container {
 	width: 100%;
 	max-width: 1200px;

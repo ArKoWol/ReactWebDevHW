@@ -67,6 +67,12 @@ const darkTheme = {
 	body: '#1a1b26',
 	text: '#c0caf5',
 	shape: '#24283b',
+	error: '#f7768e',
+	success: '#9ece6a',
+	warning: '#e0af68',
+	disabled: '#787c99',
+	border: '#545c7e',
+	textSecondary: '#a9b1d6',
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {

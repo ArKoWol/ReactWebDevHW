@@ -33,14 +33,11 @@ export function MenuPage(): React.ReactElement {
 	};
 
 	const handleAddToCart = async (item: MenuItem, quantity: number): Promise<void> => {
-		// Add items to cart
 		for (let i = 0; i < quantity; i++) {
 			dispatch(addToCart(item));
 		}
 		
-		// Sync with Firestore if user is logged in
 		if (currentUser) {
-			// Calculate the new cart state after adding items
 			const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
 			let newCartItems = [...cartItems];
 			

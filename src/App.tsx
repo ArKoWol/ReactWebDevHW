@@ -6,6 +6,7 @@ import { CompanyPage } from './pages/CompanyPage/CompanyPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
 import { SignUpPage } from './pages/LoginPage/SignUpPage';
 import { CartPage } from './pages/CartPage/CartPage';
+import { ErrorPage } from './pages/ErrorPage/ErrorPage';
 import { Layout } from './components/Layout/Layout';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { ScrollToTop } from './components/ScrollToTop/ScrollToTop';
@@ -141,6 +142,7 @@ function App(): React.JSX.Element {
 							</PrivateRoute>
 						} 
 					/>
+					<Route path="*" element={<ErrorPage />} />
 				</Route>
 			</Routes>
 		</>
