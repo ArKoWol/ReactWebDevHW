@@ -52,6 +52,7 @@
 	backdrop-filter: blur(10px);
 	border: 2px solid transparent;
 	outline: none;
+	user-select: none;
 }
 
 [data-theme='light'] .menu-select label {
