@@ -17,66 +17,89 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-const lightTheme = {
-	borderRadius: '5px',
-	palette: {
-		common: {
-			black: '#222831',
-			white: '#ffffff',
-		},
-		primary: {
-			main: '#35b8be',
-			contrastText: '#ffffff',
-		},
-		secondary: {
-			main: '#28224b',
-			contrastText: '#ffffff',
-		},
-	},
-	typography: {
-		h1: {
-			fontSize: '2rem',
-		},
-	},
-	body: '#f5fbfc',
-	text: '#28224b',
-	shape: '#ffffff',
+// Type for CSS variables
+type ThemeVariables = {
+  [key: string]: string;
 };
 
-const darkTheme = {
-	borderRadius: '5px',
-	palette: {
-		common: {
-			black: '#1a1b26',
-			white: '#ffffff',
-		},
-		primary: {
-			main: '#7aa2f7',
-			contrastText: '#1a1b26',
-		},
-		secondary: {
-			main: '#bb9af7',
-			contrastText: '#1a1b26',
-		},
-	},
-	typography: {
-		h1: {
-			fontSize: '2rem',
-		},
-	},
-	body: '#1a1b26',
-	text: '#c0caf5',
-	shape: '#24283b',
-	error: '#f7768e',
-	success: '#9ece6a',
-	warning: '#e0af68',
-	disabled: '#787c99',
-	border: '#545c7e',
-	textSecondary: '#a9b1d6',
+// Type for theme variables map
+type ThemeVariablesMap = {
+  [key in Theme]: ThemeVariables;
+};
+
+// Single theme object using CSS variables
+const theme = {
+  borderRadius: '5px',
+  palette: {
+    common: {
+      black: 'var(--color-black)',
+      white: 'var(--color-white)',
+    },
+    primary: {
+      main: 'var(--color-primary)',
+      contrastText: 'var(--color-primary-contrast)',
+    },
+    secondary: {
+      main: 'var(--color-secondary)',
+      contrastText: 'var(--color-secondary-contrast)',
+    },
+  },
+  typography: {
+    h1: {
+      fontSize: '2rem',
+    },
+  },
+  body: 'var(--color-body)',
+  text: 'var(--color-text)',
+  shape: 'var(--color-shape)',
+  error: 'var(--color-error)',
+  success: 'var(--color-success)',
+  warning: 'var(--color-warning)',
+  disabled: 'var(--color-disabled)',
+  border: 'var(--color-border)',
+  textSecondary: 'var(--color-text-secondary)',
+};
+
+// Theme variable values
+const themeVariables: ThemeVariablesMap = {
+  [Theme.LIGHT]: {
+    '--color-black': '#222831',
+    '--color-white': '#ffffff',
+    '--color-primary': '#35b8be',
+    '--color-primary-contrast': '#ffffff',
+    '--color-secondary': '#28224b',
+    '--color-secondary-contrast': '#ffffff',
+    '--color-body': '#f5fbfc',
+    '--color-text': '#28224b',
+    '--color-shape': '#ffffff',
+    '--color-error': '#d32f2f',
+    '--color-success': '#388e3c',
+    '--color-warning': '#f57c00',
+    '--color-disabled': '#bdbdbd',
+    '--color-border': '#e0e0e0',
+    '--color-text-secondary': '#757575',
+  },
+  [Theme.DARK]: {
+    '--color-black': '#1a1b26',
+    '--color-white': '#ffffff',
+    '--color-primary': '#7aa2f7',
+    '--color-primary-contrast': '#1a1b26',
+    '--color-secondary': '#bb9af7',
+    '--color-secondary-contrast': '#1a1b26',
+    '--color-body': '#1a1b26',
+    '--color-text': '#c0caf5',
+    '--color-shape': '#24283b',
+    '--color-error': '#f7768e',
+    '--color-success': '#9ece6a',
+    '--color-warning': '#e0af68',
+    '--color-disabled': '#787c99',
+    '--color-border': '#545c7e',
+    '--color-text-secondary': '#a9b1d6',
+  },
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(() => {
+  const [currentTheme, setCurrentTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       return storedTheme as Theme;
@@ -89,19 +112,23 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    // Apply CSS variables to :root
+    const variables = themeVariables[currentTheme];
+    Object.entries(variables).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
+    });
+    
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('theme', currentTheme);
+  }, [currentTheme]);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
+    setCurrentTheme(prevTheme => (prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT));
   };
 
-  const currentTheme = theme === Theme.LIGHT ? lightTheme : darkTheme;
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <StyledThemeProvider theme={currentTheme}>
+    <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
+      <StyledThemeProvider theme={theme}>
         {children}
       </StyledThemeProvider>
     </ThemeContext.Provider>

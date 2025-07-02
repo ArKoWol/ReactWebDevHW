@@ -16,10 +16,15 @@ export function Button({
 	disabled = false,
 	className = '',
 }: ButtonProps): React.ReactElement {
+	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		onClick?.();
+	};
+
 	return (
 		<button
 			className={`custom-button ${className}`}
-			onClick={onClick}
+			onClick={handleClick}
 			type={type}
 			disabled={disabled}
 		>

@@ -129,6 +129,7 @@ export function MenuCard({
 								value={quantity}
 								onChange={handleQuantityChange}
 								onBlur={handleQuantityBlur}
+								onClick={(e) => e.stopPropagation()}
 								className="menu-quantity-input"
 								min="1"
 								max="99"
