@@ -36,14 +36,14 @@ export function HomePage(): React.ReactElement {
 	return (
 		<div className="home-page">
 			{}
-			<DecorativeBackground density="heavy" variant="playful" />
+			{/* <DecorativeBackground density="heavy" variant="playful" /> */}
 			
 			{}
-			<section className="hero-section enhanced-section">
+			<section className="hero-section">
 				{}
-				{stablePositions.homepage.hero.map((element, index) => 
+				{/* {stablePositions.homepage.hero.map((element, index) => 
 					createDecorativeElement(element, `hero-${index}`)
-				)}
+				)} */}
 				
 				<div className="hero-container">
 					<div className="hero-content fade-in-section">
@@ -80,11 +80,11 @@ export function HomePage(): React.ReactElement {
 			<SectionDivider variant="wave" height="medium" />
 
 			{}
-			<section className="features-section enhanced-section fade-in-section">
+			<section className="features-section fade-in-section">
 				{}
-				{stablePositions.homepage.features.map((element, index) => 
+				{/* {stablePositions.homepage.features.map((element, index) => 
 					createDecorativeElement(element, `features-${index}`)
-				)}
+				)} */}
 				
 				<div className="container">
 					<h2 className="features-title">Why Choose Our Service?</h2>
@@ -125,11 +125,11 @@ export function HomePage(): React.ReactElement {
 			<SectionDivider variant="diagonal" height="small" />
 
 			{}
-			<section className="stats-section enhanced-section fade-in-section">
+			<section className="stats-section fade-in-section">
 				{}
-				{stablePositions.homepage.stats.map((element, index) => 
+				{/* {stablePositions.homepage.stats.map((element, index) => 
 					createDecorativeElement(element, `stats-${index}`)
-				)}
+				)} */}
 				
 				<div className="container">
 					<div className="stats-grid">
@@ -157,11 +157,11 @@ export function HomePage(): React.ReactElement {
 			<SectionDivider variant="curved" height="large" />
 
 			{}
-			<section className="cta-section enhanced-section fade-in-section">
+			<section className="cta-section fade-in-section">
 				{}
-				{stablePositions.homepage.cta.map((element, index) => 
+				{/* {stablePositions.homepage.cta.map((element, index) => 
 					createDecorativeElement(element, `cta-${index}`)
-				)}
+				)} */}
 				
 				<div className="container">
 					<div className="cta-content">

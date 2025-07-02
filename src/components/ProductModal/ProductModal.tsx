@@ -1,7 +1,8 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import './ProductModal.css';
 import { Button } from '../Button/Button';
+import { QuantityControls } from '../QuantityControls/QuantityControls';
 import { MenuItem } from '../../types';
 
 type ProductModalProps = {
@@ -12,7 +13,7 @@ type ProductModalProps = {
 };
 
 export function ProductModal({ isOpen, onClose, product, onAddToCart }: ProductModalProps): React.JSX.Element | null {
-	const [quantity, setQuantity] = useState<string>('1');
+	const [quantity, setQuantity] = useState<number>(1);
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -43,54 +44,13 @@ export function ProductModal({ isOpen, onClose, product, onAddToCart }: ProductM
 		};
 	}, [isOpen, onClose]);
 
-	const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>): void => {
-		const value = event.target.value;
-		if (value === '' || (!isNaN(parseInt(value)) && parseInt(value) >= 0)) {
-			if (!isNaN(parseInt(value)) && parseInt(value) > 99) {
-				setQuantity('99');
-			} else {
-				setQuantity(value);
-			}
-		}
-	};
-
-	const handleQuantityBlur = (): void => {
-		if (quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1) {
-			setQuantity('1');
-		} else if (parseInt(quantity) > 99) {
-			setQuantity('99');
-		}
+	const handleQuantityChange = (newQuantity: number): void => {
+		setQuantity(newQuantity);
 	};
 
 	const handleAddToCart = (): void => {
-		let finalQuantity = quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1 
-			? 1 
-			: parseInt(quantity);
-		
-		finalQuantity = Math.min(finalQuantity, 99);
-		
-		if (quantity === '' || isNaN(parseInt(quantity)) || parseInt(quantity) < 1) {
-			setQuantity('1');
-		} else if (parseInt(quantity) > 99) {
-			setQuantity('99');
-		}
-		
-		onAddToCart(finalQuantity);
+		onAddToCart(quantity);
 		onClose();
-	};
-
-	const handleIncreaseQuantity = (): void => {
-		const currentQuantity = parseInt(quantity) || 1;
-		if (currentQuantity < 99) {
-			setQuantity((currentQuantity + 1).toString());
-		}
-	};
-
-	const handleDecreaseQuantity = (): void => {
-		const currentQuantity = parseInt(quantity) || 1;
-		if (currentQuantity > 1) {
-			setQuantity((currentQuantity - 1).toString());
-		}
 	};
 
 	const toggleDescription = (): void => {
@@ -169,27 +129,14 @@ export function ProductModal({ isOpen, onClose, product, onAddToCart }: ProductM
 					<div className="modal-actions">
 						<div className="quantity-section">
 							<label htmlFor="modal-quantity">Quantity:</label>
-							<div className="quantity-controls">
-								<button className="quantity-btn decrease" onClick={handleDecreaseQuantity} disabled={parseInt(quantity) <= 1}>
-									−
-								</button>
-								<input
-									id="modal-quantity"
-									type="number"
-									value={quantity}
-									onChange={handleQuantityChange}
-									onBlur={handleQuantityBlur}
-									className="modal-quantity-input"
-									min="1"
-									max="99"
-								/>
-								<button className="quantity-btn increase" onClick={handleIncreaseQuantity} disabled={parseInt(quantity) >= 99}>
-									+
-								</button>
-							</div>
+							<QuantityControls
+								value={quantity}
+								onChange={handleQuantityChange}
+								size="large"
+							/>
 						</div>
 						<Button onClick={handleAddToCart} className="modal-add-button">
-							Add {quantity || 1} to Cart - $ {((product.price * (parseInt(quantity) || 1))).toFixed(2)} USD
+							Add {quantity} to Cart - $ {(product.price * quantity).toFixed(2)} USD
 						</Button>
 					</div>
 				</div>

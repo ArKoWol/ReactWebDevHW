@@ -1,8 +1,39 @@
 .home-page {
 	width: 100%;
 	overflow-x: hidden;
+	overflow-y: visible;
 	box-sizing: border-box;
 	position: relative;
+	/* Предотвращаем перехват скролла */
+	touch-action: manipulation;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* Локальная защита от перехвата скролла декоративными элементами */
+.home-page .decorative-background,
+.home-page .decorative-background *,
+.home-page .floating-element,
+.home-page .floating-element::before,
+.home-page .floating-element::after {
+	pointer-events: none !important;
+}
+
+/* Защита для image-wrapper от перехвата скролла */
+.home-page .image-wrapper::after,
+.home-page .hero-button::after,
+.home-page .cta-button::after {
+	pointer-events: none !important;
+}
+
+/* Дополнительная защита для touch устройств */
+@media (max-width: 768px) {
+	.home-page .decorative-background,
+	.home-page .floating-element {
+		touch-action: auto !important;
+		user-select: none;
+		-webkit-user-select: none;
+		-webkit-touch-callout: none;
+	}
 }
 
 .hero-section {
@@ -11,7 +42,6 @@
 	margin-bottom: 0;
 	box-sizing: border-box;
 	position: relative;
-	min-height: 90vh;
 	display: flex;
 	align-items: center;
 	background: linear-gradient(135deg, 
@@ -20,8 +50,6 @@
 		rgba(255, 193, 87, 0.08) 50%,
 		rgba(125, 213, 111, 0.08) 75%,
 		rgba(78, 205, 196, 0.08) 100%);
-	background-attachment: fixed;
-	overflow: hidden;
 }
 
 [data-theme='dark'] .hero-section {
@@ -31,7 +59,6 @@
 		#1a1b26 50%,
 		#16161e 75%,
 		#1f2335 100%) !important;
-	background-attachment: fixed !important;
 }
 
 .hero-section::before {
@@ -44,7 +71,6 @@
 	background-image: url('../../assets/background.png');
 	background-size: cover;
 	background-position: center;
-	background-attachment: fixed;
 	opacity: 0.03;
 	z-index: 0;
 }
@@ -118,11 +144,24 @@
 	cursor: pointer;
 	transition: all 0.3s ease;
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+	/* Исправляем проблемы со скроллингом на touch устройствах */
+	touch-action: auto !important;
+	overscroll-behavior: auto !important;
+	-webkit-overflow-scrolling: auto !important;
+	-webkit-touch-callout: none;
 }
 
 .hero-button:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+/* Отключаем hover эффекты кнопок на touch устройствах */
+@media (hover: none) and (pointer: coarse) {
+	.hero-button:hover {
+		transform: none !important;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+	}
 }
 
 .hero-button::after {
@@ -136,9 +175,7 @@
 	pointer-events: none;
 }
 
-.hero-button:hover::after {
-	pointer-events: auto;
-}
+/* Убрал pointer-events: auto чтобы не перехватывать скролл */
 
 .rating-container {
 	display: flex;
@@ -177,7 +214,16 @@
 .image-wrapper {
 	position: relative;
 	transition: all 0.4s ease;
-	
+	overflow: visible !important;
+	border-radius: 30px;
+	max-width: 100%;
+	/* Исправляем проблемы со скроллингом на touch устройствах */
+	touch-action: auto !important;
+	overscroll-behavior: auto !important;
+	-webkit-overflow-scrolling: auto !important;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .image-wrapper::after {
@@ -195,9 +241,7 @@
 	transform: scale(1.05) rotate(2deg);
 }
 
-.image-wrapper:hover::after {
-	pointer-events: auto;
-}
+/* Убрал pointer-events: auto чтобы не перехватывать скролл */
 
 .image-wrapper:hover .hero-image {
 	
@@ -248,13 +292,38 @@
 	opacity: 0.5;
 }
 
+/* Отключаем hover эффекты картинки на touch устройствах */
+@media (hover: none) and (pointer: coarse) {
+	.image-wrapper:hover {
+		transform: none !important;
+	}
+	
+	.image-wrapper:hover .hero-image {
+		filter: 
+			drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2))
+			drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1)) !important;
+	}
+	
+	[data-theme='dark'] .image-wrapper:hover .hero-image {
+		filter: 
+			drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4))
+			drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2)) !important;
+	}
+	
+	.image-wrapper:hover .image-glow {
+		opacity: 0 !important;
+	}
+}
+
 .features-section {
 	padding: 120px 20px;
 	background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
 	border-radius: 50px;
 	margin: 0 20px;
 	position: relative;
-	overflow: hidden;
+	overflow: visible !important;
+	touch-action: auto !important;
+	overscroll-behavior: auto !important;
 }
 
 [data-theme='dark'] .features-section {
@@ -326,7 +395,9 @@
 	border-radius: 30px;
 	margin: 60px 20px;
 	position: relative;
-	overflow: hidden;
+	overflow: visible !important;
+	touch-action: auto !important;
+	overscroll-behavior: auto !important;
 }
 
 .stats-grid {
@@ -430,11 +501,24 @@
 	transition: all 0.3s ease;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 	animation: fadeInUp 1s ease-out 0.4s both;
+	/* Исправляем проблемы со скроллингом на touch устройствах */
+	touch-action: auto !important;
+	overscroll-behavior: auto !important;
+	-webkit-overflow-scrolling: auto !important;
+	-webkit-touch-callout: none;
 }
 
 .cta-button:hover {
 	transform: translateY(-5px) scale(1.05);
 	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Отключаем hover эффекты CTA кнопки на touch устройствах */
+@media (hover: none) and (pointer: coarse) {
+	.cta-button:hover {
+		transform: none !important;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+	}
 }
 
 .cta-button::after {
@@ -448,9 +532,7 @@
 	pointer-events: none;
 }
 
-.cta-button:hover::after {
-	pointer-events: auto;
-}
+/* Убрал pointer-events: auto чтобы не перехватывать скролл */
 
 @media (max-width: 1024px) {
 	.hero-container {
@@ -462,7 +544,6 @@
 @media (max-width: 768px) {
 	.hero-section {
 		padding: 80px 15px 40px;
-		min-height: 70vh;
 	}
 
 	.hero-container {
@@ -508,7 +589,6 @@
 @media (max-width: 600px) {
 	.hero-section {
 		padding: 60px 10px 30px;
-		min-height: 60vh;
 	}
 
 	.hero-container {
@@ -558,5 +638,109 @@
 
 	.stat-card {
 		min-height: clamp(120px, 18vw, 150px);
+	}
+}
+
+/* РАДИКАЛЬНОЕ РЕШЕНИЕ: Полное исправление скролл-проблем на touch устройствах */
+@media (hover: none) and (pointer: coarse) {
+	/* Исправляем body и html для правильного скролла на touch */
+	html, body {
+		overflow: auto !important;
+		overflow-x: hidden !important;
+		touch-action: manipulation !important;
+		-webkit-overflow-scrolling: touch !important;
+		overscroll-behavior: contain !important;
+		scroll-behavior: smooth !important;
+		height: auto !important;
+		min-height: 100% !important;
+	}
+	
+	/* Принудительно исправляем основные контейнеры */
+	#root,
+	.main-content {
+		overflow: visible !important;
+		touch-action: manipulation !important;
+		-webkit-overflow-scrolling: touch !important;
+		transform: none !important;
+		position: relative !important;
+	}
+	
+	/* Убираем перехват скролла у всех элементов HomePage */
+	.home-page,
+	.home-page * {
+		overflow: visible !important;
+		touch-action: manipulation !important;
+		overscroll-behavior: auto !important;
+		-webkit-overflow-scrolling: touch !important;
+		/* Отключаем все трансформации на touch */
+		transform: none !important;
+		transition: none !important;
+		will-change: auto !important;
+	}
+	
+	/* Полностью отключаем hover эффекты на touch */
+	.home-page *:hover {
+		transform: none !important;
+		box-shadow: initial !important;
+		border-color: initial !important;
+		opacity: initial !important;
+	}
+	
+	/* Отключаем backdrop-filter и сложные эффекты на touch */
+	.home-page .interactive-card,
+	.home-page .image-wrapper,
+	.home-page .features-section,
+	.home-page .stats-section,
+	.home-page .cta-section {
+		backdrop-filter: none !important;
+		filter: none !important;
+		z-index: auto !important;
+		position: static !important;
+	}
+	
+	/* Исключения для элементов которым действительно нужен overflow: hidden */
+	.home-page .hero-image,
+	.home-page img,
+	.home-page .text-clamp-2,
+	.home-page .text-clamp-3,
+	.home-page .text-clamp-4 {
+		overflow: hidden !important;
+	}
+}
+
+/* Дополнительное исправление для мобильных экранов */
+@media screen and (max-width: 768px) {
+	/* Принудительно исправляем скролл на мобильных */
+	html {
+		overflow: auto !important;
+		-webkit-overflow-scrolling: touch !important;
+		touch-action: manipulation !important;
+	}
+	
+	body {
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
+		-webkit-overflow-scrolling: touch !important;
+		touch-action: manipulation !important;
+	}
+	
+	.home-page {
+		overflow: visible !important;
+		touch-action: manipulation !important;
+		-webkit-overflow-scrolling: touch !important;
+	}
+	
+	/* Отключаем все проблемные элементы */
+	.home-page .interactive-card,
+	.home-page .image-wrapper,
+	.home-page .hero-button,
+	.home-page .cta-button {
+		transform: none !important;
+		transition: none !important;
+		overflow: visible !important;
+		touch-action: manipulation !important;
+		-webkit-overflow-scrolling: touch !important;
+		position: static !important;
+		z-index: auto !important;
 	}
 }

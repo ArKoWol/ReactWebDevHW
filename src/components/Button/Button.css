@@ -12,10 +12,12 @@
 	letter-spacing: 0.5px;
 	backdrop-filter: blur(10px);
 	
-	
 	background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
 	color: white;
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+	
+	/* Обеспечиваем правильное ограничение анимации переливания */
+	contain: layout style paint;
 }
 
 .custom-button::before {
@@ -28,6 +30,11 @@
 	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 	transition: left 0.6s ease;
 	z-index: 1;
+	border-radius: inherit;
+	pointer-events: none;
+	/* Обеспечиваем что переливание не выходит за границы кнопки */
+	overflow: hidden;
+	will-change: transform;
 }
 
 .custom-button:hover::before {
@@ -48,7 +55,7 @@
 	width: 100%;
 	height: 100%;
 	z-index: 1;
-	pointer-events: auto;
+	pointer-events: none;
 }
 
 [data-theme='dark'] .custom-button:hover {
@@ -263,14 +270,32 @@
 	.custom-button {
 		padding: clamp(10px, 3vw, 14px) clamp(20px, 5vw, 28px);
 		font-size: clamp(13px, 2.2vw, 15px);
+		/* Усиливаем ограничение контента на мобильных */
+		overflow: hidden !important;
+		contain: layout style paint;
 	}
 	
+	/* Контролируем анимацию переливания на мобильных */
+	.custom-button::before {
+		clip-path: inset(0);
+		contain: layout style paint;
+	}
+	
+	/* Ограничиваем hover эффекты для лучшей производительности */
 	.custom-button:hover {
 		transform: translateY(-2px) scale(1.01);
+		box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+		transition: all 0.25s ease;
+	}
+	
+	.custom-button:hover::before {
+		left: 100%;
+		transition: left 0.5s ease;
 	}
 	
 	.custom-button:active {
-		transform: translateY(-1px) scale(0.99);
+		transform: translateY(-1px) scale(0.98);
+		transition: all 0.1s ease;
 	}
 }
 
@@ -282,12 +307,28 @@
 }
 
 @media (hover: none) and (pointer: coarse) {
+	/* ВОЗВРАЩАЕМ hover анимации, но обеспечиваем корректную работу псевдоэлементов */
 	.custom-button:hover {
-		transform: none;
-		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+		transform: translateY(-3px) scale(1.02) !important;
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+		transition: all 0.3s ease !important;
 	}
 	
+	.custom-button:hover::before {
+		left: 100% !important;
+		transition: left 0.6s ease !important;
+	}
+	
+	/* СОХРАНЯЕМ анимации active - они важны для UX на мобильных */
 	.custom-button:active {
-		transform: scale(0.95);
+		transform: translateY(-1px) scale(0.98) !important;
+		transition: all 0.1s ease !important;
+	}
+	
+	/* Убеждаемся что псевдоэлементы корректно позиционируются на touch устройствах */
+	.custom-button::before,
+	.custom-button::after {
+		overflow: hidden;
+		border-radius: inherit;
 	}
 }

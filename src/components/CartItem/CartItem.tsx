@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateQuantity, removeFromCart, syncCartAfterChange } from '../../store/slices/cartSlice';
 import { CartItem as CartItemType } from '../../store/slices/cartSlice';
 import { Button } from '../Button/Button';
+import { QuantityControls } from '../QuantityControls/QuantityControls';
 import './CartItem.css';
 
 interface CartItemProps {
@@ -13,43 +14,16 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 	const dispatch = useAppDispatch();
 	const { items: cartItems } = useAppSelector((state) => state.cart);
 	const { currentUser } = useAppSelector((state) => state.auth);
-	const [quantity, setQuantity] = useState(item.quantity > 99 ? '99+' : item.quantity.toString());
 
-	useEffect(() => {
-		setQuantity(item.quantity > 99 ? '99+' : item.quantity.toString());
-	}, [item.quantity]);
-
-	const handleQuantityChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		if (value === '' || (!isNaN(parseInt(value)) && parseInt(value) > 0)) {
-			const numValue = parseInt(value);
-			if (!isNaN(numValue)) {
-				if (numValue > 99) {
-					setQuantity('99');
-					dispatch(updateQuantity({ id: item.id, quantity: 99 }));
-					if (currentUser) {
-						const updatedItems = cartItems.map(cartItem => 
-							cartItem.id === item.id 
-								? { ...cartItem, quantity: 99 }
-								: cartItem
-						);
-						dispatch(syncCartAfterChange(updatedItems));
-					}
-				} else {
-					setQuantity(value);
-					dispatch(updateQuantity({ id: item.id, quantity: numValue }));
-					if (currentUser) {
-						const updatedItems = cartItems.map(cartItem => 
-							cartItem.id === item.id 
-								? { ...cartItem, quantity: numValue }
-								: cartItem
-						);
-						dispatch(syncCartAfterChange(updatedItems));
-					}
-				}
-			} else {
-				setQuantity(value);
-			}
+	const handleQuantityChange = async (newQuantity: number) => {
+		dispatch(updateQuantity({ id: item.id, quantity: newQuantity }));
+		if (currentUser) {
+			const updatedItems = cartItems.map(cartItem => 
+				cartItem.id === item.id 
+					? { ...cartItem, quantity: newQuantity }
+					: cartItem
+			);
+			dispatch(syncCartAfterChange(updatedItems));
 		}
 	};
 
@@ -68,13 +42,11 @@ export function CartItem({ item }: CartItemProps): React.ReactElement {
 				<h3 className="cart-item-name">{item.title}</h3>
 			</div>
 			<span className="cart-item-price accent-span">${(item.price * item.quantity).toFixed(2)}</span>
-			<input
-				type="number"
-				value={quantity === '99+' ? '99' : quantity}
+			<QuantityControls
+				value={item.quantity}
 				onChange={handleQuantityChange}
-				className="cart-item-quantity-input"
-				min="1"
-				max="99"
+				size="small"
+				className="cart-item-quantity"
 			/>
 			<Button 
 				className="remove-button" 
